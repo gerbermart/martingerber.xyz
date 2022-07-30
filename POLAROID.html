@@ -4,22 +4,17 @@ body {
     background: #000000;
 }
 
-.row {
-    position: relative;
-    max-width: 695px; 
-    flex: center;
-    margin: auto; 
-}
-
 .container {
     display: grid;
+    width: 100%;
     gap:15px 15px;
     grid-template-columns: repeat(auto-fit, minmax(355px, 1fr));
-    justify-content: space-evenly;
 }
 
 .polaroid {
     display: grid;
+    margin: 0 auto;
+    justify-content: center;
 }
 
 .content {
@@ -28,7 +23,7 @@ body {
     margin-left: 15px;
     margin-top: 20px;
     overflow: hidden; 
-    filter: brightness(85%) saturate(150%) contrast(125%) brightness(125%) blur(0.5px);
+    filter: brightness(50%) saturate(120%) contrast(120%) brightness(200%) blur(0.5px);
     grid-area: 1 / 1;
 }
 
@@ -45,6 +40,7 @@ body {
 </style>
 
 <body>
+    </br></br>
     <div class="container">
         <a href="https://wayak.xyz"><div class="polaroid">
             <div class="content"><img src="IMAGES/WAYAK.jpg"></div>
@@ -58,7 +54,12 @@ body {
             <div class="content"><img src="IMAGES/HURRIC4N3IKE.jpg"></div>
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
         </div></a>
-        <a href=""><div class="polaroid">
+        <a href="https://linktr.ee/jadynviolet"><div class="polaroid">
+            <div class="content"><img src="IMAGES/JADYN.jpg"></div>
+            <div class="overlay"><img src="IMAGES/COVER.png"></div>
+        </div></a>
+        <a href="https://twinnytwin.io/"><div class="polaroid">
+            <div class="content"><img src="IMAGES/TWINNY.jpg"></div>
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
         </div></a>
         <a href=""><div class="polaroid">
@@ -85,8 +86,6 @@ body {
         <a href=""><div class="polaroid">
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
         </div></a>
-        
-
         
         
     </div>
