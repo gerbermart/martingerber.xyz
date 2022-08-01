@@ -3,44 +3,91 @@
 <style type="text/css">
 
 body {
-    background: #f8fbf7;
+    background: #ffffff;
 }
 
-.box1 { 
-		position: relative; 
-		margin: 0 auto;
-  		width: 60em; 
-		height: 80em;
-		background-image: url(IMAGES/GERBS_GIF_2_COMPILE_3.GIF); 
-		background-repeat: no-repeat; 
-		background-size: cover;
-		}
+.container {
+    display: grid;
+    margin: 0 auto;
+    justify-content: center;
+    width: 1280px;
+    height: 900px;
+}
 
-.box2 { 
-		position: relative; 
-		margin: 0 auto;
-		width: 25em; 
-		height: 25em;
-		background-image: url(IMAGES/ALBUM_IN_F.jpg); 
-		background-repeat: no-repeat; 
-		background-size: cover;
-		}
-.box3 { 
-		position: relative; 
-		margin: 0 auto;
-		width: 25em; 
-		height: 25em;
-		background-image: url(IMAGES/WaT.jpg); 
-		background-repeat: no-repeat; 
-		background-size: cover;
-		}
+.background {
+    justify-self: center; 
+    grid-area: 1 / 1;
+}
+
+.background > img {
+    object-fit: cover;
+    width: 800px;
+    max-height: 100%;
+}
+
+
+.GERBS {
+    margin: 10% 3%;
+    grid-area: 1 / 1;
+}
+
+.GERBS > img {
+    object-fit: cover;
+    width: 400px;
+    max-height: 100%;
+}
+
+.IIEPS {
+    margin: 8% 3%;
+    justify-self: right;
+    grid-area: 1 / 1;
+}
+
+.IIEPS > img {
+    object-fit: cover;
+    width: 320px;
+    max-height: 100%;
+}
+
+.NORLI{
+    margin: 600px 0px;
+    grid-area: 1 / 1;
+}
+
+.NORLI > img {
+    object-fit: cover;
+    width: 200px;
+    max-height: 100%;
+}
+
+.MOON{
+    margin: 650px 300px;
+    grid-area: 1 / 1;
+}
+
+.MOON > img {
+    width: 200px;
+    max-height: 100%;
+}
+
+.RELINQUISH {
+    justify-self: right;
+    margin: 650px 20px;
+    grid-area: 1 / 1;
+}
+
+.RELINQUISH > img {
+    width: 200px;
+    max-height: 100%;
+}
 
 .box-link { 
-		position: absolute; 
-		width: 18.5em; 
-		height: 3.5em; 
-		background-color: transparent; 
-		border: 0px solid yellow; }
+    grid-area: 1 / 1;
+    position: relative; 
+    background-color: transparent; 
+    border: 0px solid yellow; 
+}
+
 a.box-link:hover { 
 	text-decoration: none; 
 	color: blue;
@@ -246,15 +293,23 @@ a.box-link:hover {
 </head>
 
 <body>
-	<div class="box1"> <!-- THE GIF LINKS -->
-		<a class="box-link" style="height: 4em; width:10em; top: 5em; left: 17em;" href=https://opensea.io/collection/martingerber target="_blank"></a>
-		<a class="box-link" style="height: 4em; width:10em; top: 12em; left: 17em;" href=https://withkoji.com/@martin_gerber/dqe5 target="_blank"></a>
-		<a class="box-link" style="height: 6.5em; width:10.5em; top: 7.5em; left: 30.5em;" href=https://vault.fan/martin_gerber target="_blank"></a>
-		<a class="box-link" style="height: 13em; width:13em; top: 52em; left: 6.5em;" href=https://opensea.io/collection/norli target="_blank"></a>
-		<a class="box-link" style="height: 5em; width:13em; top: 72.5em; left: 6.5em;" href=https://koji.to/k/6LtK target="_blank"></a>
-		<a class="box-link" style="height: 11em; width:11em; top: 45em; left: 24.5em;" href=https://opensea.io/collection/martingerber?search[query]=worn%20and%20tattered&search[sortAscending]=true&search[sortBy]=UNIT_PRICE target="_blank"></a>
-		<a class="box-link" style="height: 11.5em; width:11.5em; top: 60em; left: 24.2em;" href=https://mintsongs.com/songs/2052 target="_blank"></a>
-		<a class="box-link" style="height: 13em; width:13em; top: 51.5em; left: 41em;" href=https://martingerber.holaplex.com target="_blank"></a>
+    <div class="container"> <!-- THE GIF LINKS -->
+        <div class="background"><img src="IMAGES/GERBS_GIF_2_CARD.gif"></div>
+        <div class="GERBS"><img src="IMAGES/GERBS.png"></div>
+        <div class="IIEPS"><img src="IMAGES/IIEPS.png"></div>
+        <div class="NORLI"><img src="IMAGES/NORLI.png"></div>
+        <div class="MOON"><img src="IMAGES/MOON.png"></div>
+        <div class="RELINQUISH"><img src="IMAGES/RELINQUISH.png"></div>
+    	<a class="box-link" style="height: 40px; width:100px; top: 90px; left: 160px;" href=https://opensea.io/collection/martingerber target="_blank"></a>
+        <a class="box-link" style="height: 125px; width:125px; top: 90px; left: 20px;" href=https://opensea.io/collection/martingerber?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Featured%20Artist&search[stringTraits][0][values][0]=Brandon%20Sobel target="_blank"></a>
+        <a class="box-link" style="height: 125px; width:125px; top: 90px; left: 280px;" href=https://opensea.io/collection/martingerber?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=ISRC&search[stringTraits][0][values][0]=QZFZ32202690 target="_blank"></a>
+		<a class="box-link" style="height: 40px; width:100px; top: 165px; left: 160px;" href=https://withkoji.com/@martin_gerber/dqe5 target="_blank"></a>
+		<a class="box-link" style="height: 75px; width:130px; top: 110px; left: 450px;" href=https://vault.fan/martin_gerber target="_blank"></a>
+        <a class="box-link" style="height: 150px; width:125px; top: 70px; left: 620px;" href=https://vault.fan/martin_gerber target="_blank"></a>
+		<a class="box-link" style="height: 190px; width:190px; top: 600px; left: 0px;" href=https://opensea.io/collection/norli target="_blank"></a>
+		<a class="box-link" style="height: 70px; width:170px; top: 835px; left: 10px;" href=https://koji.to/k/6LtK target="_blank"></a>
+		<a class="box-link" style="height: 200px; width:200px; top: 650px; left: 300px;" href=https://mintsongs.com/songs/2052 target="_blank"></a>
+		<a class="box-link" style="height: 190px; width:190px; top: 650px; left: 580px;" href=https://martingerber.holaplex.com target="_blank"></a>
 		
 	</div>
 	</br></br></br></br></br></br>
