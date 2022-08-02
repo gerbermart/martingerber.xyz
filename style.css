@@ -370,15 +370,19 @@ a.box-link:hover {
 }
 
 .row {
-  display: flex;
-  justify-self: center;
-  justify-content: center;
-  width: 810px;
+    display: flex;
+    justify-self: center;
+    justify-content: center;
+    width: 800px;
 }
 
 .column {
     display: flex;
     justify-content: center;
     flex: 33.33%;
-    padding: 5px;
+    padding: 0px;
+}
+
+#player{
+    width: 100%;
 }
