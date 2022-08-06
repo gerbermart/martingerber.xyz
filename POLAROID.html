@@ -93,6 +93,7 @@ button:hover {
     margin-top: 20px;
     overflow: hidden; 
     filter: brightness(50%) saturate(120%) contrast(120%) brightness(200%) blur(0.5px);
+    background: url('IMAGES/STATIC_PLAY.gif') no-repeat;
     grid-area: 1 / 1;
 }
 
@@ -137,7 +138,7 @@ a:hover {
     <div class="container">
         <div class="polaroid">
             <div class="content"><img width=313 id="myIMG" src=""></div>
-            <div class="iframe_content">
+            <div class="video_content">
                 <iframe id="myIFRAME" allowfullscreen="false" style='display:none;' width="600" height="313" src="" onclick="this.paused ? this.play() : this.pause();"></iframe>
                 <video webkit-playsinline playsinline id="myVIDEO" allowfullscreen="false" style='display:none;' width="600" height="313" src="" onclick="this.paused ? this.play() : this.pause();"></video>
             </div>
