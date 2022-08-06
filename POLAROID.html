@@ -20,14 +20,25 @@ body {
 .content {
     z-index: 1;
     min-height: 313px; 
-    min-width: 305px; 
+    min-width: 304; 
     max-height:313px;
-    max-width: 308px;
-    margin-left: 15px;
+    max-width: 304px;
+    margin-left: 12px;
     margin-top: 20px;
     overflow: hidden; 
     filter: brightness(50%) saturate(120%) contrast(120%) brightness(200%) blur(0.5px);
     grid-area: 1 / 1;
+}
+
+.box-link { 
+    z-index: 5;
+    height: 300px; 
+    width: 290px; 
+    margin-left: 15px;
+    margin-top: 20px;
+    grid-area: 1 / 1;
+    background-color: transparent; 
+    border: 0px solid yellow; 
 }
 
 .overlay {
@@ -39,6 +50,19 @@ body {
 }
 
 .video_content {
+    z-index: 3;
+    min-height: 313px; 
+    min-width: 305px; 
+    max-height:313px;
+    max-width: 308px;
+    margin-left: 15px;
+    margin-top: 20px;
+    overflow: hidden; 
+    filter: brightness(50%) saturate(120%) contrast(120%) brightness(200%) blur(0.5px);
+    grid-area: 1 / 1;
+}
+
+.iframe_content {
     z-index: 3;
     min-height: 313px; 
     min-width: 305px; 
@@ -71,23 +95,25 @@ a:hover {
 }
 
 
+
+
 </style>
 
-<script language="javascript" type="text/javascript">
-$("iframe").each(function() { 
-        var src= $(this).attr('src');
-        $(this).attr('src',src);  
-});
-</script>
 
 <body>
     </br></br>
     <div class="container">
         <div class="polaroid">
-            <div class="content"><a href="https://opensea.io/assets/ethereum/0xb0e5faac1429592cea8a70f8828d7bd88b788e82/1" id="myHREF" target="_blank"><img width=313 id="myIMG" src="https://arweave.net/eG2_msrALWKn9vUN1Yu2g2LFwZYtXahb7BOWTSRDbPg"></a></div>
-            <div class="video_content"><iframe id="myVIDEO" style='display:none;' width="600" height="313" src="https://glass.xyz/embed/EyDpLk0COK5QAhBVCUkQDIE0HhOlldLZCsrx2tFP11c="></iframe></div>
+            <div class="content"><img width=313 id="myIMG" src="https://arweave.net/eG2_msrALWKn9vUN1Yu2g2LFwZYtXahb7BOWTSRDbPg"></div>
+            <div class="iframe_content">
+                <iframe id="myIFRAME" style='display:none;' width="600" height="313" src="https://glass.xyz/embed/EyDpLk0COK5QAhBVCUkQDIE0HhOlldLZCsrx2tFP11c=" onclick="this.paused ? this.play() : this.pause();"></iframe>
+            </div>
+            <div class="video_content">
+                <video id="myVIDEO" style='display:none;' width="600" height="313" src="https://glass.xyz/embed/EyDpLk0COK5QAhBVCUkQDIE0HhOlldLZCsrx2tFP11c=" onclick="this.paused ? this.play() : this.pause();">
+            </div>
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
-            <div class="text" style="font-size: 16px;">
+            <div class="text" style="font-size: 16px; margin: top -75px;">
+                <b id="myTXT">MARTY GERBS - NORLI I</b>
                 <div style="width=100%">
                     <audio id="mySONG" preload controls>
                         <source id="mySONG" src="https://arweave.net/difhb5h41bJUGwDCh4-tHNT9HwS8O6sg91-Hjt3Snxk">
@@ -95,36 +121,37 @@ $("iframe").each(function() {
                     </audio> 
                 </div>
             </div>
+            <a class="box-link" id="myHREF" href="https://opensea.io/assets/ethereum/0xb0e5faac1429592cea8a70f8828d7bd88b788e82/1" target="_blank"></a>
         </div>
         <div class="polaroid">
             <div class="content"><a href="https://wayak.xyz" target="_blank"><img src="IMAGES/WAYAK.jpg"></a></div>
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
-            <div class="text"><b><button onclick="document.getElementById('myVIDEO').src=''; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('mySONG').src='https://arweave.net/5CgSOJz_F9YT6BDPmDNcxgl-UglfCVVGpYWzPNE2vNI?ext=mp4'; document.getElementById('myIMG').src='https://arweave.net/HFkFfLf4uP2Gv_jFss9SEsKdNPng2lO6tXo3fj0t980?ext=png'; document.getElementById('myHREF').href='https://exchange.art/series/Influence/nfts'">&#9655</button><a href="https://wayak.xyz" target="_blank"> WAYAK</a></b></div>
+            <div class="text"><b><button onclick="document.getElementById('myTXT').innerHTML='WAYAK - INFLUENCE'; document.getElementById('myHREF').style='display:inline;'; document.getElementById('myVIDEO').src=''; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('myIFRAME').src=''; document.getElementById('myIFRAME').style='display:none;'; document.getElementById('mySONG').src='https://arweave.net/5CgSOJz_F9YT6BDPmDNcxgl-UglfCVVGpYWzPNE2vNI?ext=mp4'; document.getElementById('myIMG').src='https://arweave.net/HFkFfLf4uP2Gv_jFss9SEsKdNPng2lO6tXo3fj0t980?ext=png'; document.getElementById('myHREF').href='https://exchange.art/series/Influence/nfts'">&#9655</button><a href="https://wayak.xyz" target="_blank"> WAYAK</a></b></div>
         </div>
         <div class="polaroid">
             <div class="content"><a href="https://soundmechanic.club/" target="_blank"><img src="IMAGES/SOUND_MECHANIC.jpg"></a></div>
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
-            <div class="text"><b><button onclick="document.getElementById('myVIDEO').src=''; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('mySONG').src='https://mintsongs.mypinata.cloud/ipfs/QmPaBUsC86RZoRGmDN7L3MPbLnbgPfmhhdVHyTjq1iHyfp'; document.getElementById('myIMG').src='https://mintsongs.mypinata.cloud/ipfs/QmTAB8f1fwGykdnGJidrtJJd9cVsU5m9PRyoxZpZxyTNam'; document.getElementById('myHREF').href='https://factory.mintsongs.com/songs/2723'">&#9655</button><a href="https://soundmechanic.club/" target="_blank"> SOUND MECHANIC</a></b></div>
+            <div class="text"><b><button onclick="document.getElementById('myTXT').innerHTML='SOUND MECHANIC - IN A CELL'; document.getElementById('myHREF').style='display:inline;'; document.getElementById('myVIDEO').src=''; document.getElementById('myIFRAME').src=''; document.getElementById('myIFRAME').style='display:none;'; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('mySONG').src='https://mintsongs.mypinata.cloud/ipfs/QmPaBUsC86RZoRGmDN7L3MPbLnbgPfmhhdVHyTjq1iHyfp'; document.getElementById('myIMG').src='https://mintsongs.mypinata.cloud/ipfs/QmTAB8f1fwGykdnGJidrtJJd9cVsU5m9PRyoxZpZxyTNam'; document.getElementById('myHREF').href='https://factory.mintsongs.com/songs/2723'">&#9655</button><a href="https://soundmechanic.club/" target="_blank"> SOUND MECHANIC</a></b></div>
         </div>
-        <a href="https://linktr.ee/hurric4n3ike.wav" target="_blank"><div class="polaroid">
-            <div class="content"><img src="IMAGES/HURRIC4N3IKE.jpg"></div>
+        <div class="polaroid">
+            <div class="content"><a href="https://linktr.ee/hurric4n3ike.wav" target="_blank"><img src="IMAGES/HURRIC4N3IKE.jpg"></a></div>
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
-            <div class="text"><b>HURRIC4N3IKE</b></div>
-        </div></a>
-        <a href="https://linktr.ee/jadynviolet" target="_blank"><div class="polaroid">
-            <div class="content"><img src="IMAGES/JADYN.jpg"></div>
+            <div class="text"><b><button onclick="document.getElementById('myTXT').innerHTML='HURRIC4N3IKE - SOUTHSIDEWAVEZ <br> --> CLICK IMAGE TO PLAY VID'; document.getElementById('myHREF').style='display:none;'; document.getElementById('mySONG').src=''; document.getElementById('mySONG').style='display:none;'; document.getElementById('myVIDEO').style='margin-left:-50%;display: inline;'; document.getElementById('myVIDEO').src='https://gateway.ipfs.io/ipfs/QmT87XsYLmbGknv17WGpc5WxaW69hjK942FVXHKRv9QDbd/1.mp4'; document.getElementById('myIFRAME').src=''; document.getElementById('myIFRAME').style='display:none;'; document.getElementById('myHREF').href='https://opensea.io/collection/hurric4n3szn-2022-southsidewavez-genesis-music-vid'">&#9655</button><a href="https://linktr.ee/hurric4n3ike.wav" target="_blank"> HURRIC4N3IKE</a></b></div>
+        </div>
+        <div class="polaroid">
+            <div class="content"><a href="https://linktr.ee/jadynviolet" target="_blank"><img src="IMAGES/JADYN.jpg"></a></div>
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
-            <div class="text"><b>JADYN VIOLET</b></div>
-        </div></a>
+            <div class="text"><button onclick="document.getElementById('myTXT').innerHTML='JADYN VIOLET - G.A.T.E.'; document.getElementById('myHREF').style='display:inline;'; document.getElementById('myVIDEO').src=''; document.getElementById('myIFRAME').src=''; document.getElementById('myIFRAME').style='display:none;'; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('mySONG').src='https://openseauserdata.com/files/a0b2ffedeb4db31faaef10419b49faea.mp3'; document.getElementById('myIMG').src='https://lh3.googleusercontent.com/aweGJm_WDbMGa1pXg_IEDrWoBX93A0bh6Pd7Zzmyyn-U_OzkOD9CFITZqP8JbGHoP3X1uMRds32agxZKCJpbs56F8RzxXbITAK7c1Ic'; document.getElementById('myHREF').href='https://www.sound.xyz/jadynviolet/good-always-turns-evil'">&#9655</button> <b><a href="https://linktr.ee/jadynviolet" target="_blank"> JADYN VIOLET</a></b></div>
+        </div>
         <div class="polaroid">
             <div class="content"><a href="https://amycorreabell.xyz" target="_blank"><img src="IMAGES/AMY.jpg"></a></div>
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
-            <div class="text"><button onclick="document.getElementById('myVIDEO').src=''; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('mySONG').src='https://openseauserdata.com/files/3f34f679b60a784bfc55610c31ce11ba.wav'; document.getElementById('myIMG').src='https://lh3.googleusercontent.com/cWsSSvdKn3Vcc9ksphmFjUOwIpHslL4Whcdvxyqto6pdR1AZVZ0V5mYyhABNQufpdmTWgZ_4bmtJht-MD2f_J36GgQ4w3a6f_-J04Q'; document.getElementById('myHREF').href='https://amycorreabell.artiva.app/edition/0x81d357102829cca4bf5e22203860308946b71ee3'">&#9655</button> <b><a href="https://amycorreabell.xyz/" target="_blank"> AMY CORREA BELL</a></b></div>
+            <div class="text"><button onclick="document.getElementById('myTXT').innerHTML='AMY CORREA BELL - RUN IT'; document.getElementById('myHREF').style='display:inline;'; document.getElementById('myVIDEO').src=''; document.getElementById('myIFRAME').src=''; document.getElementById('myIFRAME').style='display:none;'; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('mySONG').src='https://openseauserdata.com/files/3f34f679b60a784bfc55610c31ce11ba.wav'; document.getElementById('myIMG').src='https://lh3.googleusercontent.com/cWsSSvdKn3Vcc9ksphmFjUOwIpHslL4Whcdvxyqto6pdR1AZVZ0V5mYyhABNQufpdmTWgZ_4bmtJht-MD2f_J36GgQ4w3a6f_-J04Q'; document.getElementById('myHREF').href='https://amycorreabell.artiva.app/edition/0x81d357102829cca4bf5e22203860308946b71ee3'">&#9655</button> <b><a href="https://amycorreabell.xyz/" target="_blank"> AMY CORREA BELL</a></b></div>
         </div>
         <div class="polaroid">
             <div class="content"><a href="https://lesles.xyz/" target="_blank"><img src="IMAGES/LESLES.jpg"></a></div>
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
-            <div class="text"><button onclick="document.getElementById('myVIDEO').src=''; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('mySONG').src='https://openseauserdata.com/files/3f34f679b60a784bfc55610c31ce11ba.wav'; document.getElementById('myIMG').src='https://lh3.googleusercontent.com/cWsSSvdKn3Vcc9ksphmFjUOwIpHslL4Whcdvxyqto6pdR1AZVZ0V5mYyhABNQufpdmTWgZ_4bmtJht-MD2f_J36GgQ4w3a6f_-J04Q'; document.getElementById('myHREF').href='https://amycorreabell.artiva.app/edition/0x81d357102829cca4bf5e22203860308946b71ee3'">&#9655</button> <b><a href="https://lesles.xyz/" target="_blank"> LES LES</a></b></div>
+            <div class="text"><button onclick="document.getElementById('myTXT').innerHTML='RUN IT (PROD. BY LES LES)'; document.getElementById('myHREF').style='display:inline;'; document.getElementById('myVIDEO').src=''; document.getElementById('myIFRAME').src=''; document.getElementById('myIFRAME').style='display:none;'; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('mySONG').src='https://openseauserdata.com/files/3f34f679b60a784bfc55610c31ce11ba.wav'; document.getElementById('myIMG').src='https://lh3.googleusercontent.com/cWsSSvdKn3Vcc9ksphmFjUOwIpHslL4Whcdvxyqto6pdR1AZVZ0V5mYyhABNQufpdmTWgZ_4bmtJht-MD2f_J36GgQ4w3a6f_-J04Q'; document.getElementById('myHREF').href='https://amycorreabell.artiva.app/edition/0x81d357102829cca4bf5e22203860308946b71ee3'">&#9655</button> <b><a href="https://lesles.xyz/" target="_blank"> LES LES</a></b></div>
         </div>
         <a href="https://twinnytwin.io/" target="_blank"><div class="polaroid">
             <div class="content"><img src="IMAGES/TWINNY.jpg"></div>
@@ -134,17 +161,17 @@ $("iframe").each(function() {
         <div class="polaroid">
             <div class="content"><a href="https://evaflowmusic.com" target="_blank"><img src="IMAGES/EVAFLOW.jpg"></a></div>
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
-            <div class="text"><b><button onclick="document.getElementById('mySONG').style='display:none;'; document.getElementById('myVIDEO').style='margin-left:-50%;display: inline;'; document.getElementById('myVIDEO').src='https://glass.xyz/embed/EyDpLk0COK5QAhBVCUkQDIE0HhOlldLZCsrx2tFP11c='; document.getElementById('myHREF').href='https://glass.xyz/v/EyDpLk0COK5QAhBVCUkQDIE0HhOlldLZCsrx2tFP11c='">&#9655</button><a href="https://evaflowmusic.com" target="_blank"> EVAFLOW</a></b></div>
+            <div class="text"><b><button onclick="document.getElementById('myTXT').innerHTML='EVAFLOW-LIVE YOUR LIFE'; document.getElementById('myHREF').style='display:none;'; document.getElementById('mySONG').src=''; document.getElementById('mySONG').style='display:none;'; document.getElementById('myVIDEO').src=''; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('myIFRAME').style='margin-left:-50%;display: inline;'; document.getElementById('myIFRAME').src='https://glass.xyz/embed/EyDpLk0COK5QAhBVCUkQDIE0HhOlldLZCsrx2tFP11c='; document.getElementById('myHREF').href='https://glass.xyz/v/EyDpLk0COK5QAhBVCUkQDIE0HhOlldLZCsrx2tFP11c='">&#9655</button><a href="https://evaflowmusic.com" target="_blank"> EVAFLOW</a></b></div>
         </div>
         <div class="polaroid">
             <div class="content"><a href="https://withkoji.com/@Elameen" target="_blank"><img src="IMAGES/ELAMEEN.jpg"></a></div>
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
-            <div class="text"><b><button onclick="document.getElementById('myVIDEO').src=''; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('mySONG').src='https://openseauserdata.com/files/51b21de20ce89457f7a7bbd969bfccc8.wav'; document.getElementById('myIMG').src='https://lh3.googleusercontent.com/naTwzpNpieSSAUt0wRKyZZVBSV5sJri2ukiH4siGtFc3aAYDyOrxU98JftPHuap7JH6xEFB6PHAbNHpnxHFWFVwv3JyT863_7zdz-A'; document.getElementById('myHREF').href='https://opensea.io/assets/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/19016199989133445896590319145333303509284378670594720736818754966827837685770'">&#9655</button><a href="https://withkoji.com/@Elameen" target="_blank"> ELAMEEN</a></b></div>
+            <div class="text"><b><button onclick="document.getElementById('myTXT').innerHTML=''; document.getElementById('myHREF').style='display:inline;'; document.getElementById('myVIDEO').src=''; document.getElementById('myIFRAME').src=''; document.getElementById('myIFRAME').style='display:none;'; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('mySONG').src='https://openseauserdata.com/files/51b21de20ce89457f7a7bbd969bfccc8.wav'; document.getElementById('myIMG').src='https://lh3.googleusercontent.com/naTwzpNpieSSAUt0wRKyZZVBSV5sJri2ukiH4siGtFc3aAYDyOrxU98JftPHuap7JH6xEFB6PHAbNHpnxHFWFVwv3JyT863_7zdz-A'; document.getElementById('myHREF').href='https://opensea.io/assets/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/19016199989133445896590319145333303509284378670594720736818754966827837685770'">&#9655</button><a href="https://withkoji.com/@Elameen" target="_blank"> ELAMEEN</a></b></div>
         </div>
         <div class="polaroid">
             <div class="content"><a href="https://linktr.ee/dundomaroye" target="_blank"><img src="IMAGES/DUNDO.jpg"></a></div>
             <div class="overlay"><img src="IMAGES/COVER.png"></div>
-            <div class="text"><b><button onclick="document.getElementById('myVIDEO').src=''; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('mySONG').src='https://mintsongs.mypinata.cloud/ipfs/QmeTwygzoz5bPs8zL6Zpx1feZerDvhGYp6GmJQrWPLNsvY'; document.getElementById('myIMG').src='https://mintsongs.mypinata.cloud/ipfs/QmTZdop7wrrgSQbQ51eVXhxNyzbrmXmvofKNS7WrAsQ8ZZ'; document.getElementById('myHREF').href='https://factory.mintsongs.com/songs/5565'">&#9655</button><a href="https://withkoji.com/@Elameen" target="_blank"> DUNDO</a></b></div>
+            <div class="text"><b><button onclick="document.getElementById('myTXT').innerHTML='DUNDO - CRYPTO IS A DISCO'; document.getElementById('myHREF').style='display:inline;'; document.getElementById('myVIDEO').src=''; document.getElementById('myIFRAME').src=''; document.getElementById('myIFRAME').style='display:none;'; document.getElementById('mySONG').style='display:inline;'; document.getElementById('myVIDEO').style='display:none;'; document.getElementById('mySONG').src='https://mintsongs.mypinata.cloud/ipfs/QmeTwygzoz5bPs8zL6Zpx1feZerDvhGYp6GmJQrWPLNsvY'; document.getElementById('myIMG').src='https://mintsongs.mypinata.cloud/ipfs/QmTZdop7wrrgSQbQ51eVXhxNyzbrmXmvofKNS7WrAsQ8ZZ'; document.getElementById('myHREF').href='https://factory.mintsongs.com/songs/5565'">&#9655</button><a href="https://withkoji.com/@Elameen" target="_blank"> DUNDO</a></b></div>
         </div>
         <a href="https://alibianchi.wixsite.com/music" target="_blank"><div class="polaroid">
             <div class="content"><img src="IMAGES/ALI.jpg"></div>

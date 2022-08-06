@@ -30,6 +30,18 @@ body {
     max-height: 100%;
 }
 
+.box-link { 
+    grid-area: 1 / 1;
+    position: relative; 
+    background-color: transparent; 
+    border: 0px solid yellow; 
+}
+
+a.box-link:hover { 
+	text-decoration: none; 
+	color: blue;
+	background-color: none; 
+}
 
 .GERBS {
     margin: 10% 3%;
@@ -86,18 +98,7 @@ body {
     max-height: 100%;
 }
 
-.box-link { 
-    grid-area: 1 / 1;
-    position: relative; 
-    background-color: transparent; 
-    border: 0px solid yellow; 
-}
 
-a.box-link:hover { 
-	text-decoration: none; 
-	color: blue;
-	background-color: none; 
-}
 
 .DSP_CONTAINER {
     position: relative;
