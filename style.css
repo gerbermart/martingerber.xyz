@@ -149,8 +149,9 @@ a.box-link:hover {
     padding: 0px;
     position: relative; 
     margin: 0 auto;
-    width: 400px;
-    height: 400px;
+    width: 200px;
+    height: 200px;
+    background-size: 100%;
     background-image: url(https://arweave.net/eG2_msrALWKn9vUN1Yu2g2LFwZYtXahb7BOWTSRDbPg), url(IMAGES/SOLD_40.png);
     background-blend-mode: overlay;
 }
@@ -160,8 +161,9 @@ a.box-link:hover {
     padding: 0px;
     position: relative; 
     margin: 0 auto;
-    width: 400px; 
-    height: 400px;
+    width: 200px;
+    height: 200px;
+    background-size: 100%;
     background-image: url(https://arweave.net/GHCkNvRhqzSYLoQYVcKHvWE-OKDpcuyf7COxOd-rm4U), url(IMAGES/SOLD_40.png);
     background-blend-mode: overlay;
 }
@@ -171,8 +173,9 @@ a.box-link:hover {
     padding: 0px;
     position: relative; 
     margin: 0 auto;
-    width: 400px; 
-    height: 400px;
+    width: 200px;
+    height: 200px;
+    background-size: 100%;
     background-image: url(https://arweave.net/pxvBP969zwOfOPGd8IRKfF2ZcoWSkHVn0kBhXdoTWTc), url(IMAGES/NORLI_ETH_3_A50.png);
     background-blend-mode: overlay;
 }
@@ -182,8 +185,9 @@ a.box-link:hover {
     padding: 0px;
     position: relative; 
     margin: 0 auto;
-    width: 400px; 
-    height: 400px;
+    width: 200px;
+    height: 200px;
+    background-size: 100%;
     background-image: url(https://arweave.net/jdLMh5tvUpnzzWa-GC3z-2uGGaiLb01HckNYZkVpFsc), url(IMAGES/NORLI_ETH_4_A50.png);
     background-blend-mode: overlay;
 }
@@ -193,8 +197,9 @@ a.box-link:hover {
     padding: 0px;
     position: relative; 
     margin: 0 auto;
-    width: 400px; 
-    height: 400px;
+    width: 200px;
+    height: 200px;
+    background-size: 100%;
     background-image: url(https://arweave.net/6wAfZSh6IcOfnVHxIJhFtefurOOKYkr4hkgP6fOjSfM), url(IMAGES/NORLI_ETH_5_A50.png);
     background-blend-mode: overlay;
 }
@@ -204,8 +209,9 @@ a.box-link:hover {
     padding: 0px;
     position: relative; 
     margin: 0 auto;
-    width: 400px; 
-    height: 400px;
+    width: 200px;
+    height: 200px;
+    background-size: 100%;
     background-image: url(https://arweave.net/9sHHSx4QHbuHqlU-KVDg1Nv2Q5MUIeBadVFTYBLnJMs), url(IMAGES/NORLI_ETH_6_A50.png);
     background-blend-mode: overlay;
 }
@@ -216,8 +222,9 @@ a.box-link:hover {
     padding: 0px;
     position: relative; 
     margin: 0 auto;
-    width: 400px; 
-    height: 400px;
+    width: 200px;
+    height: 200px;
+    background-size: 100%;
     background-image: url(https://arweave.net/2_NyvLBsn3y92U94QKgf6uPgY64ZCyoAkfdLvIXCkp8), url(IMAGES/NORLI_ETH_7_A50.png);
     background-blend-mode: overlay;
 }
@@ -227,8 +234,9 @@ a.box-link:hover {
     padding: 0px;
     position: relative; 
     margin: 0 auto;
-    width: 400px; 
-    height: 400px;
+    width: 200px;
+    height: 200px;
+    background-size: 100%;
     background-image: url(https://arweave.net/oNHsLL8oLJTLcTD-SgQSPBhkZjId_gfHRjlpWPdg7Ow), url(IMAGES/NORLI_ETH_8_A50.png);
     background-blend-mode: overlay;
 }
@@ -246,8 +254,9 @@ a.box-link:hover {
     padding: 0px;
     position: relative; 
     margin: 0 auto;
-    width: 400px;
-    height: 400px;
+    width: 160px;
+    height: 160px;
+    background-size: 100%;
     background-image: url(IMAGES/GERBS_400.GIF), url(IMAGES/SOLD_40.png);
     background-blend-mode: overlay;
 }
@@ -257,8 +266,9 @@ a.box-link:hover {
     padding: 0px;
     position: relative; 
     margin: 0 auto;
-    width: 400px;
-    height: 400px;
+    width: 160px;
+    height: 160px;
+    background-size: 100%;
     background-image: url(IMAGES/GERBS_400.GIF), url(IMAGES/GERBS_ETH_42_A50.png);
     background-blend-mode: overlay;
 }
