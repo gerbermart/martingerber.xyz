@@ -1,0 +1,25 @@
+<html>
+
+<style>
+  .c1 {
+    color : RED;
+    border:10px solid #2a9e00;
+  }
+  </style>
+
+<script>
+    function changeclassstyle() {
+        var c = document.getElementsByClassName("c1");
+        for (var i=0; i<c.length; i++) {
+        c[i].style = "border:none;";
+        }
+    }
+</script>
+
+  
+<img src="IMAGES/ALBUM_IN_F.jpg" id="a1" class="c1" onclick="changeclassstyle()">
+<img src="IMAGES/ALBUM_IN_F.jpg" id="a1" class="c1" onclick="changeclassstyle()">
+<img src="IMAGES/ALBUM_IN_F.jpg" id="a1" class="c1" onclick="changeclassstyle()">
+  
+</img>
+</html>
