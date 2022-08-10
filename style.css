@@ -3,6 +3,14 @@ body {
     background: #ffffff;
 }
 
+video {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
 .MAIN {
     display: grid;
     margin: 0 auto;
@@ -127,16 +135,6 @@ a.box-link:hover {
     background-image: url(IMAGES/WaT_400.jpg);
 }
 
-.GERBS_SALE {
-    float: left;
-    padding: 0px;
-    position: relative; 
-    margin: 0 auto;
-    width: 400px;
-    height: 400px;
-    background-image: url(IMAGES/GERBS_400.GIF);
-}
-
 .NORLI_CONTAINER {
     position: relative;
     max-width: 800px; 
@@ -152,8 +150,7 @@ a.box-link:hover {
     width: 200px;
     height: 200px;
     background-size: 100%;
-    background-image: url(https://arweave.net/eG2_msrALWKn9vUN1Yu2g2LFwZYtXahb7BOWTSRDbPg), url(IMAGES/SOLD_40.png);
-    background-blend-mode: overlay;
+    background-image: url(IMAGES/SOLD_40.png);
 }
 
 .NORLI_II {
@@ -257,8 +254,7 @@ a.box-link:hover {
     width: 160px;
     height: 160px;
     background-size: 100%;
-    background-image: url(IMAGES/GERBS_400.GIF), url(IMAGES/SOLD_40.png);
-    background-blend-mode: overlay;
+    background-image: url(IMAGES/SOLD_40.png);
 }
 
 .GERBS_SALE {
@@ -269,8 +265,7 @@ a.box-link:hover {
     width: 160px;
     height: 160px;
     background-size: 100%;
-    background-image: url(IMAGES/GERBS_400.GIF), url(IMAGES/GERBS_ETH_42_A50.png);
-    background-blend-mode: overlay;
+    background-image: url(IMAGES/GERBS_ETH_42_A50.png);
 }
 
 .WaT_CONTAINER {
