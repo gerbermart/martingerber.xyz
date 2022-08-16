@@ -24,7 +24,7 @@ video {
     margin: 0 auto;
     justify-content: center;
     width: 1280px;
-    height: 900px;
+    height: auto;
 }
 
 .background {
