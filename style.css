@@ -1,6 +1,7 @@
 
 body {
     background: #fcfef9;
+    overflow: hidden;
 }
 
 video {
