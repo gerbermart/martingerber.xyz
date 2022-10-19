@@ -16,7 +16,17 @@ video {
     display: grid;
     margin: 0 auto;
     justify-content: center;
-    width: 1280px;
+    width: 900px;
+    height: auto;
+    overflow: hidden;
+}
+
+.MAIN_BORDER {
+    display: grid;
+    margin: 0 auto;
+    justify-content: center;
+    width: 900px;
+    border-style: outset;
     height: auto;
     overflow: hidden;
 }
