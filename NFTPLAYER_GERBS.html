@@ -19,7 +19,17 @@
             width: 100%;
         }
 
-        
+                
+        b.green_box{
+            background-color: #239d00;
+            color: white; 
+            display: flex;
+            justify-content: center;
+            flex: 33.33%;
+            padding: 0px;
+            border-style: double;
+            font-family: "Courier New"; 
+        }
     </style>
 
     <script>
@@ -32,6 +42,9 @@
     </script>
 
     <body>
+        <div class="row">
+            <b class="green_box" style="font-size: 24px;">NFT PLAYER: hit PLAY (active track in GREEN BOX)</b>
+        </div>
         <div class="row">
             <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://arweave.net/difhb5h41bJUGwDCh4-tHNT9HwS8O6sg91-Hjt3Snxk';"><source src="IMAGES/NORLI_I.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
             <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://arweave.net/kUjJzDKgfNauS_6_lQceCoo6sebos8PdlDzZSOkFSFI';"><source src="IMAGES/NORLI_II.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>

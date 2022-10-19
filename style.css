@@ -3,6 +3,7 @@ body {
     background: #fcfef9;
 }
 
+
 video {
     position: absolute;
     width: 100%;
@@ -298,6 +299,17 @@ a.box-link:hover {
     background-image: url(IMAGES/WaT_160.jpg);
 }
 
+.WaT_SALE_1 {
+    float: left;
+    padding: 0px;
+    position: relative; 
+    margin: 0 auto;
+    width: 160px;
+    height: 160px;
+    background-image: url(IMAGES/WaT_160.jpg), url(IMAGES/WaT_ETH_1_A50.png);
+    background-blend-mode: overlay;
+}
+
 .WaT_SALE_16 {
     float: left;
     padding: 0px;
@@ -394,4 +406,48 @@ a.box-link:hover {
 
 #player{
     width: 100%;
+}
+
+.button {
+    background-color: white;
+    font-family: "Courier New"; 
+    border: none;
+    color: black;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 32px;
+    border-radius: 6px;
+    border: 2px solid black;
+}
+
+.button:hover { 
+	text-decoration: none; 
+	background-color: #239d00;
+	color: white; 
+}
+
+
+.text{
+    z-index:4;
+    position: relative;
+    margin-left: 22px;
+    margin-top:-66px;
+    font-family: "Courier New"; 
+    font-size: 24;
+}
+
+p{font-family: "Courier New";}
+
+p.double {border-style: double;}
+
+b.green_box{
+    background-color: #239d00;
+	color: white; 
+    display: flex;
+    justify-content: center;
+    flex: 33.33%;
+    padding: 0px;
+    border-style: double;
 }
