@@ -1,6 +1,7 @@
 
 body {
-    background: #fcfef9;
+    background-color: #fcfef9;
+    background:none;
 }
 
 
@@ -409,6 +410,7 @@ a.box-link:hover {
     justify-content: center;
     width: 810px;
     overflow: hidden;
+    background-color: none;
 }
 
 .column {
