@@ -22,12 +22,9 @@ video {
 }
 
 .BORDER_DIV {
-    display: flex;
-    justify-content: center;
-    width: 900px;
-    border-style: outset;
-    height: auto;
-    overflow: hidden;
+    border-style: outset; 
+    width:850; 
+    padding-left: 50;
 }
 
 .HEADER {
@@ -122,9 +119,11 @@ a.box-link:hover {
 
 .DSP_CONTAINER {
     position: relative;
-    max-width: 800px; 
+    max-width: 850px; 
     flex: center;
-    margin: auto; 
+    margin: 0 auto;
+    border-style: outset;
+    padding: 45;
 }
 
 .DSP_ALBUM_IN_F {
@@ -152,6 +151,8 @@ a.box-link:hover {
     max-width: 800px; 
     flex: center;
     margin: auto; 
+    border-style: outset;
+    padding: 45;
 }
 
 .NORLI_I {
@@ -255,6 +256,8 @@ a.box-link:hover {
     position: relative;
     max-width: 800px; <!-- DEFINES TILING -->
     flex: center;
+    border-style: outset;
+    padding: 40;
     margin: auto; <!-- REQUIRED OR THE TEXT GOES LEFT ALIGNED -->
 }
 
@@ -284,6 +287,8 @@ a.box-link:hover {
     position: relative;
     max-width: 800px; <!-- DEFINES TILING -->
     flex: center;
+    border-style: outset;
+    padding: 40;
     margin: auto; <!-- REQUIRED OR THE TEXT GOES LEFT ALIGNED -->
 }
 
