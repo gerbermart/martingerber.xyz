@@ -24,11 +24,8 @@
                     
                     const obj = JSON.parse(json);
                     
-                    text='';
-                    for (let i = 0; i < obj.owners.length; i++) {
-                     text += obj.owners[i].owner.address.toString() + "<br>";
-                    } 
-                    $("#msgid").html(text);
+                    console.log(obj.owners[0].owner.address);
+                    $("#msgid").html(obj.owners[0].owner.address.toString());
                 });
                 
             });
