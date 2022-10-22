@@ -10,8 +10,11 @@
                 console.log('MetaMask is installed!');
             }
             $("#msgid").html('B');
-            obj=ethereum.request({ method: 'eth_requestAccounts' });
+            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
             $("#msgid").html('C');
+            const account = accounts[0];
+            $("#msgid").html(account);
+            
         };
     </script>
 
