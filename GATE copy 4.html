@@ -1,0 +1,62 @@
+<html>
+<head>
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        function getOwner(){
+            let contract = myContract.value;
+            let tokenID = myTokenID.value;
+            let testWaddy = myWaddy.value;
+            const url_str='https://api.opensea.io/api/v1/asset/'+contract+'/'+tokenID+'/owners';
+            const settings = {
+            async: true,
+            crossDomain: true,
+            url: url_str,
+            method: 'GET',
+            headers: {}
+            };
+        
+            $(document).ready(function(){
+                $("#msgid").html('doin stuff...');
+                $.ajax(settings).done(function (response) {
+                    
+                    const json = JSON.stringify(response).replace(/[\r\n]/gm, '');
+                    
+                    const obj = JSON.parse(json);
+                    
+                    text='';
+                    for (let i = 0; i < obj.owners.length; i++) {
+                     text += obj.owners[i].owner.address.toString() + "<br>";
+                    } 
+                    var addresses = text.split('<br>')
+                    if ((testWaddy!='') & (addresses.includes(testWaddy))){
+                        $("#msgid").html(text+'<br>includes testWaddy');
+                    } else {
+                        $("#msgid").html(text+'<br>does NOT include testWaddy');
+                    }
+                    
+                });
+                
+            });
+        };
+    
+    </script>
+
+</head>
+
+<body>
+
+<h1>ETH NFT Owners</h1>
+<p>Enter your NFT Contract Address & Token ID:</p>
+<input type="text" size="50" id="myContract" />
+<input type="text" size="50" id="myTokenID" />
+<p>Enter your Wallet ID (replace w/ WalletConnect):</p>
+<input type="text" size="50" id="myWaddy" />
+<button type="button" onClick="getOwner();">Get Owners</button>
+
+<div id="msgid">
+</div>
+
+</body>
+</html>

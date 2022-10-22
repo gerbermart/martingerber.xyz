@@ -4,20 +4,13 @@
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
-        async function getWaddy(){
-            if (typeof window.ethereum !== 'undefined') {
-                console.log('MetaMask is installed!');
-            }
-            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-            const account = accounts[0];
-            return account;
-        };
+        
         function getOwners(){
             let contract = myContract.value;
             text='';
             stopper='no';
             for (let i=1;((i<100) & (stopper=='no'));i++){
-                let testWaddy = getWaddy();
+                let testWaddy = myWaddy.value;
                 const url_str='https://api.opensea.io/api/v1/asset/'+contract+'/'+i.toString()+'/owners';
                 const settings = {
                 async: true,
@@ -64,8 +57,9 @@
 <h1>ETH NFT Owners</h1>
 <p>Enter your NFT Contract Address & Token ID:</p>
 <input type="text" size="50" id="myContract" />
-<button type="button" onClick="getOwners();">Check Ownership</button>
-
+<p>Enter your Wallet ID (replace w/ WalletConnect):</p>
+<input type="text" size="50" id="myWaddy" />
+<button type="button" onClick="getOwners();">Get Owners</button>
 
 <div id="msgid">
 </div>
