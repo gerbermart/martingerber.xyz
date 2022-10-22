@@ -1,0 +1,50 @@
+<html>
+<head>
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        function getOwner(){
+            contract='0xB0e5Faac1429592CEA8a70F8828D7bD88b788e82';
+            tokenID='1';
+            const url_str='https://api.opensea.io/api/v1/asset/'+contract+'/'+tokenID+'/owners';
+            const settings = {
+            async: true,
+            crossDomain: true,
+            url: url_str,
+            method: 'GET',
+            headers: {}
+            };
+        
+            $(document).ready(function(){
+                $("#msgid").html('doin stuff...');
+                $.ajax(settings).done(function (response) {
+                    
+                    const json = JSON.stringify(response).replace(/[\r\n]/gm, '');
+                    
+                    const obj = JSON.parse(json);
+                    
+                    console.log(obj.owners[0].owner.address);
+                    $("#msgid").html(obj.owners[0].owner.address.toString());
+                });
+                
+            });
+        };
+    
+    </script>
+
+</head>
+
+<body>
+
+<h1>ETH NFT Owners</h1>
+<p>Enter your NFT Contract Address & Token ID:</p>
+<input type="text" size="50" id="contract" />
+<input type="text" size="50" id="tokenID" />
+<button type="button" onClick="getOwner();">Get Owners</button>
+
+<div id="msgid">
+</div>
+
+</body>
+</html>

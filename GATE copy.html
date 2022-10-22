@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="./web3.min.js"></script>
+    <script type="text/javascript">
+        window.addEventListener('load', function () {
+            if (typeof web3 !== 'undefined') {
+                console.log('Web3 Detected! ' + web3.currentProvider.constructor.name)
+                window.web3 = new Web3(web3.currentProvider);
+            } else {
+                console.log('No Web3 Detected... using HTTP Provider')
+                window.web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/3bc088b8cecf4c90be2f6e9a23bb212c"));
+            }
+        })
+        function getOwners() {
+            document.getElementById("output").innerHTML = 'good';
+            abiJson=[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"stateMutability":"payable","type":"fallback"},{"inputs":[],"name":"implementation","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"stateMutability":"payable","type":"receive"}]
+            tokenId=1
+            try {
+                document.getElementById("output").innerHTML = 'good';
+                collectionAddress='0xB0e5Faac1429592CEA8a70F8828D7bD88b788e82';
+                const collection = new web3.eth.Contract(abiJson, collectionAddress);
+                const owner = collection.methods.ownerOf(1).call();
+                document.getElementById("output").innerHTML = owner;
+            } catch (err) {
+                document.getElementById("output").innerHTML = 'whoops: '+err;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>ETH NFT Owners</h1>
+    <p>Enter your NFT Contract Address:</p>
+    <input type="text" size="50" id="collectionAddress" />
+    <button type="button" onClick="getOwners();">Get Owners</button>
+    <br />
+    <br />
+    <div id="output"></div>
+</body>
+</html>

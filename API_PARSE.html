@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <script>
+            function getOwners(){
+                
+                OkHttpClient client = new OkHttpClient();
+
+                contract='0xB0e5Faac1429592CEA8a70F8828D7bD88b788e82';
+                tokenID='1';
+                
+                Request request = new Request.Builder()
+                    .url("https://api.opensea.io/api/v1/asset/{contract}/{tokenID}/owners")
+                    .get()
+                    .build();
+
+                Response output = client.newCall(request).execute();
+            }
+        </script>
+    </head>
+
+<body>
+    <script>
+        
+        output=getOwners()
+    </script>
+
+    <div id="output"></div>
+</body>
+</html>

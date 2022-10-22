@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="./web3.min.js"></script>
+    <script type="text/javascript">
+        window.addEventListener('load', function () {
+            if (typeof web3 !== 'undefined') {
+                console.log('Web3 Detected! ' + web3.currentProvider.constructor.name)
+                window.web3 = new Web3(web3.currentProvider);
+            } else {
+                console.log('No Web3 Detected... using HTTP Provider')
+                window.web3 = new Web3(new Web3.providers.HttpProvider("https://api.opensea.io/api/v1/"));
+            }
+        })
+        function getOwners() {
+            document.getElementById("output").innerHTML = 'good';
+            abiJson=[{
+  "constant":true,
+  "inputs":[{"name":"tokenId","type":"uint256"}],
+  "name":"ownerOf",
+  "outputs":[{"name":"owner","type":"address"}],
+  "type":"function"
+},{"next":null,"previous":null,"owners":[{"owner":{"user":{"username":"Evaflow"},"profile_img_url":"https://storage.googleapis.com/opensea-static/opensea-profile/17.png","address":"0xafda4f57783d1b958307beaec1efedee0ba7943b","config":""},"quantity":"1","created_date":"2022-05-15T08:29:14.256210+00:00"}]}]
+            tokenId=1
+            try {
+                document.getElementById("output").innerHTML = 'good';
+                collectionAddress='0xB0e5Faac1429592CEA8a70F8828D7bD88b788e82';
+                const collection = new web3.eth.Contract(abiJson, collectionAddress);
+                const owner = await collection.methods.ownerOf(1).call();
+                document.getElementById("output").innerHTML = owner;
+            } catch (err) {
+                document.getElementById("output").innerHTML = 'whoops: '+err;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>ETH NFT Owners</h1>
+    <p>Enter your NFT Contract Address:</p>
+    <input type="text" size="50" id="collectionAddress" />
+    <button type="button" onClick="getOwners();">Get Owners</button>
+    <br />
+    <br />
+    <div id="output"></div>
+</body>
+</html>
