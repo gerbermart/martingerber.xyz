@@ -10,14 +10,16 @@
             }
             const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
             const account = accounts[0];
-            return account;
+            myWaddy=account.toLowerCase();
+            $("#waddyid").html(myWaddy);
         };
         function getOwners(){
             let contract = myContract.value;
             text='';
+            let testWaddy = myWaddy;
             stopper='no';
-            for (let i=1;((i<2) & (stopper=='no'));i++){
-                let testWaddy = getWaddy();
+            for (let i=1;((i<100) & (stopper=='no'));i++){
+                
                 const url_str='https://api.opensea.io/api/v1/asset/'+contract+'/'+i.toString()+'/owners';
                 const settings = {
                 async: true,
@@ -27,11 +29,11 @@
                 headers: {}
                 };
             
-                $(document).ready(async function(){
+                $(document).ready(function(){
                     $("#msgid").html('doin stuff...');
                     $.ajax(settings).done(function (response) {
                         
-                        const json = await JSON.stringify(response).replace(/[\r\n]/gm, '');
+                        const json = JSON.stringify(response).replace(/[\r\n]/gm, '');
                         
                         const obj = JSON.parse(json);
                         
@@ -64,7 +66,14 @@
 <h1>ETH NFT Owners</h1>
 <p>Enter your NFT Contract Address & Token ID:</p>
 <input type="text" size="50" id="myContract" />
-<button type="button" onClick="getOwners();">Check Ownership</button>
+<p>Enter your Wallet ID (replace w/ WalletConnect):</p>
+
+<button type="button" onClick="getWaddy();">Get Waddy</button>
+
+<button type="button" onClick="getOwners();">Get Owners</button>
+
+<div id="waddyid">
+</div>
 
 
 <div id="msgid">
