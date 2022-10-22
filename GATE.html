@@ -16,8 +16,8 @@
             let contract = myContract.value;
             text='';
             stopper='no';
-            for (let i=1;((i<100) & (stopper=='no'));i++){
-                let testWaddy = getWaddy();
+            for (let i=1;((i<2) & (stopper=='no'));i++){
+                let testWaddy = await getWaddy();
                 const url_str='https://api.opensea.io/api/v1/asset/'+contract+'/'+i.toString()+'/owners';
                 const settings = {
                 async: true,
@@ -27,11 +27,11 @@
                 headers: {}
                 };
             
-                $(document).ready(function(){
+                $(document).ready(async function(){
                     $("#msgid").html('doin stuff...');
                     $.ajax(settings).done(function (response) {
                         
-                        const json = JSON.stringify(response).replace(/[\r\n]/gm, '');
+                        const json = await JSON.stringify(response).replace(/[\r\n]/gm, '');
                         
                         const obj = JSON.parse(json);
                         
