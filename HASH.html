@@ -1,0 +1,30 @@
+<html>
+<head>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="./sha3.js"></script>
+    <script type="text/javascript">
+        function getHash(){
+            let string = myString.value;
+            $("#msgid").html(string);
+            $("#msgid").html(sha3_512(string));
+            $("#linkid").html('<a href="'+sha3_512(string)+'.html">SECRET LINK</a>');
+        };
+    </script>
+
+</head>
+
+<body>
+
+<p>String to hash:</p>
+<input type="text" size="50" id="myString" /><button type="button" onClick="getHash();">Make Hash</button>
+
+<p>Hashout:</p>
+<br>
+<div id="msgid">
+</div>
+
+<div id="linkid"></div>
+
+</body>
+</html>
