@@ -4,15 +4,16 @@
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
-        function getWaddy(){
+        async function getWaddy(){
             $("#msgid").html('A');
             if (typeof window.ethereum !== 'undefined') {
                 console.log('MetaMask is installed!');
             }
             $("#msgid").html('B');
-            const accounts=ethereum.request({ method: 'eth_requestAccounts' });
+            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
             $("#msgid").html('C');
-            $("#msgid").html(accounts.toString());
+            const account = accounts[0];
+            $("#msgid").html(account);
         };
     </script>
 
