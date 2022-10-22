@@ -17,7 +17,7 @@
             text='';
             stopper='no';
             for (let i=1;((i<2) & (stopper=='no'));i++){
-                let testWaddy = await getWaddy();
+                let testWaddy = getWaddy();
                 const url_str='https://api.opensea.io/api/v1/asset/'+contract+'/'+i.toString()+'/owners';
                 const settings = {
                 async: true,
