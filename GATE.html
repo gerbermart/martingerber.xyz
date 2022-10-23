@@ -1,6 +1,36 @@
 <html>
 <head>
 
+    <style>
+         .locked_button {
+            background-color: #ff6666; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🔑</text></svg>")
+                16 0,
+                auto;
+        }
+        
+        .unlocked_button {
+            background-color: #239d00; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🎉</text></svg>")
+                16 0,
+                auto;
+        }
+    </style>
+
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="./sha3.js"></script>
@@ -14,6 +44,10 @@
             myWaddy=account.toLowerCase();
             $("#waddyid").html(myWaddy);
         };
+        function gettestWaddy(){
+            myWaddy='0x7e8C38Ad50622c0b26906C9Cf81D2825fC78A38B'.toLowerCase();
+            $("#waddyid").html(myWaddy);
+        };
         function getOwners(){
             let contracts=['0xB0e5Faac1429592CEA8a70F8828D7bD88b788e82','0xd8FAbd716eCCBF98157f6728D3c187625a513127','0x349dbADc6d24Eb7E534EF230Db01a35208E49d04'];
             let token_trackers=['NORLI','GERBS','BONES'];
@@ -23,6 +57,8 @@
                 let token_tracker=token_trackers[k];
             
                 text='';
+                addresses='';
+                
                 let testWaddy = myWaddy.toLowerCase();
                 stopper='no';
                 for (let i=1;((i<100) & (stopper=='no'));i++){
@@ -50,12 +86,14 @@
                             
                             for (let j = 0; j < obj.owners.length; j++) {
                             text += token_tracker+'-'+i.toString()+': '+obj.owners[j].owner.address.toString() + "<br>";
+                            addresses+=obj.owners[j].owner.address.toString()+','
                             } 
-                            var addresses = text.split('<br>')
-                            if ((testWaddy!='') & (addresses.includes(testWaddy))){
+                            var address_list = addresses.split(',')
+                            if ((testWaddy!='') & (address_list.includes(testWaddy))){
                                 $("#msgid").html(text+'<br>includes testWaddy');
-                                let string = 'BONES_UNLOCKED';
+                                let string = token_tracker+'_UNLOCKED';
                                 $("#linkid").html('<a href="'+sha3_512(string)+'.html">SECRET LINK</a>');
+                                $("#"+token_tracker+"id").html('<a href="'+sha3_512(string)+'.html"><button class="unlocked_button">'+token_tracker+' Archive Unlocked</button></a>');
                             } else {
                                 $("#msgid").html(text+'<br>does NOT include testWaddy');
                             }
@@ -66,27 +104,48 @@
                 };
             };
         };
-        function getHash(){
-            
-        };
+        function makeButtons(){
+            $("#GERBSid").html('<button class="locked_button">GERBS Archive Locked</button>');
+            $("#NORLIid").html('<button class="locked_button">NORLI Archive Locked</button>');
+            $("#BONESid").html('<button class="locked_button">BONES Archive Locked</button>');
+        }
     
     </script>
 
 </head>
 
-<body>
+<body onload="makeButtons();">
+
+
+
 
 <h1>ETH NFT Owners</h1>
 
 
-<button type="button" onClick="getWaddy();">Get Waddy</button>
+<button type="button" onClick="getWaddy();">Get My Waddy (Connect to MetaMask)</button><br><br>
+<button type="button" onClick="gettestWaddy();">Get Test Waddy</button><br><br>
 
 <button type="button" onClick="getOwners();">Get Owners</button>
+<div id="waddyid">
+</div>
+
+
 
 <p>My Wallet ID (replace w/ WalletConnect):</p>
 <div id="waddyid">
 </div>
-<p>Token Owners & Match Result:</p>
+
+
+<div id="GERBSid">
+</div>
+<div id="NORLIid">
+</div>
+<div id="BONESid">
+</div>
+
+
+
+<p>Query Logs (Token Owners & Match Results):</p>
 <br>
 <div id="msgid">
 </div>
