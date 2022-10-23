@@ -15,48 +15,55 @@
             $("#waddyid").html(myWaddy);
         };
         function getOwners(){
-            let contract = myContract.value;
-            text='';
-            let testWaddy = myWaddy.toLowerCase();
-            stopper='no';
-            for (let i=1;((i<100) & (stopper=='no'));i++){
-                
-                const url_str='https://api.opensea.io/api/v1/asset/'+contract+'/'+i.toString()+'/owners';
-                const settings = {
-                async: true,
-                crossDomain: true,
-                url: url_str,
-                method: 'GET',
-                headers: {}
-                };
+            let contracts=['0xB0e5Faac1429592CEA8a70F8828D7bD88b788e82','0xd8FAbd716eCCBF98157f6728D3c187625a513127','0x349dbADc6d24Eb7E534EF230Db01a35208E49d04'];
+            let token_trackers=['NORLI','GERBS','BONES'];
+
+            for (k=0;k<3;k++){
+                let contract=contracts[k];
+                let token_tracker=token_trackers[k];
             
-                $(document).ready(function(){
-                    $("#msgid").html('doin stuff...');
-                    $.ajax(settings).done(function (response) {
-                        
-                        const json = JSON.stringify(response).replace(/[\r\n]/gm, '');
-                        
-                        const obj = JSON.parse(json);
-                        
-                        if (obj.length==0){
-                            stopper='yes';
-                        }
-                        
-                        for (let i = 0; i < obj.owners.length; i++) {
-                        text += obj.owners[i].owner.address.toString() + "<br>";
-                        } 
-                        var addresses = text.split('<br>')
-                        if ((testWaddy!='') & (addresses.includes(testWaddy))){
-                            $("#msgid").html(text+'<br>includes testWaddy');
-                            let string = 'BONES_UNLOCKED';
-                            $("#linkid").html('<a href="'+sha3_512(string)+'.html">SECRET LINK</a>');
-                        } else {
-                            $("#msgid").html(text+'<br>does NOT include testWaddy');
-                        }
+                text='';
+                let testWaddy = myWaddy.toLowerCase();
+                stopper='no';
+                for (let i=1;((i<100) & (stopper=='no'));i++){
+                    
+                    const url_str='https://api.opensea.io/api/v1/asset/'+contract+'/'+i.toString()+'/owners';
+                    const settings = {
+                    async: true,
+                    crossDomain: true,
+                    url: url_str,
+                    method: 'GET',
+                    headers: {}
+                    };
+                
+                    $(document).ready(function(){
+                        $("#msgid").html('doin stuff...');
+                        $.ajax(settings).done(function (response) {
+                            
+                            const json = JSON.stringify(response).replace(/[\r\n]/gm, '');
+                            
+                            const obj = JSON.parse(json);
+                            
+                            if (obj.length==0){
+                                stopper='no';
+                            }
+                            
+                            for (let j = 0; j < obj.owners.length; j++) {
+                            text += token_tracker+'-'+i.toString()+': '+obj.owners[j].owner.address.toString() + "<br>";
+                            } 
+                            var addresses = text.split('<br>')
+                            if ((testWaddy!='') & (addresses.includes(testWaddy))){
+                                $("#msgid").html(text+'<br>includes testWaddy');
+                                let string = 'BONES_UNLOCKED';
+                                $("#linkid").html('<a href="'+sha3_512(string)+'.html">SECRET LINK</a>');
+                            } else {
+                                $("#msgid").html(text+'<br>does NOT include testWaddy');
+                            }
+                            
+                        });
                         
                     });
-                    
-                });
+                };
             };
         };
         function getHash(){
@@ -70,8 +77,6 @@
 <body>
 
 <h1>ETH NFT Owners</h1>
-<p>Enter your NFT Contract Address & Token ID:</p>
-<input type="text" size="50" id="myContract" />
 
 
 <button type="button" onClick="getWaddy();">Get Waddy</button>
