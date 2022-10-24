@@ -106,9 +106,9 @@
                             if ((testWaddy!='') & (address_list.includes(testWaddy))){
                                 $("#msgid").html(text+'<br>SUCCESS: NFT owners include your wallet ID!');
                                 let string = token_tracker+'_UNLOCKED';
-                                $("#"+token_tracker+"id").html('<a href="'+sha3_512(string)+'.html"><button class="unlocked_button">'+token_tracker+' Archive Unlocked</button></a>');
+                                $("#"+token_tracker+"id").html('<a href="'+sha3_512(string)+'.html" target="_blank"><button class="unlocked_button">'+token_tracker+' Archive Unlocked</button></a>');
                             } else {
-                                $("#msgid").html(text+'<br>NFT owner results do not include your wallet ID (try again, or <a href="https://twitter.com/martin_gerber">reach out!</a>)');
+                                $("#msgid").html(text+'<br>NFT owner results do not include your wallet ID (try again, or <a href="https://twitter.com/martin_gerber" target="_blank">reach out!</a>)');
                             }
                             
                         });
