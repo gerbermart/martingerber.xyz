@@ -104,12 +104,11 @@
                             } 
                             var address_list = addresses.split(',')
                             if ((testWaddy!='') & (address_list.includes(testWaddy))){
-                                $("#msgid").html(text+'<br>includes testWaddy');
+                                $("#msgid").html(text+'<br>SUCCESS: NFT owners include your wallet ID!');
                                 let string = token_tracker+'_UNLOCKED';
-                                $("#linkid").html('<a href="'+sha3_512(string)+'.html">SECRET LINK</a>');
                                 $("#"+token_tracker+"id").html('<a href="'+sha3_512(string)+'.html"><button class="unlocked_button">'+token_tracker+' Archive Unlocked</button></a>');
                             } else {
-                                $("#msgid").html(text+'<br>does NOT include testWaddy');
+                                $("#msgid").html(text+'<br>NFT owner results do not include your wallet ID (try again, or <a href="https://twitter.com/martin_gerber">reach out!</a>)');
                             }
                             
                         });
@@ -144,7 +143,7 @@
 <div id="waddyid">
 </div>
 
-
+<p>note: you may need to press the "Connect & Check" button twice</p>
 
 <p>My Wallet ID (replace w/ WalletConnect):</p>
 <div id="waddyid">
