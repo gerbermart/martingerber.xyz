@@ -3,10 +3,14 @@
 <head>
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/vue-audio-mixer/dist/vue-audio-mixer.min.css">
     <style>
+        html *
+        {
+            font-family: 'Papyrus' !important;
+        }
         .download_button {
             background-color: #239d00; /* Green */
+            color: #f3e0c6;
             border: none;
-            color: white;
             padding: 15px 32px;
             text-align: center;
             text-decoration: none;
@@ -15,6 +19,49 @@
             cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>💌</text></svg>")
                 16 0,
                 auto;
+            margin: 0;
+            position: absolute;
+            left: 50%;
+            -ms-transform: translate(-50%, 0%);
+            transform: translate(-50%, 0%);
+        }
+        .text_box {
+            background-color: #303030; 
+            color: #f3e0c6;
+            border: none;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 0;
+            position: absolute;
+            left: 50%;
+            -ms-transform: translate(-50%, 0%);
+            transform: translate(-50%, 0%);
+        }
+        a:link {
+            color: #f3e0c6;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: #f3e0c6;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #239d00;
+            background-color: transparent;
+            text-decoration: underline;
+        }
+
+        a:active {
+            color: yellow;
+            background-color: transparent;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -128,7 +175,12 @@ const app = new Vue({
 })
 </script> 
 
-<a href="https://www.dropbox.com/s/pa0x4wx1442j9i9/RYBSTMS.zip?dl=0"><button class="download_button">Download ZIP of Stems</button></a>
+<div width=100%><a href="https://www.dropbox.com/s/pa0x4wx1442j9i9/RYBSTMS.zip?dl=0"><button class="download_button">Download ZIP of Stems</button></a></div>
+<div style="clear:both;"></div><br><br><br>
+<div width=100% class="text_box"><p>YES! you made it! super grateful that you collected & found your way to this place built exclusively for you! we would LOVE to hear your own remixes!</p><p>Please feel free to post your remix with <span style="color: #239d00;">#BONESremixes</span> & tag us (<a href="https://twitter.com/martin_gerber">@martin_gerber</a>, <a href="https://twitter.com/omotayo_music">@omotayo_music</a> & <a href="https://twitter.com/wayakart">@wayakart</a>) so we can check it out!</p></div>
+<div style="clear:both;"></div><br><br><br><br><br><br>
+<p>.</p>
+
 
 </body>
 </html>
