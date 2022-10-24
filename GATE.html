@@ -29,6 +29,20 @@
                 16 0,
                 auto;
         }
+
+        .connect_button {
+            background-color: #239d00; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>👛</text></svg>")
+                16 0,
+                auto;
+        }
     </style>
 
 
@@ -109,6 +123,10 @@
             $("#NORLIid").html('<button class="locked_button">NORLI Archive Locked</button>');
             $("#BONESid").html('<button class="locked_button">BONES Archive Locked</button>');
         }
+        function getKeys(){
+            getWaddy();
+            getOwners();
+        }
     
     </script>
 
@@ -119,13 +137,10 @@
 
 
 
-<h1>ETH NFT Owners</h1>
+<h1>Token-Gated Content for Martin Gerber</h1>
 
 
-<button type="button" onClick="getWaddy();">Get My Waddy (Connect to MetaMask)</button><br><br>
-
-
-<button type="button" onClick="getOwners();">Get Owners</button>
+<button type="button" class="connect_button" onClick="getKeys();">Connect & Check Metamask Wallet for NFT Keys</button>
 <div id="waddyid">
 </div>
 
