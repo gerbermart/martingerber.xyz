@@ -2,8 +2,23 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/vue-audio-mixer/dist/vue-audio-mixer.min.css">
+    <style>
+        .download_button {
+            background-color: #239d00; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>💌</text></svg>")
+                16 0,
+                auto;
+        }
+    </style>
 </head>
-<body>
+<body bgcolor="black">
 
 <div id="app">
   <div>
@@ -35,27 +50,67 @@ const app = new Vue({
       newconfig:{},
       config: {
         "tracks":[
-            {
-                "title":"Drums",
+        {
+                "title":"BASS",
                 "url":"SONGS/BONES_DRUMS.wav",
                 "pan":0,
-                "gain":0,
+                "gain":1,
                 "muted":false,
                 "hidden":false
             },
             {
-                "title":"Ambience",
+                "title":"KICK",
+                "url":"SONGS/BONES_DRUMS.wav",
+                "pan":0,
+                "gain":1,
+                "muted":false,
+                "hidden":false
+            },
+            {
+                "title":"DRUMS",
+                "url":"SONGS/BONES_DRUMS.wav",
+                "pan":0,
+                "gain":1,
+                "muted":false,
+                "hidden":false
+            },
+            {
+                "title":"SAMPLER",
+                "url":"SONGS/BONES_CHOIR.wav",
+                "pan":0,
+                "gain":1,
+                "muted":false,
+                "hidden":false
+            },
+            {
+                "title":"LEAD VOCALS",
+                "url":"SONGS/BONES_LEAD_VOX.wav",
+                "pan":0,
+                "gain":1,
+                "muted":false,
+                "hidden":false
+            },
+            {
+                "title":"HARMONY",
+                "url":"SONGS/BONES_HARMONY_VOX.wav",
+                "pan":0,
+                "gain":1,
+                "muted":false,
+                "hidden":false
+            },
+            {
+                "title":"ADLIBS",
+                "url":"SONGS/BONES_ADLIB_VOX.wav",
+                "pan":0,
+                "gain":1,
+                "muted":false,
+                "hidden":false
+            },
+            {
+                "title":"AMBIENCE",
                 "url":"SONGS/BONES_AMBIENCE.wav",
                 "pan":0,
-                "gain":0,
-                "muted":false,
-                "hidden":false
-            },
-            {
-                "title":"Vocals",
-                "url":"SONGS/BONES_VOX.wav",
-                "pan":0,
-                "gain":0,
+                "gain":1,
                 "muted":false,
                 "hidden":false
             }
@@ -70,6 +125,8 @@ const app = new Vue({
   }
 })
 </script> 
+
+<a href="SONGS/RYBSTMS.zip"><button class="download_button">Download ZIP of Stems</button></a>
 
 </body>
 </html>
