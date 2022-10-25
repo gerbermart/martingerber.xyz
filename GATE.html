@@ -77,6 +77,7 @@
             
                 text='';
                 addresses='';
+                current_token='';
                 
                 let testWaddy = myWaddy.toLowerCase();
                 stopper='no';
@@ -104,12 +105,16 @@
                             }
                             
                             for (let j = 0; j < obj.owners.length; j++) {
-                            text += token_tracker+'-'+i.toString()+': '+obj.owners[j].owner.address.toString() + "<br>";
+                            //text += token_tracker+'-'+i.toString()+': '+obj.owners[j].owner.address.toString() + "<br>";
                             addresses+=obj.owners[j].owner.address.toString()+','
                             } 
                             var address_list = addresses.split(',')
                             if ((testWaddy!='') & (address_list.includes(testWaddy))){
-                                $("#msgid").html(text+'<br>SUCCESS: NFT owners include your wallet ID!');
+                                if (current_token!=token_tracker){
+                                    text+='<br>SUCCESS: '+token_tracker+' unlocked!';
+                                    current_token=token_tracker;
+                                }
+                                $("#msgid").html(text);
                                 let string = token_tracker+'_UNLOCKED';
                                 $("#"+token_tracker+"id").html('<a href="'+sha3_512(string)+'.html" target="_blank"><button class="unlocked_button">'+token_tracker+' Archive Unlocked</button></a>');
                             } else {
@@ -128,7 +133,7 @@
             $("#BONESid").html('<button class="locked_button">BONES Archive Locked</button>');
         }
         function getKeys(){
-            getWaddy();
+            gettestWaddy();
             getOwners();
         }
     
@@ -163,7 +168,6 @@
 
 
 
-<p>Query Logs (Token Owners & Match Results):</p>
 <br>
 <div id="msgid">
 </div>
