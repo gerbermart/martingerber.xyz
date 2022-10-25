@@ -43,6 +43,11 @@
                 16 0,
                 auto;
         }
+
+        html *
+        {
+            font-family: 'Courier New' !important;
+        }
     </style>
 
 
@@ -56,7 +61,7 @@
             const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
             const account = accounts[0];
             myWaddy=account.toLowerCase();
-            $("#waddyid").html('Successfull connection! (Wallet: '+myWaddy+')<br><br>press the button once more...<br>');
+            $("#waddyid").html('Successfull connection! (Wallet: '+myWaddy+')<br><br>   press the same button once more...<br>');
         };
         function gettestWaddy(){
             myWaddy='0x7e8C38Ad50622c0b26906C9Cf81D2825fC78A38B'.toLowerCase();
@@ -131,12 +136,12 @@
 
 </head>
 
-<body onload="makeButtons();" background="IMAGES/BONES_BANNER.jpg">
+<body onload="makeButtons();">
 
 
 
 
-<h1>Token-Gated Content for Martin Gerber (on mobile? use MetaMask browser)</h1>
+<h1>Token-Gated Content for Martin Gerber <br> -> on mobile? use MetaMask browser</h1>
 
 
 <button type="button" class="connect_button" onClick="getKeys();">Connect & Check Metamask Wallet for NFT Keys</button>
@@ -144,8 +149,7 @@
 </div>
 
 <p>note: you may need to press the "Connect & Check" button twice</p>
-
-<p>My Wallet ID (replace w/ WalletConnect):</p>
+<br><br>
 <div id="waddyid">
 </div>
 
