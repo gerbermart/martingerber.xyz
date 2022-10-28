@@ -271,6 +271,18 @@ a.box-link:hover {
     height: 160px;
     background-size: 100%;
     background-image: url(IMAGES/SOLD_40.png);
+    background-blend-mode: overlay;
+}
+
+.MOON_SOLD {
+    float: left;
+    padding: 0px;
+    position: relative; 
+    margin: 0 auto;
+    width: 160px;
+    height: 160px;
+    background-size: 100%;
+    background-image: url(IMAGES/MOON.gif);
 }
 
 .GERBS_SALE {
