@@ -337,6 +337,16 @@ a.box-link:hover {
     background-blend-mode: overlay;
 }
 
+.WaT_SALE_4 {
+    float: left;
+    padding: 0px;
+    position: relative; 
+    margin: 0 auto;
+    width: 160px;
+    height: 160px;
+    background-image: url(IMAGES/WaT_160.jpg), url(IMAGES/WaT_ETH_4.png);
+    background-blend-mode: overlay;
+}
 .WaT_SALE_16 {
     float: left;
     padding: 0px;
