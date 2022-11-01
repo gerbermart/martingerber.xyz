@@ -333,7 +333,18 @@ a.box-link:hover {
     margin: 0 auto;
     width: 160px;
     height: 160px;
-    background-image: url(IMAGES/WaT_160.jpg), url(IMAGES/WaT_ETH_1_A50.png);
+    background-image: url(IMAGES/WaT_160.jpg), url(IMAGES/WaT_ETH_1.png);
+    background-blend-mode: overlay;
+}
+
+.WaT_SALE_2 {
+    float: left;
+    padding: 0px;
+    position: relative; 
+    margin: 0 auto;
+    width: 160px;
+    height: 160px;
+    background-image: url(IMAGES/WaT_160.jpg), url(IMAGES/WaT_ETH_2.png);
     background-blend-mode: overlay;
 }
 
