@@ -30,6 +30,26 @@
             border-style: double;
             font-family: "Courier New"; 
         }
+
+        .button {
+            background-color: white;
+            font-family: "Courier New"; 
+            border: none;
+            color: black;
+            padding: 10px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 32px;
+            border-radius: 6px;
+            border: 2px solid black;
+        }
+
+        .button:hover { 
+            text-decoration: none; 
+            background-color: #239d00;
+            color: white; 
+        }
     </style>
 
     <script>
@@ -39,6 +59,35 @@
                     c[i].style='border:none;';
                 }
         }
+        var song_list = ["WaT","MOON","GERBS","RELINQUISH","NORLI_I","NORLI_II","NORLI_III","NORLI_IV","NORLI_V","NORLI_VI","NORLI_VII","NORLI_VIII"];
+        var song_dict={
+            'WaT':'https://arweave.net/kcFp5ZQRvOXSRlx3nxPKirZrcpxOAZr7B2NbhzrVYCc',
+            'MOON':'https://arweave.net/et6x-QcOKMJTTjSMTxIyXeRZL-s2VgVZUyRUcZKYvPw',
+            'GERBS':'https://arweave.net/LImCAPoVHtIM0T7sXKwlCZ0bQEp9Qmc_fuTzKybFhDM',
+            'RELINQUISH':'SONGS/RELINQUISH.wav',
+            'NORLI_I':'https://arweave.net/difhb5h41bJUGwDCh4-tHNT9HwS8O6sg91-Hjt3Snxk',
+            'NORLI_II':'https://arweave.net/kUjJzDKgfNauS_6_lQceCoo6sebos8PdlDzZSOkFSFI',
+            'NORLI_III':'https://arweave.net/D6p6OHNhzCbsXuKzZZf9BrhK5TvpX9HBsdrG9rd3oik',
+            'NORLI_IV':'https://arweave.net/naj-kL53kNivSGYYn5mE9vN8jdmrXGnjTWnxdEo86w8',
+            'NORLI_V':'https://arweave.net/btauMPeVWLjb6F6zCsSVmi3Z4waViwbgnGKKdw0l_Oc',
+            'NORLI_VI':'https://arweave.net/6KoP0qRWdZHNjVwJYH7g9lV_GdJQM9G6BQ1kE2wci7A',
+            'NORLI_VII':'https://arweave.net/b2XB85NN42oIKNeqXA-dc5kI8R4m5OgASwU2V3RHZFo',
+            'NORLI_VIII':'https://arweave.net/xY7wLcbkYu9Szv3k7YX2BkWsnnnRsuQ19fntFydNTEc',
+        }
+        var song_list_mem=song_list;
+        function nextsong() {
+            // function we want to run
+            var random_song = song_list[Math.floor(Math.random() * song_list.length)];
+            song_list=song_list.filter(e => e !== random_song); // remove selected track from future options to avoid repeat plays
+            if (song_list.length==0) {song_list=song_list_mem}; // list has run dry, restore original list
+            play_track(random_song);
+        };
+        function play_track(playerID){
+            resetborders();
+            document.getElementById(playerID).style='border:10px solid #2a9e00; width:180px; height: 180px;'; 
+            document.getElementById('player').src=song_dict[playerID]; // feeds string into key of song_dict
+            document.getElementById('player').play()
+        }
     </script>
 
     <body>
@@ -46,28 +95,33 @@
             <b class="green_box" style="font-size: 24px;">NFT PLAYER: hit PLAY (active track in GREEN BOX)</b>
         </div>
         <div class="row">
-            <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://arweave.net/difhb5h41bJUGwDCh4-tHNT9HwS8O6sg91-Hjt3Snxk';"><source src="IMAGES/NORLI_I.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
-            <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://arweave.net/kUjJzDKgfNauS_6_lQceCoo6sebos8PdlDzZSOkFSFI';"><source src="IMAGES/NORLI_II.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
-            <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://arweave.net/D6p6OHNhzCbsXuKzZZf9BrhK5TvpX9HBsdrG9rd3oik';"><source src="IMAGES/NORLI_III.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
-            <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://arweave.net/naj-kL53kNivSGYYn5mE9vN8jdmrXGnjTWnxdEo86w8';"><source src="IMAGES/NORLI_IV.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
+            <div class="column"><video class="video" id="NORLI_I" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src=song_dict.NORLI_I;"><source src="IMAGES/NORLI_I.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
+            <div class="column"><video class="video" id="NORLI_II" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='';"><source src="IMAGES/NORLI_II.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
+            <div class="column"><video class="video" id="NORLI_III" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='';"><source src="IMAGES/NORLI_III.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
+            <div class="column"><video class="video" id="NORLI_IV" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='';"><source src="IMAGES/NORLI_IV.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
         </div>
         <div class="row">
-            <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://arweave.net/btauMPeVWLjb6F6zCsSVmi3Z4waViwbgnGKKdw0l_Oc';"><source src="IMAGES/NORLI_V.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
-            <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://arweave.net/6KoP0qRWdZHNjVwJYH7g9lV_GdJQM9G6BQ1kE2wci7A';"><source src="IMAGES/NORLI_VI.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
-            <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://arweave.net/b2XB85NN42oIKNeqXA-dc5kI8R4m5OgASwU2V3RHZFo';"><source src="IMAGES/NORLI_VII.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
-            <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://arweave.net/xY7wLcbkYu9Szv3k7YX2BkWsnnnRsuQ19fntFydNTEc';"><source src="IMAGES/NORLI_VIII.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
+            <div class="column"><video class="video" id="NORLI_V" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='';"><source src="IMAGES/NORLI_V.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
+            <div class="column"><video class="video" id="NORLI_VI" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='';"><source src="IMAGES/NORLI_VI.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
+            <div class="column"><video class="video" id="NORLI_VII" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='';"><source src="IMAGES/NORLI_VII.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
+            <div class="column"><video class="video" id="NORLI_VIII" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='';"><source src="IMAGES/NORLI_VIII.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
         </div>
         <div class="row">
-            <div class="column"><img class="video" width="100%" src="IMAGES/WaT_160.jpg" style="border:10px solid #2a9e00; width:180px; height: 180px;" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://arweave.net/kcFp5ZQRvOXSRlx3nxPKirZrcpxOAZr7B2NbhzrVYCc';"></div>
-            <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://mintsongs.mypinata.cloud/ipfs/QmaemPw2B8ydCvFGVScbsVK14vBk17LyQovMhy37CpEUUX';"><source src="IMAGES/MOON.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
-            <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='https://arweave.net/LImCAPoVHtIM0T7sXKwlCZ0bQEp9Qmc_fuTzKybFhDM';"><source src="IMAGES/GERBS.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
-            <div class="column"><video class="video" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='SONGS/RELINQUISH.wav';"><source src="IMAGES/RELINQUISH.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
+            <div class="column"><img class="video" id="WaT" width="100%" src="IMAGES/WaT_160.jpg" style="border:10px solid #2a9e00; width:180px; height: 180px;" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='';"></div>
+            <div class="column"><video class="video" id="MOON" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='';"><source src="IMAGES/MOON.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
+            <div class="column"><video class="video" id="GERBS" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='';"><source src="IMAGES/GERBS.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
+            <div class="column"><video class="video" id="RELINQUISH" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src='';"><source src="IMAGES/RELINQUISH.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
         </div>
         <div class="row">
-            <audio id="player" preload controls>
+            <audio id="player" preload controls autoplay onended="nextsong()">
                 <source src="https://arweave.net/kcFp5ZQRvOXSRlx3nxPKirZrcpxOAZr7B2NbhzrVYCc" type="audio/wav">
                 Your browser does not support the audio element.
             </audio> 
         </div>
+        <br>
+        <div class="row">
+            <button onclick="nextsong();" class="button">NEXT SONG</button>
+        </div>
+        
     </body>
 </html>
