@@ -147,6 +147,17 @@ a.box-link:hover {
     background-image: url(IMAGES/WaT_400.jpg);
 }
 
+
+.DSP_RYB {
+    float: left;
+    padding: 0px;
+    position: relative; 
+    margin: 0 auto;
+    width: 400px;
+    height: 400px;
+    background-image: url(IMAGES/RYB_400.png);
+}
+
 .NORLI_CONTAINER {
     position: relative;
     max-width: 800px; 
@@ -475,8 +486,29 @@ a.box-link:hover {
 	text-decoration: none; 
 	background-color: #239d00;
 	color: white; 
+    cursor: pointer;
 }
 
+.button_soundcloud {
+    background-color: black;
+    font-family: "Courier New"; 
+    border: none;
+    color: black;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 32px;
+    border-radius: 0px;
+    border: none;
+}
+
+.button_soundcloud:hover { 
+	text-decoration: none; 
+	background-color: #239d00;
+	color: white; 
+    cursor: pointer;
+}
 
 .text{
     z-index:4;

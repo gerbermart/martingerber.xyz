@@ -1,18 +1,34 @@
 <html>
     <head>
         <link rel="stylesheet" href="style.css">
+        <script>
+            function play_SoundCloud(){
+                document.getElementById('SOUNDCLOUD').innerHTML='<iframe width="400" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1535186155&color=%23239d00&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/martingerber" title="Martin Gerber" target="_blank" style="color: #cccccc; text-decoration: none;">Martin Gerber</a> · <a href="https://soundcloud.com/martingerber/sets/throwbacks" title="Throwbacks by Martin Gerber &amp; Friends" target="_blank" style="color: #cccccc; text-decoration: none;">Throwbacks by Martin Gerber &amp; Friends</a></div>'
+            }
+        </script>
     </head>
     <body>
         <div class="MAIN">
             <div class="DSP_CONTAINER">
                 <div class="row">
-                    <b class="green_box" style="font-size: 24px; font-family: 'Courier New';">STREAMING LINKS (SPOTIFY, APPLE, ETC)</b>
+                    <b class="green_box" style="font-size: 24px; font-family: 'Courier New';">STREAMING LINKS (SPOTIFY, APPLE, SOUNDCLOUD, ETC)</b>
                 </div>
                 <a href=https://distrokid.com/hyperfollow/martingerberanddanfilice/album-in-f target="_blank"><div class="DSP_ALBUM_IN_F"></div></a>
-                <a href="https://distrokid.com/hyperfollow/martingerber/worn-and-tattered"><div class="DSP_WaT"></div></a>
+                <a href="https://distrokid.com/hyperfollow/martingerber/worn-and-tattered" target="_blank"><div class="DSP_WaT"></div></a>
+                <a href="https://distrokid.com/hyperfollow/martingerber/rest-your-bones-feat-omotayo--wayak" target="_blank"><div class="DSP_RYB"></div></a>
+                <div id="SOUNDCLOUD"><button class="button_soundcloud" onclick="play_SoundCloud();"><img width=390 src="IMAGES/STEREOGRAPHY.png"></button></div>
             </div>
         </div>
         <div style="clear:both;"></div></br>
+        <div class="MAIN">
+            <div class="BORDER_DIV" style="padding:10;">
+                <object data="BUTTONS.html" width="2000px" height="200px"> 
+                    Your browser doesn’t support the object tag. 
+                </object> 
+            </div>
+        </div>
+        <div style="clear:both;"></div></br>
+        </br></br>
         <div class="MAIN">
             <div class="NORLI_CONTAINER">
                 <div class="row">
