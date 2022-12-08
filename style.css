@@ -26,6 +26,7 @@ video {
     border-style: outset; 
     width:850; 
     padding-left: 50;
+    overflow: hidden;
 }
 
 .HEADER {
@@ -125,6 +126,7 @@ a.box-link:hover {
     margin: 0 auto;
     border-style: outset;
     padding: 45;
+    overflow: hidden;
 }
 
 .DSP_ALBUM_IN_F {
@@ -165,6 +167,7 @@ a.box-link:hover {
     margin: auto; 
     border-style: outset;
     padding: 45;
+    overflow: hidden;
 }
 
 .NORLI_I {
@@ -266,11 +269,12 @@ a.box-link:hover {
 
 .GERBS_CONTAINER {
     position: relative;
-    max-width: 800px; <!-- DEFINES TILING -->
+    max-width: 800px; 
     flex: center;
     border-style: outset;
     padding: 40;
-    margin: auto; <!-- REQUIRED OR THE TEXT GOES LEFT ALIGNED -->
+    margin: auto;
+    overflow: hidden;
 }
 
 .GERBS_SOLD {
@@ -309,11 +313,12 @@ a.box-link:hover {
 
 .WaT_CONTAINER {
     position: relative;
-    max-width: 800px; <!-- DEFINES TILING -->
+    max-width: 800px; 
     flex: center;
     border-style: outset;
     padding: 40;
-    margin: auto; <!-- REQUIRED OR THE TEXT GOES LEFT ALIGNED -->
+    margin: auto;
+    overflow: hidden;
 }
 
 .WaT_SOLD {
@@ -462,6 +467,7 @@ a.box-link:hover {
     justify-content: center;
     flex: 33.33%;
     padding: 0px;
+    overflow: hidden;
 }
 
 #player{
