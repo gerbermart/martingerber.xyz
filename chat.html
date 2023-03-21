@@ -1,17 +1,109 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>Chat GPT Prompt Example</title>
-    <script src="chatgpt.js"></script>
+    <meta charset="UTF-8" />
+    <title>ChatGPT Demo</title>
   </head>
   <body>
     <div id="chat-container">
-      <div id="chat-output"></div>
-      <div id="chat-input">
-        <input type="text" id="chat-input-box" placeholder="Ask me something...">
-        <button id="chat-send-btn">Send</button>
+      <div id="chat-log"></div>
+      <div id="input-container">
+        <input type="text" id="chat-input" placeholder="Ask me anything!" />
+        <button id="send-btn">Send</button>
       </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@openai/api@0.6.0/dist/openai-api.min.js"></script>
+    <script>
+      const chatLog = document.getElementById("chat-log");
+      const chatInput = document.getElementById("chat-input");
+      const sendBtn = document.getElementById("send-btn");
+
+      const openai = new OpenAI("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");
+
+      async function generateResponse(prompt) {
+        const completions = await openai.complete({
+          engine: "davinci",
+          prompt: prompt,
+          maxTokens: 150,
+          n: 1,
+          stop: ["\n"],
+          temperature: 0.7,
+        });
+        const message = completions.choices[0].text.trim();
+        return message;
+      }
+
+      function appendMessageToChatLog(message, sender) {
+        const messageNode = document.createElement("div");
+        messageNode.classList.add("chat-message");
+        messageNode.classList.add(sender === "user" ? "user-message" : "bot-message");
+        messageNode.innerText = message;
+        chatLog.appendChild(messageNode);
+      }
+
+      async function handleUserInput() {
+        const userInput = chatInput.value.trim();
+
+        if (userInput !== "") {
+          appendMessageToChatLog(userInput, "user");
+
+          const response = await generateResponse(userInput);
+          appendMessageToChatLog(response, "bot");
+
+          chatInput.value = "";
+        }
+      }
+
+      sendBtn.addEventListener("click", handleUserInput);
+      chatInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          handleUserInput();
+        }
+      });
+
+      // Initial message from bot
+      (async () => {
+        const response = await generateResponse("hello");
+        appendMessageToChatLog(response, "bot");
+      })();
+    </script>
+
+    <style>
+      #chat-container {
+        width: 400px;
+        margin: 0 auto;
+      }
+
+      .chat-message {
+        margin-bottom: 10px;
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+      .user-message {
+        background-color: #d1eaf7;
+        text-align: right;
+      }
+
+      .bot-message {
+        background-color: #f0f0f0;
+        text-align: left;
+      }
+
+      #input-container {
+        margin-top: 10px;
+        display: flex;
+      }
+
+      #chat-input {
+        flex-grow: 1;
+        margin-right: 10px;
+      }
+
+      #send-btn {
+        width: 80px;
+      }
+    </style>
   </body>
 </html>

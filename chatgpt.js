@@ -1,26 +1,23 @@
-const chatContainer = document.getElementById("chat-container");
-const chatOutput = document.getElementById("chat-output");
-const chatInputBox = document.getElementById("chat-input-box");
-const chatSendBtn = document.getElementById("chat-send-btn");
+class ChatGPT {
+    constructor(apiKey) {
+        this.apiKey = apiKey;
+    }
 
-function sendChatMessage() {
-  const userMessage = chatInputBox.value;
-  chatInputBox.value = "";
+    generateResponse(prompt) {
+        const openai = require("@openai/api");
+        const api = new openai(this.apiKey);
 
-  const botMessage = generateBotResponse(userMessage);
+        const parameters = {
+            "model": "text-davinci-002",
+            "prompt": prompt,
+            "temperature": 0.7,
+            "max_tokens": 60,
+            "top_p": 1,
+            "frequency_penalty": 0,
+            "presence_penalty": 0
+        };
 
-  const messageTemplate = `
-    <div class="chat-message user-message">${userMessage}</div>
-    <div class="chat-message bot-message">${botMessage}</div>
-  `;
-  chatOutput.insertAdjacentHTML("beforeend", messageTemplate);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
+        return api.completions.create(parameters)
+            .then(response => response.data.choices[0].text);
+    }
 }
-
-function generateBotResponse(userMessage) {
-  // Call your Chat GPT API or library here to generate a response
-  // based on the user's message, and return the response string.
-  return "Hello, how can I help you?";
-}
-
-chatSendBtn.addEventListener("click", sendChatMessage);
