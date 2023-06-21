@@ -1,109 +1,55 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>ChatGPT Demo</title>
-  </head>
-  <body>
-    <div id="chat-container">
-      <div id="chat-log"></div>
-      <div id="input-container">
-        <input type="text" id="chat-input" placeholder="Ask me anything!" />
-        <button id="send-btn">Send</button>
-      </div>
-    </div>
+<head>
+	<title>Chatbot</title>
+</head>
+<body>
+	<div id="chat-container">
+		<div id="messages"></div>
+		<input type="text" id="user-input" placeholder="Type your message here...">
+		<button id="send-button">Send</button>
+	</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@openai/api@0.6.0/dist/openai-api.min.js"></script>
-    <script>
-      const chatLog = document.getElementById("chat-log");
-      const chatInput = document.getElementById("chat-input");
-      const sendBtn = document.getElementById("send-btn");
+	<script>
+		// Set up OpenAI API credentials
+		const OPENAI_API_KEY = "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";
+		const OPENAI_API_URL = "https://api.openai.com/v1/engines/davinci-codex/completions";
 
-      const openai = new OpenAI("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");
+		// Set up event listener for send button
+		const sendButton = document.getElementById("send-button");
+		sendButton.addEventListener("click", sendMessage);
 
-      async function generateResponse(prompt) {
-        const completions = await openai.complete({
-          engine: "davinci",
-          prompt: prompt,
-          maxTokens: 150,
-          n: 1,
-          stop: ["\n"],
-          temperature: 0.7,
-        });
-        const message = completions.choices[0].text.trim();
-        return message;
-      }
+		// Function to handle user input and send to GPT-3 API
+		async function sendMessage() {
+			// Get user input text
+			const userInput = document.getElementById("user-input").value;
 
-      function appendMessageToChatLog(message, sender) {
-        const messageNode = document.createElement("div");
-        messageNode.classList.add("chat-message");
-        messageNode.classList.add(sender === "user" ? "user-message" : "bot-message");
-        messageNode.innerText = message;
-        chatLog.appendChild(messageNode);
-      }
+			// Create request object for GPT-3 API
+			const requestOptions = {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json',
+							'Authorization': `Bearer ${OPENAI_API_KEY}` },
+				body: JSON.stringify({ prompt: `User: ${userInput}\nBot:` })
+			};
 
-      async function handleUserInput() {
-        const userInput = chatInput.value.trim();
+			// Send request to GPT-3 API
+			const response = await fetch(OPENAI_API_URL, requestOptions);
+			const data = await response.json();
 
-        if (userInput !== "") {
-          appendMessageToChatLog(userInput, "user");
+			// Get response text from API and display in chat
+			const botResponse = data.choices[0].text;
+			addMessage("Bot", botResponse);
 
-          const response = await generateResponse(userInput);
-          appendMessageToChatLog(response, "bot");
+			// Clear input field
+			document.getElementById("user-input").value = "";
+		}
 
-          chatInput.value = "";
-        }
-      }
-
-      sendBtn.addEventListener("click", handleUserInput);
-      chatInput.addEventListener("keypress", (event) => {
-        if (event.key === "Enter") {
-          handleUserInput();
-        }
-      });
-
-      // Initial message from bot
-      (async () => {
-        const response = await generateResponse("hello");
-        appendMessageToChatLog(response, "bot");
-      })();
-    </script>
-
-    <style>
-      #chat-container {
-        width: 400px;
-        margin: 0 auto;
-      }
-
-      .chat-message {
-        margin-bottom: 10px;
-        padding: 5px;
-        border-radius: 5px;
-      }
-
-      .user-message {
-        background-color: #d1eaf7;
-        text-align: right;
-      }
-
-      .bot-message {
-        background-color: #f0f0f0;
-        text-align: left;
-      }
-
-      #input-container {
-        margin-top: 10px;
-        display: flex;
-      }
-
-      #chat-input {
-        flex-grow: 1;
-        margin-right: 10px;
-      }
-
-      #send-btn {
-        width: 80px;
-      }
-    </style>
-  </body>
+		// Function to add message to chat history
+		function addMessage(sender, message) {
+			const messageElement = document.createElement("div");
+			messageElement.textContent = `${sender}: ${message}`;
+			document.getElementById("messages").appendChild(messageElement);
+		}
+	</script>
+</body>
 </html>
