@@ -21,9 +21,9 @@
 
         #video-background {
             position: relative;
-            width: 100%;
+            width: 100vw;
             height: 0;
-            padding-bottom: 58.33%; /* Aspect ratio: 768x448 (100 / 1.72) */
+            padding-bottom: 56.25vw; /* Aspect ratio: 16:9 (9 / 16 * 100) */
             overflow: hidden;
         }
 
@@ -33,6 +33,7 @@
             left: 0;
             width: 100%;
             height: 100%;
+            object-fit: cover;
         }
 
         .countdown-container {
@@ -45,14 +46,16 @@
         }
 
         .countdown {
-            font-size: 36px;
-            margin-bottom: 20px;
+            font-size: 4vw;
+            margin-bottom: 2vw;
+            white-space: nowrap;
         }
 
         .promo-text {
             color: #fff;
-            font-size: 36px;
-            margin-top: 20px;
+            font-size: 4vw;
+            margin-top: 2vw;
+            white-space: nowrap;
         }
 
         a:link,
@@ -63,6 +66,18 @@
 
         a:hover {
             color: #b64917; /* #b64917 color when hovered over */
+        }
+
+        @media (min-width: 768px) {
+            .countdown {
+                font-size: 4.5vw;
+                margin-bottom: 1vw;
+            }
+
+            .promo-text {
+                font-size: 4.5vw;
+                margin-top: 1vw;
+            }
         }
     </style>
 </head>
