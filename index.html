@@ -1,68 +1,147 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-	<title>Martin Gerber aka Marty Gerbs</title>
-	<meta name="description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
-	<meta property="og:title" content="Martin Gerber aka Marty Gerbs">
-	<meta property="og:type" content="article" />
-	<meta property="og:description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
-	<meta property="og:image" content="https://martingerber.xyz/card.jpg">
-	<meta property="og:url" content="https://martingerber.xyz/index.html">
-	<meta name="twitter:card" content="summary_large_image">
-    <meta name="viewport">
-    <link rel="stylesheet" href="style.css">
+    <title>Something is Coming</title>
+    <meta name="description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta property="og:title" content="Martin Gerber aka Marty Gerbs">
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
+    <meta property="og:image" content="https://martingerber.xyz/card.jpg">
+    <meta property="og:url" content="https://martingerber.xyz/index.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+        }
+
+        #video-background {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 58.33%; /* Aspect ratio: 768x448 (100 / 1.72) */
+            overflow: hidden;
+        }
+
+        #video-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .countdown-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .countdown {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .promo-text {
+            color: #fff;
+            font-size: 36px;
+            margin-top: 20px;
+        }
+
+        a:link,
+        a:visited {
+            color: #ffffff; /* White */
+            text-decoration: none; /* Remove underline */
+        }
+
+        a:hover {
+            color: #b64917; /* #b64917 color when hovered over */
+        }
+    </style>
 </head>
-
 <body>
-    <div class="HEADER"> 
-        <object data="HEADER.html" width="1280" height="975"> 
-            Your browser doesn’t support the object tag. 
-        </object>     
+<div id="video-background">
+    <video id="video-content" autoplay loop muted>
+        <source src="IMAGES/HIDDENVARIABLES_LASERS.mp4" type="video/mp4">
+    </video>
+    <div class="countdown-container">
+        <div class="promo-text"><b>DROP COMING:</b> HIDDEN VARIABLES I</div>
+        <br>
+        <div class="countdown" id="countdown1"></div>
+        <div class="countdown" id="countdown2"></div>
+        <div class="promo-text"><a href="index_main.html">continue to main site</a></div>
     </div>
-    <div style="clear:both;"></div></br>
-    </br></br></br></br>
-    <div class="MAIN">
-        <div class="BORDER_DIV">
-            <p style="font-size:36px; margin: 20 0; text-align:left;"><b>USE YOUR GERBS/NORLI/BONES TOKENS:</b></p>
-            <div class="row">
-                <a href="GATE.html" target="_blank">
-                    <button class="button"  style="font-size: 24px; width:800;"><span><b>UNLOCKABLE ARCHIVES</b></span></button>
-                </a>
-            </div>
-            <br><br>
-        </div>
-    </div>
-    <div style="clear:both;"></div></br>
-    </br></br></br></br>
-    <div class="MAIN">
-        <div class="BORDER_DIV">
-            <div style="margin:20 0;">
-                <object data="NFTPLAYER_GERBS.html" width="2000px" height="800px"> 
-                    Your browser doesn’t support the object tag. 
-                </object> 
-            </div>
-        </div>
-    </div>
-    <div style="clear:both;"></div>
-    </br></br>
-    <div class="MAIN">
-        <div class="BORDER_DIV">
-            <p style="font-size:36px; margin: 20 0; text-align:left;"><b>UPCOMING PERFORMANCES: TBA</b></p>
-            <div class="row">
-                <a href="PAST_GIGS.html" target="_blank">
-                    <button class="button"  style="font-size: 24px; width:800;"><span><b>PREVIOUS PERFORMANCES</b></span></button>
-                </a>
-            </div>
-            <br><br>
-        </div>
-    </div>
-    <div style="clear:both;"></div></br>
-    <div class="MAIN">
-        <object data="MAIN.html" width="1280" height="4500" > 
-            Your browser doesn’t support the object tag. 
-        </object> 
-    </div>
-</body>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js"></script>
+<script>
+    // Set the countdown dates in PST
+    var countdownDate1 = moment.utc([2023, 6, 3, 17, 0, 0]); // July 3, 2023, 10:00 AM PST
+    var countdownDate2 = moment.utc([2023, 7, 1, 17, 0, 0]); // August 1, 2023, 10:00 AM PST
 
+    var countdownElement1 = document.getElementById('countdown1');
+    var countdownElement2 = document.getElementById('countdown2');
+
+    // Update the countdown every second
+    var countdownInterval = setInterval(function() {
+        // Get the current date and time in the user's local timezone
+        var now = moment();
+
+        // Calculate the remaining time until countdown 1
+        var duration1 = moment.duration(countdownDate1.diff(now));
+
+        // Calculate the remaining time until countdown 2
+        var duration2 = moment.duration(countdownDate2.diff(now));
+
+        // Display the countdowns
+        countdownElement1.innerHTML = "<b>ETH mint opens:</b> " + formatDuration(duration1);
+        countdownElement2.innerHTML = "<b>DSP release:</b> " + formatDuration(duration2);
+
+        // If countdown 1 is finished, display a message
+        if (duration1.asMilliseconds() < 0) {
+            clearInterval(countdownInterval);
+            countdownElement1.innerHTML = "<b>ETH mint open!</b> <a href='x.html'>MINT HERE</a>";
+        }
+
+        // If countdown 2 is finished, display a message
+        if (duration2.asMilliseconds() < 0) {
+            clearInterval(countdownInterval);
+            countdownElement2.innerHTML = "<b>released to DSPs!</b> <a href='x.html'>STREAM HERE</a>";
+        }
+    }, 1000);
+
+    // Format the duration as "X months X days X hours X minutes X seconds"
+    function formatDuration(duration) {
+        var months = duration.months();
+        var days = duration.days();
+        var hours = duration.hours();
+        var minutes = duration.minutes();
+        var seconds = duration.seconds();
+
+        var durationString = "";
+
+        if (months > 0) {
+            durationString += months + "m ";
+        }
+
+        if (days > 0) {
+            durationString += days + "d ";
+        }
+
+        durationString += hours + "h " + minutes + "m " + seconds + "s";
+
+        // Remove "0m" and "0d" from the duration string
+        durationString = durationString.replace(/ 0h |0d /g, "");
+
+        return durationString;
+    }
+</script>
+</body>
 </html>
