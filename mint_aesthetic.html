@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ETH Mint Landing Page</title>
+    <meta name="description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta property="og:title" content="Martin Gerber aka Marty Gerbs">
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
+    <meta property="og:image" content="https://martingerber.xyz/card.jpg">
+    <meta property="og:url" content="https://martingerber.xyz/index.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+        }
+
+        #video-background {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #video-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+            min-width: 100%;
+            object-fit: cover;
+        }
+
+        .content-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .title {
+            font-size: 4vw;
+            margin-bottom: 2vw;
+            white-space: nowrap;
+        }
+
+        .buttons-container {
+            margin-top: 2vw;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 1.5vw 3vw;
+            font-size: 3.5vw;
+            background-color: #2b8c00;
+            color: #fff;
+            text-decoration: none;
+            margin: 0 1vw;
+            border-radius: 5px;
+        }
+
+        a.button:hover {
+            background-color: #fff;
+            color: #b64917;
+        }
+
+        @media (min-width: 768px) {
+            #video-content {
+                min-height: unset;
+                min-width: unset;
+            }
+
+            .title {
+                font-size: 4.5vw;
+                margin-bottom: 1vw;
+            }
+
+            .buttons-container {
+                margin-top: 1vw;
+            }
+
+            .button {
+                padding: 1vw 2vw;
+                font-size: 2.5vw;
+            }
+        }
+    </style>
+    <script type="text/javascript"></script>
+        
+</head>
+<body>
+<div id="video-background">
+    <video id="video-content" autoplay loop muted playsinline>
+        <source src="IMAGES/MINT.mp4" type="video/mp4">
+    </video>
+    <div class="content-container">
+        <div class="title">GOERLI mint is LIVE!</div>
+        <div class="buttons-container">
+            <a onclick="mintAlbum()"; id="myTXT" class="button" target="_blank" rel="noopener noreferrer">MINT ALBUM (0.01 GOERLI)</a>
+            <br><br>
+            <a onclick="freeMint()"; id="myTXT" class="button" target="_blank" rel="noopener noreferrer">MINT (FREE FOR ALLOWLIST)</a>
+            <br><br>
+            <a href="https://testnets.opensea.io/assets/goerli/0x2e1d608c7a5a14bc226217e9f9a7c914fa75bd2c/1" class="button" target="_blank" rel="noopener noreferrer">VIEW ON OPENSEA</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
