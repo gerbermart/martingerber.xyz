@@ -98,6 +98,22 @@
             background-color: #2b8c00;
             color: #b64917;
         }
+
+        .button {
+            display: inline-block;
+            padding: 1.5vw 3vw;
+            font-size: 3.5vw;
+            background-color: #2b8c00;
+            color: #fff;
+            text-decoration: none;
+            margin: 0 1vw;
+            border-radius: 5px;
+        }
+
+        a.button:hover {
+            background-color: #fff;
+            color: #b64917;
+        }
     </style>
 </head>
 <body>
@@ -141,13 +157,13 @@
         // If countdown 1 is finished, display a message
         if (duration1.asMilliseconds() < 0) {
             clearInterval(countdownInterval);
-            countdownElement1.innerHTML = "<b>ETH mint open!</b> <a href='x.html'><mark>&nbsp MINT HERE &nbsp</mark></a>";
+            countdownElement1.innerHTML = "<b>ETH mint open!</b> <a href='topsecretlink.html' class='button'>&nbsp MINT HERE &nbsp</a>";
         }
 
         // If countdown 2 is finished, display a message
         if (duration2.asMilliseconds() < 0) {
             clearInterval(countdownInterval);
-            countdownElement2.innerHTML = "<b>released to DSPs!</b> <a href='x.html'><mark>&nbsp STREAM HERE &nbsp</mark></a>";
+            countdownElement2.innerHTML = "<b>released to DSPs!</b> <a href='x.html' class='button'>&nbsp STREAM HERE &nbsp</a>";
         }
     }, 1000);
 
