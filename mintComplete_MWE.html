@@ -342,27 +342,32 @@
 
         async function mintAlbum() {
             try {
-                const provider = window.ethereum;
+                if (window.ethereum && window.ethereum.isMetaMask) {
+                    const provider = window.ethereum;
+                    await provider.enable();
 
-                const contract = new window.ethereum.Contract(contractABI, contractAddress);
+                    const contract = new window.ethereum.Contract(contractABI, contractAddress);
 
-                const mintCount = 1; // Number of album mints
+                    const mintCount = 1; // Number of album mints
 
-                const mintPrice = await contract.methods.mintPrice().call();
-                const totalAmount = mintPrice * mintCount;
+                    const mintPrice = await contract.methods.mintPrice().call();
+                    const totalAmount = mintPrice * mintCount;
 
-                const accounts = await provider.request({ method: 'eth_requestAccounts' });
-                const from = accounts[0];
+                    const accounts = await provider.request({ method: 'eth_requestAccounts' });
+                    const from = accounts[0];
 
-                const options = {
-                    from,
-                    value: totalAmount
-                };
+                    const options = {
+                        from,
+                        value: totalAmount.toString()
+                    };
 
-                await contract.methods.mintAlbum(1, mintCount).send(options);
+                    await contract.methods.mintAlbum(1, mintCount).send(options);
 
-                console.log('Mint transaction sent successfully!');
-                alert('MINT COMPLETE!');
+                    console.log('Mint transaction sent successfully!');
+                    alert('MINT COMPLETE!');
+                } else {
+                    throw new Error('Please install MetaMask extension to mint the album.');
+                }
             } catch (error) {
                 console.error('Error occurred while minting:', error);
                 alert('Error occurred while minting: ' + error.message);
@@ -371,29 +376,40 @@
 
         async function freeMint() {
             try {
-                const provider = window.ethereum;
+                if (window.ethereum && window.ethereum.isMetaMask) {
+                    const provider = window.ethereum;
+                    await provider.enable();
 
-                const contract = new window.ethereum.Contract(contractABI, contractAddress);
+                    const contract = new window.ethereum.Contract(contractABI, contractAddress);
 
-                const mintCount = 1; // Number of album mints
+                    const mintCount = 1; // Number of album mints
 
-                const accounts = await provider.request({ method: 'eth_requestAccounts' });
-                const from = accounts[0];
+                    const accounts = await provider.request({ method: 'eth_requestAccounts' });
+                    const from = accounts[0];
 
-                const isAllowed = await contract.methods.isAddressAllowed(from).call();
+                    const isAllowed = await contract.methods.isAddressAllowedInternal(from).call();
 
-                if (!isAllowed) {
-                    throw new Error('Address is not allowed to perform a free mint');
+                    if (!isAllowed) {
+                        throw new Error('Address is not allowed to perform a free mint');
+                    }
+
+                    const hasClaimed = await contract.methods.hasClaimed(from).call();
+
+                    if (!hasClaimed) {
+                        throw new Error('Allowed address has already claimed its free mint');
+                    }
+
+                    const options = {
+                        from
+                    };
+
+                    await contract.methods.freeMint(1, mintCount).send(options);
+
+                    console.log('Free Mint transaction sent successfully!');
+                    alert('MINT COMPLETE!');
+                } else {
+                    throw new Error('Please install MetaMask extension to mint the album.');
                 }
-
-                const options = {
-                    from
-                };
-
-                await contract.methods.freeMint(1, mintCount).send(options);
-
-                console.log('Free Mint transaction sent successfully!');
-                alert('MINT COMPLETE!');
             } catch (error) {
                 console.error('Error occurred while free minting:', error);
                 alert('Error occurred while free minting: ' + error.message);
