@@ -376,6 +376,21 @@
                 "type": "function"
             }
         ];
+        checkNetwork(); // run it on startup
+        async function checkNetwork() {
+            const expectedNetwork = 'goerli'; // Replace with the expected network name
+
+            if (window.ethereum && window.ethereum.isMetaMask) {
+                const provider = new Web3(window.ethereum);
+                const network = await provider.eth.net.getNetworkType();
+
+                if (network !== expectedNetwork) {
+                    throw new Error(`Please switch to the ${expectedNetwork} network.`);
+                }
+            } else {
+                throw new Error('Please install MetaMask extension to interact with the network.');
+            }
+        }
 
         async function mintAlbum() {
             try {
@@ -398,6 +413,7 @@
                         value: totalAmount.toString()
                     };
 
+                    checkNetwork(); // last minute double-check
                     const transaction = contract.methods.mintAlbum(1, mintCount).send(options);
                     transaction.on('transactionHash', function (hash) {
                         console.log('Transaction hash:', hash);
@@ -452,6 +468,7 @@
                         from
                     };
 
+                    checkNetwork(); // last minute double-check
                     const transaction = contract.methods.freeMint(1, mintCount).send(options);
                     transaction.on('transactionHash', function (hash) {
                         console.log('Transaction hash:', hash);
