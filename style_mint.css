@@ -90,6 +90,11 @@ a.button:hover {
     color: #fff;
 }
 
+.button:disabled:hover {
+    background-color: #b64917;
+    color: #fff;
+}
+
 @media (min-width: 768px) {
     #video-content {
         min-height: unset;
