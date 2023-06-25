@@ -336,19 +336,21 @@
                 "stateMutability": "view",
                 "type": "function"
             }
-        ]; 
-        async function mintAlbum() {
-            
+        ];
 
+        async function mintAlbum() {
             try {
-                const contract = new window.ethereum.Contract(contractABI, contractAddress);
+                const provider = window.ethereum;
+                const web3 = new Web3(provider);
+
+                const contract = new web3.eth.Contract(contractABI, contractAddress);
 
                 const mintCount = 1; // Number of album mints
 
                 const mintPrice = await contract.methods.mintPrice().call();
                 const totalAmount = mintPrice * mintCount;
 
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const accounts = await provider.request({ method: 'eth_requestAccounts' });
                 const from = accounts[0];
 
                 const options = {
@@ -368,13 +370,14 @@
 
         async function freeMint() {
             try {
-                
+                const provider = window.ethereum;
+                const web3 = new Web3(provider);
 
-                const contract = new window.ethereum.Contract(contractABI, contractAddress);
+                const contract = new web3.eth.Contract(contractABI, contractAddress);
 
                 const mintCount = 1; // Number of album mints
 
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const accounts = await provider.request({ method: 'eth_requestAccounts' });
                 const from = accounts[0];
 
                 const options = {
@@ -391,6 +394,7 @@
             }
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
 </head>
 <body>
     <button onclick="mintAlbum()">Mint Album</button>
