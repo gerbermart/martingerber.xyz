@@ -1,7 +1,6 @@
 const contractAddress = '0xbb1696ed7CE36a50a947e20F3785DE11460AEcEe'; // Replace with the actual contract address
 import { contractABI } from './abi.js';
 
-
 loadContractABI();
 const ethereumProvider = window.ethereum;
 let contract; // Declare the contract variable
@@ -33,30 +32,6 @@ async function mintAlbum() {
   }
 }
 
-async function freeMint() {
-  const mintCount = 1; // Number of album mints
-
-  try {
-    const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
-    const from = accounts[0];
-
-    const transactionParameters = {
-      from: from,
-      to: contractAddress,
-      data: contract.methods.freeMint(ALBUM_ID, mintCount).encodeABI()
-    };
-
-    const txHash = await ethereumProvider.request({
-      method: 'eth_sendTransaction',
-      params: [transactionParameters]
-    });
-
-    console.log('Mint Transaction Hash:', txHash);
-  } catch (error) {
-    console.log('Mint Failed:', error);
-  }
-}
-
 async function initializeContract() {
   try {
     const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
@@ -70,5 +45,8 @@ async function initializeContract() {
   }
 }
 
-// Initialize the contract and enable minting buttons
+// Initialize the contract and enable minting button
 initializeContract();
+
+// Add event listener to the mint button
+document.getElementById('mintButton').addEventListener('click', mintAlbum);
