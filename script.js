@@ -1,52 +1,66 @@
-const contractAddress = '0xbb1696ed7CE36a50a947e20F3785DE11460AEcEe'; // Replace with the actual contract address
-import { contractABI } from './abi.js';
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mint Album</title>
+    <script>
+        async function mintAlbum() {
+            try {
+                const contractAddress = 'CONTRACT_ADDRESS'; // Replace with the actual contract address
+                const contractABI = CONTRACT_ABI; // Replace with the actual contract ABI
+                const contract = new window.ethereum.Contract(contractABI, contractAddress);
 
-loadContractABI();
-const ethereumProvider = window.ethereum;
-let contract; // Declare the contract variable
+                const mintCount = 1; // Number of album mints
 
-async function mintAlbum() {
-  const mintCount = 1; // Number of album mints
-  const mintPrice = await contract.methods.mintPrice().call();
-  const value = ethereumProvider.utils.toWei(String(mintPrice * mintCount));
+                const mintPrice = await contract.methods.mintPrice().call();
+                const totalAmount = mintPrice * mintCount;
 
-  try {
-    const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
-    const from = accounts[0];
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const from = accounts[0];
 
-    const transactionParameters = {
-      from: from,
-      to: contractAddress,
-      value: value,
-      data: contract.methods.mintAlbum(ALBUM_ID, mintCount).encodeABI()
-    };
+                const options = {
+                    from,
+                    value: totalAmount,
+                    gasPrice: '20000000000', // Replace with the desired gas price (optional)
+                };
 
-    const txHash = await ethereumProvider.request({
-      method: 'eth_sendTransaction',
-      params: [transactionParameters]
-    });
+                await contract.methods.mintAlbum(1, mintCount).send(options);
 
-    console.log('Mint Transaction Hash:', txHash);
-  } catch (error) {
-    console.log('Mint Failed:', error);
-  }
-}
+                console.log('Mint transaction sent successfully!');
+                alert('MINT COMPLETE!');
+            } catch (error) {
+                console.error('Error occurred while minting:', error);
+                alert('Error occurred while minting: ' + error.message);
+            }
+        }
 
-async function initializeContract() {
-  try {
-    const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
-    const from = accounts[0];
+        async function freeMint() {
+            try {
+                const contractAddress = 'CONTRACT_ADDRESS'; // Replace with the actual contract address
+                const contractABI = CONTRACT_ABI; // Replace with the actual contract ABI
+                const contract = new window.ethereum.Contract(contractABI, contractAddress);
 
-    const web3 = new Web3(ethereumProvider);
-    contract = new web3.eth.Contract(contractABI, contractAddress, { from: from });
-    console.log('Contract Initialized');
-  } catch (error) {
-    console.log('Contract Initialization Failed:', error);
-  }
-}
+                const mintCount = 1; // Number of album mints
 
-// Initialize the contract and enable minting button
-initializeContract();
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const from = accounts[0];
 
-// Add event listener to the mint button
-document.getElementById('mintButton').addEventListener('click', mintAlbum);
+                const options = {
+                    from,
+                };
+
+                await contract.methods.freeMint(1, mintCount).send(options);
+
+                console.log('Free Mint transaction sent successfully!');
+                alert('MINT COMPLETE!');
+            } catch (error) {
+                console.error('Error occurred while free minting:', error);
+                alert('Error occurred while free minting: ' + error.message);
+            }
+        }
+    </script>
+</head>
+<body>
+    <button onclick="mintAlbum()">Mint Album</button>
+    <button onclick="freeMint()">Free Mint</button>
+</body>
+</html>
