@@ -1,16 +1,6 @@
 const contractAddress = '0xbb1696ed7CE36a50a947e20F3785DE11460AEcEe'; // Replace with the actual contract address
-let contractABI; // Declare the contractABI variable
+import { contractABI } from './abi.js';
 
-async function loadContractABI() {
-  try {
-    const response = await fetch('./contractABI.json');
-    contractABI = await response.json();
-    console.log('Contract ABI Loaded');
-    initializeContract();
-  } catch (error) {
-    console.log('Failed to load Contract ABI:', error);
-  }
-}
 
 loadContractABI();
 const ethereumProvider = window.ethereum;
