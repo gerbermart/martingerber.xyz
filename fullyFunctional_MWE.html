@@ -417,7 +417,8 @@
                     const transaction = contract.methods.mintAlbum(1, mintCount).send(options);
                     transaction.on('transactionHash', function (hash) {
                         console.log('Transaction hash:', hash);
-                        document.getElementById('mintButton').innerText = '<a href="https://goerli.etherscan.io/tx/'+hash+'" target="_blank" rel="noopener noreferrer">Minting...</a>';
+                        document.getElementById('mintButton').onclick=openLink('https://goerli.etherscan.io/tx/'+hash);
+                        document.getElementById('mintButton').innerText = 'Minting...';
                         document.getElementById('mintButton').disabled = true;
                         //alert('Transaction Hash: ' + hash);
                     });
@@ -425,7 +426,8 @@
                     const receipt = await transaction;
 
                     console.log('Mint transaction sent successfully!');
-                    document.getElementById('mintButton').innerText = '<a href="https://goerli.etherscan.io/tx/'+receipt.transactionHash+'" target="_blank" rel="noopener noreferrer">Mint Album (Completed)</a>';
+                    document.getElementById('mintButton').onclick=openLink('https://goerli.etherscan.io/tx/'+receipt.transactionHash);
+                    document.getElementById('mintButton').innerText = 'Mint Album (Completed)';
                     document.getElementById('mintButton').disabled = false;
                     //alert('MINT COMPLETE!\nTransaction Hash: ' + receipt.transactionHash);
                 } else {
@@ -472,7 +474,8 @@
                     const transaction = contract.methods.freeMint(1, mintCount).send(options);
                     transaction.on('transactionHash', function (hash) {
                         console.log('Transaction hash:', hash);
-                        document.getElementById('freeMintButton').innerText = '<a href="https://goerli.etherscan.io/tx/'+hash+'" target="_blank" rel="noopener noreferrer">Minting...</a>';
+                        document.getElementById('freeMintButton').onclick=openLink('https://goerli.etherscan.io/tx/'+hash);
+                        document.getElementById('freeMintButton').innerText = 'Minting...';
                         document.getElementById('freeMintButton').disabled = true;
                         alert('Transaction Hash: ' + hash);
                     });
@@ -480,7 +483,8 @@
                     const receipt = await transaction;
 
                     console.log('Free Mint transaction sent successfully!');
-                    document.getElementById('freeMintButton').innerText = '<a href="https://goerli.etherscan.io/tx/'+receipt.transactionHash+'" target="_blank" rel="noopener noreferrer">Free Mint (Completed)</a>';
+                    document.getElementById('freeMintButton').onclick=openLink('https://goerli.etherscan.io/tx/'+receipt.transactionHash);
+                    document.getElementById('freeMintButton').innerText = 'Free Mint (Completed)';
                     document.getElementById('freeMintButton').disabled = false;
                     //alert('MINT COMPLETE!\nTransaction Hash: ' + receipt.transactionHash);
                 } else {
@@ -493,6 +497,12 @@
                 //alert('Error occurred while free minting: ' + error.message);
             }
         }
+
+        function openLink(urlInput) {
+            const url = urlInput;
+            const win = window.open(url, "_blank");
+            win.opener = null;
+        };
     </script>
 </head>
 <body>
