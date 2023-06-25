@@ -1,12 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>ALBMS - Mint NFT</title>
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <h1>ALBMS - Mint NFT</h1>
-    <button id="mintButton">Mint Album NFT</button>
-    <p id="message"></p>
-  </body>
+<head>
+    <title>Mint Album</title>
+    <script type="text/javascript">
+        const contractAddress = '0xbb1696ed7CE36a50a947e20F3785DE11460AEcEe'; // Replace with the actual contract address
+        import { contractABI } from './abi.js'; // Replace with the actual contract ABI
+
+        async function mintAlbum() {
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const account = accounts[0];
+
+                const contract = new window.ethereum.Contract(contractABI, contractAddress);
+
+                const mintCount = 1; // Number of album tokens to mint
+
+                const mintPrice = await contract.methods.mintPrice().call();
+                const value = mintPrice * mintCount;
+
+                const tx = await contract.methods.mintAlbum(1, mintCount).send({
+                    from: account,
+                    value: value.toString(),
+                });
+
+                if (tx.status) {
+                    alert('MINT COMPLETE!');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred while minting the album.');
+            }
+        }
+
+        async function freeMint() {
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const account = accounts[0];
+
+                const contract = new window.ethereum.Contract(contractABI, contractAddress);
+
+                const mintCount = 1; // Number of album tokens to mint
+
+                const tx = await contract.methods.freeMint(1, mintCount).send({
+                    from: account,
+                });
+
+                if (tx.status) {
+                    alert('MINT COMPLETE!');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred while minting the album for free.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <button onclick="mintAlbum()">Mint Album</button>
+    <button onclick="freeMint()">Free Mint</button>
+</body>
 </html>
