@@ -401,7 +401,7 @@
                     await contract.methods.mintAlbum(1, mintCount).send(options);
 
                     console.log('Mint transaction sent successfully!');
-                    alert('MINT COMPLETE!');
+                    document.getElementById('mintButton').innerText = 'Mint Album (Completed)';
                 } else {
                     throw new Error('Please install MetaMask extension to mint the album.');
                 }
@@ -443,7 +443,7 @@
                     await contract.methods.freeMint(1, mintCount).send(options);
 
                     console.log('Free Mint transaction sent successfully!');
-                    alert('MINT COMPLETE!');
+                    document.getElementById('freeMintButton').innerText = 'Free Mint (Completed)';
                 } else {
                     throw new Error('Please install MetaMask extension to mint the album.');
                 }
@@ -455,7 +455,7 @@
     </script>
 </head>
 <body>
-    <button onclick="mintAlbum()">Mint Album</button>
-    <button onclick="freeMint()">Free Mint</button>
+    <button id="mintButton" onclick="mintAlbum()">Mint Album</button>
+    <button id="freeMintButton" onclick="freeMint()">Free Mint</button>
 </body>
 </html>
