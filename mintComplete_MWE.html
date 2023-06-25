@@ -4,7 +4,7 @@
     <title>Mint Album</title>
     <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
     <script>
-        const contractAddress = '0xbb1696ed7CE36a50a947e20F3785DE11460AEcEe'; // Replace with the actual contract address
+        const contractAddress = '0x1b75a9469e856c47b7813966a7e9da64e984e6de'; // Replace with the actual contract address
         const contractABI = [
             {
                 "anonymous": false,
@@ -280,6 +280,44 @@
                 "type": "function"
             },
             {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "addr",
+                        "type": "address"
+                    }
+                ],
+                "name": "hasClaimed",
+                "outputs": [
+                    {
+                        "internalType": "bool",
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "addr",
+                        "type": "address"
+                    }
+                ],
+                "name": "isAddressAllowedInternal",
+                "outputs": [
+                    {
+                        "internalType": "bool",
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
                 "inputs": [],
                 "name": "mintPrice",
                 "outputs": [
@@ -337,7 +375,7 @@
                 "stateMutability": "view",
                 "type": "function"
             }
-        ]; // Replace with your contract's ABI
+        ];
 
         async function mintAlbum() {
             try {
