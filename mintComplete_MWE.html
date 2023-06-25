@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Mint Album</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
     <script>
         const contractAddress = '0xbb1696ed7CE36a50a947e20F3785DE11460AEcEe'; // Replace with the actual contract address
         const contractABI = [
@@ -343,17 +344,17 @@
         async function mintAlbum() {
             try {
                 if (window.ethereum && window.ethereum.isMetaMask) {
-                    const provider = window.ethereum;
-                    await provider.enable();
+                    const provider = new Web3(window.ethereum);
+                    await provider.eth.requestAccounts();
 
-                    const contract = new window.ethereum.Contract(contractABI, contractAddress);
+                    const contract = new provider.eth.Contract(contractABI, contractAddress);
 
                     const mintCount = 1; // Number of album mints
 
                     const mintPrice = await contract.methods.mintPrice().call();
                     const totalAmount = mintPrice * mintCount;
 
-                    const accounts = await provider.request({ method: 'eth_requestAccounts' });
+                    const accounts = await provider.eth.getAccounts();
                     const from = accounts[0];
 
                     const options = {
@@ -377,14 +378,14 @@
         async function freeMint() {
             try {
                 if (window.ethereum && window.ethereum.isMetaMask) {
-                    const provider = window.ethereum;
-                    await provider.enable();
+                    const provider = new Web3(window.ethereum);
+                    await provider.eth.requestAccounts();
 
-                    const contract = new window.ethereum.Contract(contractABI, contractAddress);
+                    const contract = new provider.eth.Contract(contractABI, contractAddress);
 
                     const mintCount = 1; // Number of album mints
 
-                    const accounts = await provider.request({ method: 'eth_requestAccounts' });
+                    const accounts = await provider.eth.getAccounts();
                     const from = accounts[0];
 
                     const isAllowed = await contract.methods.isAddressAllowedInternal(from).call();
