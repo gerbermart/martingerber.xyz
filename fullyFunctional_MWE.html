@@ -409,7 +409,7 @@
                     const receipt = await transaction;
 
                     console.log('Mint transaction sent successfully!');
-                    document.getElementById('mintButton').innerText = '<a href="https://goerli.etherscan.io/tx/'+hash+'" target="_blank" rel="noopener noreferrer">Mint Album (Completed)</a>';
+                    document.getElementById('mintButton').innerText = '<a href="https://goerli.etherscan.io/tx/'+receipt.transactionHash+'" target="_blank" rel="noopener noreferrer">Mint Album (Completed)</a>';
                     document.getElementById('mintButton').disabled = false;
                     //alert('MINT COMPLETE!\nTransaction Hash: ' + receipt.transactionHash);
                 } else {
@@ -463,9 +463,9 @@
                     const receipt = await transaction;
 
                     console.log('Free Mint transaction sent successfully!');
-                    document.getElementById('freeMintButton').innerText = '<a href="https://goerli.etherscan.io/tx/'+hash+'" target="_blank" rel="noopener noreferrer">Free Mint (Completed)</a>';
+                    document.getElementById('freeMintButton').innerText = '<a href="https://goerli.etherscan.io/tx/'+receipt.transactionHash+'" target="_blank" rel="noopener noreferrer">Free Mint (Completed)</a>';
                     document.getElementById('freeMintButton').disabled = false;
-                    alert('MINT COMPLETE!\nTransaction Hash: ' + receipt.transactionHash);
+                    //alert('MINT COMPLETE!\nTransaction Hash: ' + receipt.transactionHash);
                 } else {
                     throw new Error('Please install MetaMask extension to mint the album.');
                 }
