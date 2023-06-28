@@ -25,6 +25,18 @@ body {
     object-fit: cover;
 }
 
+#loading-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: auto;
+    min-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+}
+
 .content-container {
     position: absolute;
     top: 50%;
@@ -98,6 +110,11 @@ a.button:hover {
 
 @media (min-width: 768px) {
     #video-content {
+        min-height: unset;
+        min-width: unset;
+    }
+
+    #loading-video {
         min-height: unset;
         min-width: unset;
     }
