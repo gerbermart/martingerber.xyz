@@ -1,66 +1,74 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Mint Album</title>
-    <script>
-        async function mintAlbum() {
-            try {
-                const contractAddress = 'CONTRACT_ADDRESS'; // Replace with the actual contract address
-                const contractABI = CONTRACT_ABI; // Replace with the actual contract ABI
-                const contract = new window.ethereum.Contract(contractABI, contractAddress);
+const contractAddress = '0xbb1696ed7CE36a50a947e20F3785DE11460AEcEe'; // Replace with the actual contract address
+import { contractABI } from './abi.js';
 
-                const mintCount = 1; // Number of album mints
 
-                const mintPrice = await contract.methods.mintPrice().call();
-                const totalAmount = mintPrice * mintCount;
+loadContractABI();
+const ethereumProvider = window.ethereum;
+let contract; // Declare the contract variable
 
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                const from = accounts[0];
+async function mintAlbum() {
+  const mintCount = 1; // Number of album mints
+  const mintPrice = await contract.methods.mintPrice().call();
+  const value = ethereumProvider.utils.toWei(String(mintPrice * mintCount));
 
-                const options = {
-                    from,
-                    value: totalAmount,
-                    gasPrice: '20000000000', // Replace with the desired gas price (optional)
-                };
+  try {
+    const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
+    const from = accounts[0];
 
-                await contract.methods.mintAlbum(1, mintCount).send(options);
+    const transactionParameters = {
+      from: from,
+      to: contractAddress,
+      value: value,
+      data: contract.methods.mintAlbum(ALBUM_ID, mintCount).encodeABI()
+    };
 
-                console.log('Mint transaction sent successfully!');
-                alert('MINT COMPLETE!');
-            } catch (error) {
-                console.error('Error occurred while minting:', error);
-                alert('Error occurred while minting: ' + error.message);
-            }
-        }
+    const txHash = await ethereumProvider.request({
+      method: 'eth_sendTransaction',
+      params: [transactionParameters]
+    });
 
-        async function freeMint() {
-            try {
-                const contractAddress = 'CONTRACT_ADDRESS'; // Replace with the actual contract address
-                const contractABI = CONTRACT_ABI; // Replace with the actual contract ABI
-                const contract = new window.ethereum.Contract(contractABI, contractAddress);
+    console.log('Mint Transaction Hash:', txHash);
+  } catch (error) {
+    console.log('Mint Failed:', error);
+  }
+}
 
-                const mintCount = 1; // Number of album mints
+async function freeMint() {
+  const mintCount = 1; // Number of album mints
 
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                const from = accounts[0];
+  try {
+    const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
+    const from = accounts[0];
 
-                const options = {
-                    from,
-                };
+    const transactionParameters = {
+      from: from,
+      to: contractAddress,
+      data: contract.methods.freeMint(ALBUM_ID, mintCount).encodeABI()
+    };
 
-                await contract.methods.freeMint(1, mintCount).send(options);
+    const txHash = await ethereumProvider.request({
+      method: 'eth_sendTransaction',
+      params: [transactionParameters]
+    });
 
-                console.log('Free Mint transaction sent successfully!');
-                alert('MINT COMPLETE!');
-            } catch (error) {
-                console.error('Error occurred while free minting:', error);
-                alert('Error occurred while free minting: ' + error.message);
-            }
-        }
-    </script>
-</head>
-<body>
-    <button onclick="mintAlbum()">Mint Album</button>
-    <button onclick="freeMint()">Free Mint</button>
-</body>
-</html>
+    console.log('Mint Transaction Hash:', txHash);
+  } catch (error) {
+    console.log('Mint Failed:', error);
+  }
+}
+
+async function initializeContract() {
+  try {
+    const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
+    const from = accounts[0];
+
+    const web3 = new Web3(ethereumProvider);
+    contract = new web3.eth.Contract(contractABI, contractAddress, { from: from });
+    console.log('Contract Initialized');
+  } catch (error) {
+    console.log('Contract Initialization Failed:', error);
+  }
+}
+
+// Initialize the contract and enable minting buttons
+initializeContract();
