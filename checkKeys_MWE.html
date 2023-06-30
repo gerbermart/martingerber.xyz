@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wallet Connect Example</title>
+</head>
+<body>
+  <div id="connect-container">
+    <div id="connect-link-container" style="display: none;">
+      <a id="connect-link" href="javascript:void(0)" onclick="getWalletAddress()">Click Me</a>
+    </div>
+    <div id="result-container" style="display: none;"></div>
+  </div>
+
+  <script>
+    function doneLoading() {
+      // Web3 library has finished loading
+      var connectLinkContainer = document.getElementById("connect-link-container");
+      connectLinkContainer.style.display = "block"; // Make the link visible
+    }
+
+    function getWalletAddress() {
+      if (typeof web3 !== 'undefined') {
+        // Web3 is available
+        web3.eth.getAccounts(function(error, accounts) {
+          if (error) {
+            console.error(error);
+          } else {
+            var walletAddress = accounts[0];
+            console.log("Wallet Address:", walletAddress);
+            // Use the wallet address as needed
+            checkKeys(walletAddress); // Call checkKeys() with the wallet address
+          }
+        });
+      } else {
+        console.error("Web3 is not available.");
+      }
+    }
+
+    function checkKeys(walletAddress) {
+      var contractAddresses = ['0xd8fabd716eccbf98157f6728d3c187625a513127', '0xb0e5faac1429592cea8a70f8828d7bd88b788e82', '0x349dbadc6d24eb7e534ef230db01a35208e49d04','0x9a1dfe64442701daf7fff81434a3c0792eed107f']; // Replace with your desired contract addresses
+      var contractAddressNames = ['GERBS','NORLI','BONES','TUNES'];
+
+      var contractsWithBalance = [];
+      for (var i = 0; i < contractAddresses.length; i++) {
+        var contractAddress = contractAddresses[i];
+        var contract = new web3.eth.Contract(abi, contractAddress); // Replace 'abi' with the ABI of your contract
+
+        contract.methods.balanceOf(walletAddress).call(function(error, balance) {
+          if (error) {
+            console.error(error);
+          } else {
+            if (balance > 0) {
+              var index = contractAddresses.indexOf(contractAddress);
+              if (index !== -1) {
+                var contractName = contractAddressNames[index];
+                console.log("User has a balance for contract", contractAddress, "(" + contractName + ")");
+                contractsWithBalance.push(contractName);
+              }
+            }
+          }
+        });
+      }
+
+      if (contractsWithBalance.length > 0) {
+        var contractList = contractsWithBalance.join(", ");
+        console.log("User has a balance for contracts:", contractList);
+        var resultContainer = document.getElementById("result-container");
+        resultContainer.innerHTML = "User has a balance for contracts: " + contractList;
+        resultContainer.style.display = "block";
+        var connectContainer = document.getElementById("connect-container");
+        connectContainer.style.display = "none";
+        var connectLink = document.getElementById("connect-link");
+        connectLink.innerHTML = "<a href='x.html' target='_blank'>Allowlist Mint Unlocked</a>";
+      } else {
+        console.log("User has zero balance for all contracts");
+        var resultContainer = document.getElementById("result-container");
+        resultContainer.innerHTML = "User has zero balance for all contracts";
+        resultContainer.style.display = "block";
+      }
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js" onload="doneLoading()"></script>
+</body>
+</html>

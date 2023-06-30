@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wallet Connect Example</title>
+  <script>
+    function doneLoading() {
+      // Web3 library has finished loading
+      var connectButton = document.getElementById("connect-button");
+      connectButton.style.display = "block"; // Make the button visible
+    }
+
+    function getWalletAddress() {
+      if (typeof web3 !== 'undefined') {
+        // Web3 is available
+        web3.eth.getAccounts(function(error, accounts) {
+          if (error) {
+            console.error(error);
+          } else {
+            var walletAddress = accounts[0];
+            console.log("Wallet Address:", walletAddress);
+            // Use the wallet address as needed
+          }
+        });
+      } else {
+        console.error("Web3 is not available.");
+      }
+    }
+  </script>
+</head>
+<body>
+  <button id="connect-button" style="display: none;" onclick="getWalletAddress()">Connect Wallet</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js" onload="doneLoading()"></script>
+</body>
+</html>
