@@ -18,21 +18,24 @@
       connectLinkContainer.style.display = "block"; // Make the link visible
     }
 
-    function getWalletAddress() {
-      if (typeof web3 !== 'undefined') {
-        // Web3 is available
-        web3.eth.getAccounts(function(error, accounts) {
-          if (error) {
-            console.error(error);
-          } else {
+    async function getWalletAddress() {
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          await window.ethereum.enable();
+          var accounts = await window.ethereum.request({ method: 'eth_accounts' });
+          if (accounts.length > 0) {
             var walletAddress = accounts[0];
             console.log("Wallet Address:", walletAddress);
             // Use the wallet address as needed
             checkKeys(walletAddress); // Call checkKeys() with the wallet address
+          } else {
+            console.error("No accounts found.");
           }
-        });
+        } catch (error) {
+          console.error(error);
+        }
       } else {
-        console.error("Web3 is not available.");
+        console.error("MetaMask is not available.");
       }
     }
 
@@ -43,7 +46,7 @@
       var contractsWithBalance = [];
       for (var i = 0; i < contractAddresses.length; i++) {
         var contractAddress = contractAddresses[i];
-        var contract = new web3.eth.Contract(abi, contractAddress); // Replace 'abi' with the ABI of your contract
+        var contract = new window.ethereum.Contract(abi, contractAddress); // Replace 'abi' with the ABI of your contract
 
         contract.methods.balanceOf(walletAddress).call(function(error, balance) {
           if (error) {
