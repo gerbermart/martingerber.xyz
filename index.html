@@ -124,6 +124,7 @@
     <div class="countdown-container">
         <div class="promo-text"><b>DROP COMING:</b> HIDDEN VARIABLES I</div>
         <br>
+        <div class="countdown" id="countdownALLOW"></div>
         <div class="countdown" id="countdown1"></div>
         <div class="countdown" id="countdown2"></div>
         <div class="promo-text"><a href="index_main.html">continue to main site</a></div>
@@ -134,9 +135,11 @@
 <script>
     // Set the countdown dates in PST
     var countdownDate1 = moment.utc([2023, 6, 6, 17, 0, 0]); // July 6, 2023, 10:00 AM PST
+    var countdownDateALLOW = moment.utc([2023, 6, 3, 17, 0, 0]); // July 3, 2023, 10:00 AM PST
     var countdownDate2 = moment.utc([2023, 7, 1, 17, 0, 0]); // August 1, 2023, 10:00 AM PST
 
     var countdownElement1 = document.getElementById('countdown1');
+    var countdownElementALLOW = document.getElementById('countdownALLOW');
     var countdownElement2 = document.getElementById('countdown2');
 
     // Update the countdown every second
@@ -147,17 +150,27 @@
         // Calculate the remaining time until countdown 1
         var duration1 = moment.duration(countdownDate1.diff(now));
 
+        // Calculate the remaining time until countdown 1
+        var durationALLOW = moment.duration(countdownDateALLOW.diff(now));
+
         // Calculate the remaining time until countdown 2
         var duration2 = moment.duration(countdownDate2.diff(now));
 
         // Display the countdowns
-        countdownElement1.innerHTML = "<b>ETH mint opens:</b> " + formatDuration(duration1);
-        countdownElement2.innerHTML = "<b>DSP release:</b> " + formatDuration(duration2);
+        countdownElement1.innerHTML = "<b>Public Mint Opens:</b> " + formatDuration(duration1);
+        countdownElementALLOW.innerHTML = "<b>Allowlist Mint Opens:</b> " + formatDuration(durationALLOW);
+        countdownElement2.innerHTML = "<b>DSP Release:</b> " + formatDuration(duration2);
 
         // If countdown 1 is finished, display a message
         if (duration1.asMilliseconds() < 0) {
             clearInterval(countdownInterval);
-            countdownElement1.innerHTML = "<b>ETH mint open!</b> <a href='topsecretlink2.html' class='button'>&nbsp MINT HERE &nbsp</a>";
+            countdownElement1.innerHTML = "<b>Public Mint Open!</b> <a href='topsecretlink2.html' class='button'>&nbsp MINT HERE &nbsp</a>";
+        }
+
+        // If countdown 1 is finished, display a message
+        if (durationALLOW.asMilliseconds() < 0) {
+            clearInterval(countdownInterval);
+            countdownElementALLOW.innerHTML = "<b>Allowlist Mint Open!</b> <a href='topsecretlink2.html' class='button'>&nbsp MINT HERE &nbsp</a>";
         }
 
         // If countdown 2 is finished, display a message
@@ -180,17 +193,27 @@
         if ((minutes<10) & (hours>0)) {minutes="0"+minutes;}
 
         var durationString = "";
+        var dispSeconds = true;
 
         if (months > 0) {
             durationString += months + "m, ";
+            dispSeconds = false;
         }
 
         if (days > 0) {
             durationString += days + "d, ";
+            if (days > 7) {
+                dispSeconds = false;
+            }
         }
 
         if (hours > 0) {
-            durationString += hours + ":" + minutes + ":" + seconds;
+            if (dispSeconds == true) {
+                durationString += hours + ":" + minutes + ":" + seconds;
+            } else {
+                durationString += hours + ":" + minutes;
+            }
+            
         } else if (minutes > 0) {
             durationString += minutes + ":" + seconds;
         } else {
