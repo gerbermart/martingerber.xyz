@@ -2,11 +2,30 @@
 <html>
 <head>
     <title>Wallet Address Checker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.6/web3.min.js"></script>
+</head>
+<body>
+    <h1>Wallet Address Checker</h1>
+    <button onclick="compareWalletAddress()">Check Wallet Address</button>
+    <div id="output"></div>
+
     <script>
+        // Check if Web3 is available
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // If Web3 is not available, prompt the user to install a compatible wallet extension
+            alert('Please install a wallet extension like MetaMask to use this feature.');
+        }
+
         async function compareWalletAddress() {
-            if (window.ethereum && window.ethereum.isMetaMask) {
+            // Check if Web3 is available
+            if (typeof web3 !== 'undefined') {
                 try {
-                    const accounts = await ethereum.request({ method: 'eth_accounts' });
+                    // Request access to the user's accounts
+                    const accounts = await web3.eth.requestAccounts();
+
+                    // Get the first account from the array of accounts
                     const walletAddress = accounts[0];
                     const gerbsList = ['0x20e6af36fD433821f704B12ec03f644dc406A5Dc', '0x26b13e3924897C03715489361459b869Af949640', '0x29d2B425dC9881eb1C55ab29d1a3393F7A2F5678', '0x2e69fc5871C642D045354A3988D1F071102B49aE', '0x31fA8e708cBA6eeCB355338b393621d4CA7743F4', '0x31fbaa23aD224E32B2626985e6B70ff75cB6AbE5', '0x3c9a951B0D30422964Ac9162F0E93bA4dbF9157D', '0x43f427bAA039404a949fA272bD543C7D9Efc9C71', '0x48BFB74bEF9bfa3C5896e8A168b413d8458146f4', '0x496e3833217AeD6a1738F986829F941cE71c81cF', '0x567B5E79cE0d465a0FF1e1eeeFE65d180b4C5D41', '0x621FE8A9713139603E696985fD50e2D550dE7C08', '0x6E69860885B367073D2347dD93eEC649d7f664c3', '0x75d514b6040727C19ae06aE8F1a1c7912c4C91C0', '0x7933231775dEc3f3c80039DEbd7E3afD8A81f674', '0x7e89DAF03D3E81d81bA6a242FD05646FaEF524B8', '0x7e8C38Ad50622c0b26906C9Cf81D2825fC78A38B', '0x898BB3e7CEEb3Bb0AE26A7c291d9562841ff332F', '0x8A19EE2B23EF483C6c9B2De1e65D8c799Cd80EA1', '0x945ddC5135015685E49624F2D57Ea22d766883b1', '0xAfda4F57783D1b958307beAeC1Efedee0ba7943b', '0xB3B876567b5005CC6AD5994684ADCcc3BFaB7246', '0xBB17D6b61063FD58410e309a3F9F5dfCd44a305D', '0xC1202B2da243467882439944885339f9Fd71279C', '0xa3b019710229d41537A82822bbFe5C5f8aC1b492', '0xb418b7E6CeFd4a1C28B8DaBa78488884D05b0D3f', '0xbb8341376AF7b802D34CAB5A894884d8420118cC', '0xc06317F4721BB3d2dd1694859A227E3C38F83843', '0xf9ba31763CA3445e5770cDC70284f990406bCA84'];
                     const norliList = ['0xAfda4F57783D1b958307beAeC1Efedee0ba7943b', '0xC1202B2da243467882439944885339f9Fd71279C'];
@@ -15,16 +34,16 @@
 
                     const output = document.getElementById("output");
 
-                    if (gerbsList.includes(checksumAddress)) {
+                    if (gerbsList.includes(walletAddress)) {
                         output.innerHTML += "GERBS<br>";
                     }
-                    if (norliList.includes(checksumAddress)) {
+                    if (norliList.includes(walletAddress)) {
                         output.innerHTML += "NORLI<br>";
                     }
-                    if (bonesList.includes(checksumAddress)) {
+                    if (bonesList.includes(walletAddress)) {
                         output.innerHTML += "BONES<br>";
                     }
-                    if (tunesList.includes(checksumAddress)) {
+                    if (tunesList.includes(walletAddress)) {
                         output.innerHTML += "TUNES<br>";
                     }
                 }
@@ -33,7 +52,7 @@
     </head>
     <body>
         <h1>Wallet Address Checker</h1>
-        <button onclick="compareWalletAddress()">Check Wallet Address</button>
+        <button onclick="checkWalletAddress()">Check Wallet Address</button>
         <div id="output"></div>
     </body>
-    </html>
+</html>
