@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Something is Coming</title>
+    <meta name="description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta property="og:title" content="Martin Gerber aka Marty Gerbs">
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
+    <meta property="og:image" content="https://martingerber.xyz/card.jpg">
+    <meta property="og:url" content="https://martingerber.xyz/index.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style_countdown.css">
+</head>
+<body>
+<div id="video-background">
+    <video id="video-content" autoplay loop muted playsinline>
+        <source src="IMAGES/LASERS.mp4" type="video/mp4">
+    </video>
+    <div class="countdown-container">
+        <div class="promo-text"><b>DROP COMING:</b> HIDDEN VARIABLES I</div>
+        <br>
+        <div class="countdown" id="countdownALLOW"></div>
+        <div class="countdown" id="countdown1"></div>
+        <div class="countdown" id="countdown2"></div>
+        <div class="promo-text"><a href="index_main.html">continue to main site</a></div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+<script>
+
+    //WALLET CONNECT AND CHECKKEYS
+
+    // Check if Web3 is available
+    if (typeof web3 !== 'undefined') {
+      web3 = new Web3(web3.currentProvider);
+    } else {
+      // If Web3 is not available, prompt the user to install a compatible wallet extension
+      alert('Please install a wallet extension like MetaMask to use this feature.');
+    }
+
+    async function getWalletAddress() {
+      // Check if Web3 is available
+      if (typeof web3 !== 'undefined') {
+        try {
+          // Request access to the user's accounts
+          const accounts = await web3.eth.requestAccounts();
+
+          // Get the first account from the array of accounts
+          const address = web3.utils.toChecksumAddress(accounts[0]);
+
+          const GERBS = ['0x20e6af36fD433821f704B12ec03f644dc406A5Dc', '0x26b13e3924897C03715489361459b869Af949640', '0x29d2B425dC9881eb1C55ab29d1a3393F7A2F5678', '0x2e69fc5871C642D045354A3988D1F071102B49aE', '0x31fA8e708cBA6eeCB355338b393621d4CA7743F4', '0x31fbaa23aD224E32B2626985e6B70ff75cB6AbE5', '0x3c9a951B0D30422964Ac9162F0E93bA4dbF9157D', '0x43f427bAA039404a949fA272bD543C7D9Efc9C71', '0x48BFB74bEF9bfa3C5896e8A168b413d8458146f4', '0x496e3833217AeD6a1738F986829F941cE71c81cF', '0x567B5E79cE0d465a0FF1e1eeeFE65d180b4C5D41', '0x621FE8A9713139603E696985fD50e2D550dE7C08', '0x6E69860885B367073D2347dD93eEC649d7f664c3', '0x75d514b6040727C19ae06aE8F1a1c7912c4C91C0', '0x7933231775dEc3f3c80039DEbd7E3afD8A81f674', '0x7e89DAF03D3E81d81bA6a242FD05646FaEF524B8', '0x7e8C38Ad50622c0b26906C9Cf81D2825fC78A38B', '0x898BB3e7CEEb3Bb0AE26A7c291d9562841ff332F', '0x8A19EE2B23EF483C6c9B2De1e65D8c799Cd80EA1', '0x945ddC5135015685E49624F2D57Ea22d766883b1', '0xAfda4F57783D1b958307beAeC1Efedee0ba7943b', '0xB3B876567b5005CC6AD5994684ADCcc3BFaB7246', '0xBB17D6b61063FD58410e309a3F9F5dfCd44a305D', '0xC1202B2da243467882439944885339f9Fd71279C', '0xa3b019710229d41537A82822bbFe5C5f8aC1b492', '0xb418b7E6CeFd4a1C28B8DaBa78488884D05b0D3f', '0xbb8341376AF7b802D34CAB5A894884d8420118cC', '0xc06317F4721BB3d2dd1694859A227E3C38F83843', '0xf9ba31763CA3445e5770cDC70284f990406bCA84'];
+          const NORLI = ['0xAfda4F57783D1b958307beAeC1Efedee0ba7943b', '0xC1202B2da243467882439944885339f9Fd71279C'];
+          const BONES = ['0x07f67984844248542FdACC84A95ce24BF97513b9','0x1Da2c0561cA0cDE90f16448751723fcc0b87FEf9','0x20e6af36fD433821f704B12ec03f644dc406A5Dc','0x2760564775dBf12C81B92d19718185fA6D663fe8','0x2e69fc5871C642D045354A3988D1F071102B49aE','0x35224C95aa3E53a30cc3F6f64540618892a568D7','0x4bcaC160CE0Fb9015C2b8C28726cb1EAc879a960','0x52F1E8C4C156761a2F602341768A9aecDFA4BA38','0x621FE8A9713139603E696985fD50e2D550dE7C08','0x68375427c29995B277ad343AA89BE591926C6088','0x770d0A50f87298459C13D570011fFae3C045C05E','0x7Ec0ba2787879E33bDe94A6288534Dcf45F1C132','0x7e8C38Ad50622c0b26906C9Cf81D2825fC78A38B','0x8C962009Eb45FB6abC9f57a40A2c71098B01B6b8','0x9764AcA501D18EA683637408E0a77424aB23eBD8','0xAfda4F57783D1b958307beAeC1Efedee0ba7943b','0xC1202B2da243467882439944885339f9Fd71279C','0xF823668826C24Ae56e3976EcE3Ae90De5d808Df5','0xbb8341376AF7b802D34CAB5A894884d8420118cC','0xc7b57729663DdD90A05AF66b42e9D4f71448F099','0xd0fc88F29C456e44256ba013de787cecCE06077F','0xeeD0f2aF4C784834E547FB920DddEF784041F918','0xfCbD526ad12eFF1cBB19efe1dffFe03f687CDEEa','0xfbf24654e413C69a1e9611fF24084Cf51f70a695','0xfd72C716278894E9bc1Fda2d41F93c20A6CF91EC']
+          const TUNES = ['0x20e6af36fD433821f704B12ec03f644dc406A5Dc', '0x29d2B425dC9881eb1C55ab29d1a3393F7A2F5678', '0x3c9a951B0D30422964Ac9162F0E93bA4dbF9157D', '0x496e3833217AeD6a1738F986829F941cE71c81cF', '0x567B5E79cE0d465a0FF1e1eeeFE65d180b4C5D41', '0x6E69860885B367073D2347dD93eEC649d7f664c3', '0x75d514b6040727C19ae06aE8F1a1c7912c4C91C0', '0x7e89DAF03D3E81d81bA6a242FD05646FaEF524B8', '0x7e8C38Ad50622c0b26906C9Cf81D2825fC78A38B', '0x898BB3e7CEEb3Bb0AE26A7c291d9562841ff332F', '0x8A19EE2B23EF483C6c9B2De1e65D8c799Cd80EA1', '0x945ddC5135015685E49624F2D57Ea22d766883b1', '0xAfda4F57783D1b958307beAeC1Efedee0ba7943b', '0xB3B876567b5005CC6AD5994684ADCcc3BFaB7246', '0xBB17D6b61063FD58410e309a3F9F5dfCd44a305D', '0xC1202B2da243467882439944885339f9Fd71279C', '0xa3b019710229d41537A82822bbFe5C5f8aC1b492', '0xb418b7E6CeFd4a1C28B8DaBa78488884D05b0D3f', '0xbb8341376AF7b802D34CAB5A894884d8420118cC', '0xc06317F4721BB3d2dd1694859A227E3C38F83843', '0xf9ba31763CA3445e5770cDC70284f990406bCA84'];
+
+          const arrays = {
+            GERBS: GERBS,
+            NORLI: NORLI,
+            BONES: BONES,
+            TUNES: TUNES,
+          };
+
+          let foundInArrays = [];
+
+          // Loop through each array in the 'arrays' object
+          for (const key in arrays) {
+            if (arrays.hasOwnProperty(key)) {
+              const array = arrays[key];
+
+              // Check if the address is present in the current array
+              if (array.includes(address)) {
+                foundInArrays.push(key);
+              }
+            }
+          }
+
+          // Check if the address was found in any array
+          if (foundInArrays.length > 0) {
+            // Display the result
+            const resultElement = document.getElementById('connect-link');
+            //resultElement.style.display = 'block';
+            resultElement.textContent = `MINT HERE! (FOUND: ${foundInArrays.join(', ')})`;
+          } else {
+            // Address not found
+            alert('The wallet address was not found in any array.');
+          }
+        } catch (error) {
+          // Handle error if user denies account access
+          alert('Failed to retrieve wallet address. Please grant access to your accounts.');
+        }
+      }
+    }
+
+    //COUNTDOWN TIMER
+
+    // Set the countdown dates in PST
+    var countdownDate1 = moment.utc([2022, 6, 6, 17, 0, 0]); // July 6, 2023, 10:00 AM PST
+    var countdownDateALLOW = moment.utc([2022, 6, 3, 17, 0, 0]); // July 3, 2023, 10:00 AM PST
+    var countdownDate2 = moment.utc([2022, 7, 1, 17, 0, 0]); // August 1, 2023, 10:00 AM PST
+
+    var countdownElement1 = document.getElementById('countdown1');
+    var countdownElementALLOW = document.getElementById('countdownALLOW');
+    var countdownElement2 = document.getElementById('countdown2');
+
+    // Update the countdown every second
+    var countdownInterval = setInterval(function() {
+        // Get the current date and time in the user's local timezone
+        var now = moment();
+
+        // Calculate the remaining time until countdown 1
+        var duration1 = moment.duration(countdownDate1.diff(now));
+
+        // Calculate the remaining time until countdown 1
+        var durationALLOW = moment.duration(countdownDateALLOW.diff(now));
+
+        // Calculate the remaining time until countdown 2
+        var duration2 = moment.duration(countdownDate2.diff(now));
+
+        // Display the countdowns
+        countdownElement1.innerHTML = "<b>Public Mint Opens:</b> " + formatDuration(duration1);
+        countdownElementALLOW.innerHTML = "<b>Allowlist Mint Opens:</b> " + formatDuration(durationALLOW);
+        countdownElement2.innerHTML = "<b>Hidden Variables I:</b> " + formatDuration(duration2);
+
+        // Check if all countdowns have expired
+        if (duration1.asSeconds() <= 0 && durationALLOW.asSeconds() <= 0 && duration2.asSeconds() <= 0) {
+            // Clear the interval
+            clearInterval(countdownInterval);
+
+            // Hide the countdown container
+            var countdownContainer = document.querySelector('.countdown-container');
+            countdownContainer.style.display = 'none';
+        }
+    }, 1000);
+
+    // Format the duration as "X days, X hours, X minutes, X seconds"
+    function formatDuration(duration) {
+        var days = Math.floor(duration.asDays());
+        var hours = duration.hours();
+        var minutes = duration.minutes();
+        var seconds = duration.seconds();
+
+        var parts = [];
+        if (days > 0) {
+            parts.push(days + " day" + (days > 1 ? "s" : ""));
+        }
+        if (hours > 0) {
+            parts.push(hours + " hour" + (hours > 1 ? "s" : ""));
+        }
+        if (minutes > 0) {
+            parts.push(minutes + " minute" + (minutes > 1 ? "s" : ""));
+        }
+        if (seconds > 0) {
+            parts.push(seconds + " second" + (seconds > 1 ? "s" : ""));
+        }
+
+        return parts.join(", ");
+    }
+</script>
+</body>
+</html>
