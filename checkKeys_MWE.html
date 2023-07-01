@@ -3,6 +3,7 @@
 <head>
   <title>Token List Comparison</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="./web3.min.js"></script>
 </head>
 <body>
   <div id="tokenList"></div>
@@ -70,8 +71,11 @@
               const walletAddress = accounts[0];
               console.log('Wallet Address: ' + walletAddress);
 
-              // Compare the wallet address against token lists
-              var tokensHeld = compareTokenLists(walletAddress);
+              // Normalize the wallet address using checksum encoding
+              const normalizedAddress = web3.utils.toChecksumAddress(walletAddress);
+
+              // Compare the normalized wallet address against token lists
+              var tokensHeld = compareTokenLists(normalizedAddress);
 
               // Update the token list in the HTML
               updateTokenList(tokensHeld);
