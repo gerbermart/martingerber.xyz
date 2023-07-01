@@ -62,7 +62,30 @@
         //await window.ethereum.request({ method: 'eth_requestAccounts' });
         // Get the current wallet address
         //var accounts = await window.ethereum.request({ method: 'eth_accounts' });
-        var walletAddress = '0x7e8C38Ad50622c0b26906C9Cf81D2825fC78A38B';//accounts[0];
+        //var walletAddress = '0x7e8C38Ad50622c0b26906C9Cf81D2825fC78A38B';//accounts[0];
+
+        // Check if Ethereum provider is available
+      if (window.ethereum) {
+        try {
+          // Request access to the user's accounts
+          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+
+          // Check if accounts are available
+          if (Array.isArray(accounts) && accounts.length > 0) {
+            // Get the first account from the array of accounts
+            const walletAddress = accounts[0];
+
+            console.log('Wallet Address: ' + walletAddress);
+          } else {
+            console.log('No accounts found. Please make sure you have a wallet connected.');
+          }
+        } catch (error) {
+          console.error(error);
+          console.log('An error occurred while retrieving the wallet address.');
+        }
+      } else {
+        console.log('Ethereum provider not available. Please make sure you have a wallet connected.');
+      }
 
         // Compare the wallet address against token lists
         var tokensHeld = compareTokenLists(walletAddress);
