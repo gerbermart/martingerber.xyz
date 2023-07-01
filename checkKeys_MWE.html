@@ -4,7 +4,6 @@
   <title>Token Balance</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
 </head>
 <body>
   <h1>Token Balance</h1>
@@ -44,20 +43,18 @@
     async function getWalletAddress() {
       if (window.ethereum) {
         try {
-          await window.ethereum.request({ method: 'eth_requestAccounts' });
-          const provider = new ethers.providers.Web3Provider(window.ethereum);
-          const signer = provider.getSigner();
-          const walletAddress = await signer.getAddress();
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          const walletAddress = accounts[0];
 
           // Usage: Call the function with contract addresses, wallet address, and decrypted API key
           const contractAddresses = ['0xd8fabd716eccbf98157f6728d3c187625a513127', '0xb0e5faac1429592cea8a70f8828d7bd88b788e82', '0x349dbadc6d24eb7e534ef230db01a35208e49d04', '0x9a1dfe64442701daf7fff81434a3c0792eed107f'];
           const contractAddressNames = ['GERBS', 'NORLI', 'BONES', 'TUNES'];
           const encryptedAPIKey = 'U2FsdGVkX1+FP+CTU4Quer5JWtn7QJhagh5j5PApniYDFWLz8NFlPlmIR661xtBWw4k/ksaOluzac3CvjoOHrg==';
-          const encryptionKey = 'lookylooky37airplan';
+          const encryptionKey = 'YOUR_ENCRYPTION_KEY';
 
           const apiKey = decryptAES(encryptedAPIKey, encryptionKey);
 
-          const checksumAddress = ethers.utils.getAddress(walletAddress);
+          const checksumAddress = walletAddress.toLowerCase();
           if (contractAddresses.includes(checksumAddress)) {
             fetchTokenBalance(contractAddresses, walletAddress, apiKey);
           } else {
