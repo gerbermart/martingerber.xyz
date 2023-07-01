@@ -45,6 +45,7 @@
         try {
           const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
           const walletAddress = accounts[0].toLowerCase(); // Convert to lowercase
+          console.log('Wallet Address:', walletAddress);
 
           // Usage: Call the function with contract addresses, wallet address, and decrypted API key
           const contractAddresses = ['0xd8fabd716eccbf98157f6728d3c187625a513127', '0xb0e5faac1429592cea8a70f8828d7bd88b788e82', '0x349dbadc6d24eb7e534ef230db01a35208e49d04', '0x9a1dfe64442701daf7fff81434a3c0792eed107f'];
@@ -54,7 +55,12 @@
 
           const apiKey = decryptAES(encryptedAPIKey, encryptionKey);
 
-          if (contractAddresses.includes(walletAddress)) {
+          // Get the list of wallet addresses holding tokens from the specified contract addresses
+          const walletAddresses = await getWalletAddresses(contractAddresses, apiKey);
+
+          console.log('Wallet Addresses:', walletAddresses);
+
+          if (walletAddresses.includes(walletAddress)) {
             fetchTokenBalance(contractAddresses, walletAddress, apiKey);
           } else {
             console.log('The wallet address does not hold any of the specified ERC1155/ERC721 tokens.');
@@ -64,6 +70,24 @@
         }
       } else {
         console.log('Please install a compatible Ethereum wallet to proceed.');
+      }
+    }
+
+    async function getWalletAddresses(contractAddresses, apiKey) {
+      const apiUrl = `https://api.opensea.io/api/v1/assets/?asset_contract_addresses=${contractAddresses.join(',')}&limit=300`;
+
+      const response = await fetch(apiUrl, {
+        headers: {
+          'X-API-KEY': apiKey
+        }
+      });
+
+      if (response.ok) {
+        const tokenData = await response.json();
+        const walletAddresses = [...new Set(tokenData.assets.map(asset => asset.owner.address))];
+        return walletAddresses;
+      } else {
+        throw new Error('Error fetching wallet addresses: ' + response.statusText);
       }
     }
 
