@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Wallet Connect Example</title>
+  <title>Get Wallet Address</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.6/web3.min.js"></script>
+</head>
+<body>
+  <h1>Get Wallet Address</h1>
+  <button onclick="getWalletAddress()">Get Address</button>
+
   <script>
-    function doneLoading() {
-      // Web3 library has finished loading
-      var connectButton = document.getElementById("connect-button");
-      connectButton.style.display = "block"; // Make the button visible
+    // Check if Web3 is available
+    if (typeof web3 !== 'undefined') {
+      web3 = new Web3(web3.currentProvider);
+    } else {
+      // If Web3 is not available, prompt the user to install a compatible wallet extension
+      alert('Please install a wallet extension like MetaMask to use this feature.');
     }
 
-    function getWalletAddress() {
+    async function getWalletAddress() {
+      // Check if Web3 is available
       if (typeof web3 !== 'undefined') {
-        // Web3 is available
-        web3.eth.getAccounts(function(error, accounts) {
-          if (error) {
-            console.error(error);
-          } else {
-            var walletAddress = accounts[0];
-            console.log("Wallet Address:", walletAddress);
-            // Use the wallet address as needed
-          }
-        });
-      } else {
-        console.error("Web3 is not available.");
+        try {
+          // Request access to the user's accounts
+          const accounts = await web3.eth.requestAccounts();
+
+          // Get the first account from the array of accounts
+          const address = accounts[0];
+
+          alert('Wallet Address: ' + address);
+        } catch (error) {
+          console.error(error);
+          alert('An error occurred while retrieving the wallet address.');
+        }
       }
     }
   </script>
-</head>
-<body>
-  <button id="connect-button" style="display: none;" onclick="getWalletAddress()">Connect Wallet</button>
-
   <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js" onload="doneLoading()"></script>
 </body>
 </html>

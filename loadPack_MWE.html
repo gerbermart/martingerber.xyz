@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Package Loading Example</title>
+</head>
+<body>
+  <h1>Package Loading Example</h1>
+  
+  <!-- Wallet Connect Button -->
+  <button onclick="connectWallet()">Wallet Connect</button>
+  
+  <!-- Rest of your HTML content here -->
+  
+  <script src="web3.min.js"></script>
+  <script>
+    window.addEventListener('load', function() {
+      console.log('Page loaded');
+      if (typeof web3 !== 'undefined') {
+        console.log('Web3 library is available');
+        web3.eth.getAccounts(function(error, accounts) {
+          if (error) {
+            console.error(error);
+            alert('Failed to connect to wallet');
+          } else if (accounts.length === 0) {
+            alert('No accounts found in the wallet');
+          } else {
+            var address = accounts[0];
+            alert('Wallet connected!\nAddress: ' + address);
+          }
+        });
+      } else {
+        console.log('Web3 library is not available');
+        alert('Web3 library is not available');
+      }
+    });
+  </script>
+</body>
+</html>

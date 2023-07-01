@@ -59,10 +59,10 @@
     async function fetchWalletAddressAndCompare() {
       try {
         // Request access to the user's accounts
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        //await window.ethereum.request({ method: 'eth_requestAccounts' });
         // Get the current wallet address
-        var accounts = await window.ethereum.request({ method: 'eth_accounts' });
-        var walletAddress = accounts[0];
+        //var accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        var walletAddress = '0x7e8C38Ad50622c0b26906C9Cf81D2825fC78A38B';//accounts[0];
 
         // Compare the wallet address against token lists
         var tokensHeld = compareTokenLists(walletAddress);
