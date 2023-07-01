@@ -44,18 +44,17 @@
       if (window.ethereum) {
         try {
           const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          const walletAddress = accounts[0];
+          const walletAddress = accounts[0].toLowerCase(); // Convert to lowercase
 
           // Usage: Call the function with contract addresses, wallet address, and decrypted API key
           const contractAddresses = ['0xd8fabd716eccbf98157f6728d3c187625a513127', '0xb0e5faac1429592cea8a70f8828d7bd88b788e82', '0x349dbadc6d24eb7e534ef230db01a35208e49d04', '0x9a1dfe64442701daf7fff81434a3c0792eed107f'];
           const contractAddressNames = ['GERBS', 'NORLI', 'BONES', 'TUNES'];
           const encryptedAPIKey = 'U2FsdGVkX1+FP+CTU4Quer5JWtn7QJhagh5j5PApniYDFWLz8NFlPlmIR661xtBWw4k/ksaOluzac3CvjoOHrg==';
-          const encryptionKey = 'YOUR_ENCRYPTION_KEY';
+          const encryptionKey = 'lookylooky37airplan';
 
           const apiKey = decryptAES(encryptedAPIKey, encryptionKey);
 
-          const checksumAddress = walletAddress.toLowerCase();
-          if (contractAddresses.includes(checksumAddress)) {
+          if (contractAddresses.includes(walletAddress)) {
             fetchTokenBalance(contractAddresses, walletAddress, apiKey);
           } else {
             console.log('The wallet address does not hold any of the specified ERC1155/ERC721 tokens.');
