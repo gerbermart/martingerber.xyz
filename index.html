@@ -141,12 +141,50 @@
         }
     }, 1000);
 
-    // Format the duration as "X days, X hours, X minutes, X seconds"
+    
+    // Format the duration as "X months X days X hours X minutes X seconds"
     function formatDuration(duration) {
-        return duration.days() + " days, " +
-               duration.hours() + " hours, " +
-               duration.minutes() + " minutes, " +
-               duration.seconds() + " seconds";
+        var months = duration.months();
+        var days = duration.days();
+        var hours = duration.hours();
+        var minutes = duration.minutes();
+        var seconds = duration.seconds();
+
+        // PADDING
+        if ((seconds<10) & (minutes>0)) {seconds="0"+seconds;}
+        if ((minutes<10) & (hours>0)) {minutes="0"+minutes;}
+
+        var durationString = "";
+        var dispSeconds = true;
+
+        if (months > 0) {
+            durationString += months + " month, ";
+            dispSeconds = false;
+        }
+
+        if (days > 0) {
+            durationString += days + "d, ";
+            if (days > 2) {
+                dispSeconds = false;
+            }
+        }
+
+        if (hours > 0) {
+            if (dispSeconds == true) {
+                durationString += hours + ":" + minutes + ":" + seconds;
+            } else {
+                durationString += hours + ":" + minutes;
+            }
+            
+        } else if (minutes > 0) {
+            durationString += minutes + ":" + seconds;
+        } else {
+            durationString += "<div style='display:inline' class='final_countdown'>in " + seconds + " seconds!</div>";
+        }
+
+        
+
+        return durationString;
     }
 </script>
 </body>
