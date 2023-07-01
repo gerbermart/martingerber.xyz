@@ -2,33 +2,59 @@
 <html>
 <head>
   <title>Token Balance</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
 </head>
 <body>
   <h1>Token Balance</h1>
   <div id="balance"></div>
+  <div id="contractNames"></div>
 
   <script>
-    async function fetchTokenBalance(contractAddress, tokenId) {
-      const apiKey = "ed9d98db566fd170d009f47e030293ec50a728efbde0581d7080738c7a305a17";
-      const sha256 = CryptoJS.SHA256(apiKey).toString();
+    function decryptAES(ciphertext, key) {
+      const decrypted = CryptoJS.AES.decrypt(ciphertext, key);
+      return decrypted.toString(CryptoJS.enc.Utf8);
+    }
 
-      const apiUrl = `https://api.opensea.io/api/v1/asset/${contractAddress}/${tokenId}/`;
-
+    async function fetchTokenBalance(contractAddresses, walletAddress, apiKey) {
       try {
+        const apiUrl = `https://api.opensea.io/api/v1/assets/?owner=${walletAddress}&asset_contract_addresses=${contractAddresses.join(',')}`;
+
         const tokenResponse = await fetch(apiUrl, {
           headers: {
-            'X-API-KEY': sha256
+            'X-API-KEY': apiKey
           }
         });
 
         if (tokenResponse.ok) {
           const tokenData = await tokenResponse.json();
-          const balance = tokenData.balance;
+          const balance = tokenData.assets.length;
 
           // Display the token balance
           $('#balance').text(`Token Balance: ${balance}`);
+
+          // Get the names of the contracts
+          const contractNames = contractAddresses.map((address, index) => ({
+            address,
+            name: contractAddressNames[index]
+          }));
+
+          // Filter the contract names based on the wallet address
+          const heldContracts = tokenData.assets.reduce((result, asset) => {
+            const contract = contractNames.find(c => c.address === asset.asset_contract.address);
+            if (contract) {
+              result.push(contract.name);
+            }
+            return result;
+          }, []);
+
+          // Display the contract names
+          if (heldContracts.length > 0) {
+            $('#contractNames').text(`Contracts held: ${heldContracts.join(', ')}`);
+          } else {
+            $('#contractNames').text('The wallet address does not hold any of the specified ERC1155/ERC721 tokens.');
+          }
         } else {
           throw new Error('Error fetching token balance: ' + tokenResponse.statusText);
         }
@@ -37,8 +63,37 @@
       }
     }
 
-    // Usage: Call the function with contract address and token ID
-    fetchTokenBalance('0xd8fabd716eccbf98157f6728d3c187625a513127', '6');
+    async function getWalletAddress() {
+      if (window.ethereum) {
+        try {
+          await window.ethereum.request({ method: 'eth_requestAccounts' });
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const signer = provider.getSigner();
+          const walletAddress = await signer.getAddress();
+
+          // Usage: Call the function with contract addresses, wallet address, and decrypted API key
+          const contractAddresses = ['0xd8fabd716eccbf98157f6728d3c187625a513127', '0xb0e5faac1429592cea8a70f8828d7bd88b788e82', '0x349dbadc6d24eb7e534ef230db01a35208e49d04', '0x9a1dfe64442701daf7fff81434a3c0792eed107f'];
+          const contractAddressNames = ['GERBS', 'NORLI', 'BONES', 'TUNES'];
+          const encryptedAPIKey = 'U2FsdGVkX1+FP+CTU4Quer5JWtn7QJhagh5j5PApniYDFWLz8NFlPlmIR661xtBWw4k/ksaOluzac3CvjoOHrg==';
+          const encryptionKey = 'lookylooky37airplan';
+
+          const apiKey = decryptAES(encryptedAPIKey, encryptionKey);
+
+          const checksumAddress = ethers.utils.getAddress(walletAddress);
+          if (contractAddresses.includes(checksumAddress)) {
+            fetchTokenBalance(contractAddresses, walletAddress, apiKey);
+          } else {
+            $('#contractNames').text('The wallet address does not hold any of the specified ERC1155/ERC721 tokens.');
+          }
+        } catch (error) {
+          console.error('Error getting wallet address:', error);
+        }
+      } else {
+        console.log('Please install a compatible Ethereum wallet to proceed.');
+      }
+    }
+
+    getWalletAddress();
   </script>
 </body>
 </html>
