@@ -2,44 +2,58 @@
 <html>
 <head>
   <title>Token Balance</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.6/web3.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/erc721-metadata/dist/erc721-metadata.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
   <h1>Token Balance</h1>
   <div id="balance"></div>
 
   <script>
-    // Initialize Web3
-    if (typeof web3 !== 'undefined') {
-      web3 = new Web3(web3.currentProvider);
-    } else {
-      alert('Please install a wallet extension like MetaMask to use this feature.');
-    }
-
-    // Token contract address and wallet address
-    const contractAddress = '0x...'; // Replace with the actual token contract address
-    const walletAddress = '0x...'; // Replace with the actual wallet address
-
-    // Fetch token balance
-    async function fetchTokenBalance() {
+    async function fetchTokenBalance(contractAddress, tokenId) {
       try {
-        // Create an instance of the ERC721Metadata library
-        const erc721 = new ERC721Metadata(web3);
+        const response = await fetch('https://api.github.com/repos/gerbermart/martingerber.xyz/actions/secrets/OPENSEA_API_KEY', {
+          headers: {
+            Authorization: 'Bearer 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',
+            Accept: 'application/vnd.github.v3+json'
+          }
+        });
 
-        // Fetch the token balance
-        const balance = await erc721.balanceOf(contractAddress, walletAddress);
+        if (response.ok) {
+          const data = await response.json();
+          const apiKey = data.secret;
 
-        // Display the balance in the HTML
-        const balanceElement = document.getElementById('balance');
-        balanceElement.textContent = 'Token Balance: ' + balance;
+          // Use the apiKey to make the API request
+          const apiUrl = `https://api.opensea.io/api/v1/asset/${contractAddress}/${tokenId}/`;
+
+          try {
+            const tokenResponse = await fetch(apiUrl, {
+              headers: {
+                'X-API-KEY': apiKey
+              }
+            });
+
+            if (tokenResponse.ok) {
+              const tokenData = await tokenResponse.json();
+              const balance = tokenData.balance;
+
+              // Display the token balance
+              $('#balance').text(`Token Balance: ${balance}`);
+            } else {
+              throw new Error('Error fetching token balance: ' + tokenResponse.statusText);
+            }
+          } catch (error) {
+            console.error('Error fetching token balance:', error);
+          }
+        } else {
+          throw new Error('Error retrieving GitHub secret: ' + response.statusText);
+        }
       } catch (error) {
-        console.error('Error fetching token balance:', error);
+        console.error('Error retrieving GitHub secret:', error);
       }
     }
 
-    // Call the function to fetch the token balance
-    fetchTokenBalance();
+    // Usage: Call the function with contract address and token ID
+    fetchTokenBalance('0xd8fabd716eccbf98157f6728d3c187625a513127', '6');
   </script>
 </body>
 </html>
