@@ -1,100 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Token List Comparison</title>
+  <title>Token Balance</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 </head>
 <body>
-  <div id="tokenList"></div>
+  <h1>Token Balance</h1>
+  <div id="balance"></div>
 
   <script>
-    // Predefined lists of wallet addresses for different tokens
-    var gerbsList = ["0x7e8C38Ad50622c0b26906C9Cf81D2825fC78A38B", "0xabcdef123456"];
-    var norliList = ["0x7e8C38Ad50622c0b26906C9Cf81D2825fC78A38B", "0xdef123456abc"];
-    var bonesList = ["0x456789abcdef", "0x123456abcdef"];
-    var tunesList = ["0x7e8C38Ad50622c0b26906C9Cf81D2825fC78A38B", "0xdefabc456789"];
+    async function fetchTokenBalance(contractAddress, tokenId) {
+      const apiKey = "ed9d98db566fd170d009f47e030293ec50a728efbde0581d7080738c7a305a17";
+      const sha256 = CryptoJS.SHA256(apiKey).toString();
 
-    // Function to compare wallet address against token lists
-    function compareTokenLists(walletAddress) {
-      var tokensHeld = [];
+      const apiUrl = `https://api.opensea.io/api/v1/asset/${contractAddress}/${tokenId}/`;
 
-      if (gerbsList.includes(walletAddress)) {
-        tokensHeld.push("GERBS");
-      }
-
-      if (norliList.includes(walletAddress)) {
-        tokensHeld.push("NORLI");
-      }
-
-      if (bonesList.includes(walletAddress)) {
-        tokensHeld.push("BONES");
-      }
-
-      if (tunesList.includes(walletAddress)) {
-        tokensHeld.push("TUNES");
-      }
-
-      return tokensHeld;
-    }
-
-    // Function to update the token list in the HTML
-    function updateTokenList(tokens) {
-      var tokenListElement = $("#tokenList");
-      tokenListElement.empty();
-
-      if (tokens.length === 0) {
-        tokenListElement.text("No tokens found.");
-      } else {
-        tokenListElement.append("Tokens held: ");
-        tokens.forEach(function(token, index) {
-          tokenListElement.append(token);
-          if (index !== tokens.length - 1) {
-            tokenListElement.append(", ");
+      try {
+        const tokenResponse = await fetch(apiUrl, {
+          headers: {
+            'X-API-KEY': sha256
           }
         });
-      }
-    }
 
-    // Function to fetch wallet address and compare token lists
-    async function fetchWalletAddressAndCompare() {
-      try {
-        // Check if Ethereum provider is available
-        if (window.ethereum) {
-          try {
-            // Request access to the user's accounts
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        if (tokenResponse.ok) {
+          const tokenData = await tokenResponse.json();
+          const balance = tokenData.balance;
 
-            // Check if accounts are available
-            if (Array.isArray(accounts) && accounts.length > 0) {
-              // Get the first account from the array of accounts
-              const walletAddress = accounts[0];
-              console.log('Wallet Address: ' + walletAddress);
-
-              // Normalize the wallet address using checksum encoding (using web3.js library)
-              const normalizedAddress = web3.utils.toChecksumAddress(walletAddress);
-
-              // Compare the normalized wallet address against token lists
-              var tokensHeld = compareTokenLists(normalizedAddress);
-
-              // Update the token list in the HTML
-              updateTokenList(tokensHeld);
-            } else {
-              console.log('No accounts found. Please make sure you have a wallet connected.');
-            }
-          } catch (error) {
-            console.error(error);
-            console.log('An error occurred while retrieving the wallet address.');
-          }
+          // Display the token balance
+          $('#balance').text(`Token Balance: ${balance}`);
         } else {
-          console.log('Ethereum provider not available. Please make sure you have a wallet connected.');
+          throw new Error('Error fetching token balance: ' + tokenResponse.statusText);
         }
       } catch (error) {
-        console.log('Error fetching wallet address:', error);
+        console.error('Error fetching token balance:', error);
       }
     }
 
-    // Call the function to fetch wallet address and compare token lists
-    fetchWalletAddressAndCompare();
+    // Usage: Call the function with contract address and token ID
+    fetchTokenBalance('0xd8fabd716eccbf98157f6728d3c187625a513127', '6');
   </script>
 </body>
 </html>
