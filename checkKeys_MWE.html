@@ -9,7 +9,6 @@
 <body>
   <h1>Token Balance</h1>
   <div id="balance"></div>
-  <div id="contractNames"></div>
 
   <script>
     function decryptAES(ciphertext, key) {
@@ -33,28 +32,6 @@
 
           // Display the token balance
           $('#balance').text(`Token Balance: ${balance}`);
-
-          // Get the names of the contracts
-          const contractNames = contractAddresses.map((address, index) => ({
-            address,
-            name: contractAddressNames[index]
-          }));
-
-          // Filter the contract names based on the wallet address
-          const heldContracts = tokenData.assets.reduce((result, asset) => {
-            const contract = contractNames.find(c => c.address === asset.asset_contract.address);
-            if (contract) {
-              result.push(contract.name);
-            }
-            return result;
-          }, []);
-
-          // Display the contract names
-          if (heldContracts.length > 0) {
-            $('#contractNames').text(`Contracts held: ${heldContracts.join(', ')}`);
-          } else {
-            $('#contractNames').text('The wallet address does not hold any of the specified ERC1155/ERC721 tokens.');
-          }
         } else {
           throw new Error('Error fetching token balance: ' + tokenResponse.statusText);
         }
@@ -83,7 +60,7 @@
           if (contractAddresses.includes(checksumAddress)) {
             fetchTokenBalance(contractAddresses, walletAddress, apiKey);
           } else {
-            $('#contractNames').text('The wallet address does not hold any of the specified ERC1155/ERC721 tokens.');
+            console.log('The wallet address does not hold any of the specified ERC1155/ERC721 tokens.');
           }
         } catch (error) {
           console.error('Error getting wallet address:', error);
