@@ -12,7 +12,8 @@
 
   <script>
     function decryptAES(ciphertext, key) {
-      const decrypted = CryptoJS.AES.decrypt(ciphertext, key);
+      const encryptedHex = CryptoJS.enc.Base64.parse(ciphertext);
+      const decrypted = CryptoJS.AES.decrypt({ ciphertext: encryptedHex }, key, { format: CryptoJS.format.OpenSSL });
       return decrypted.toString(CryptoJS.enc.Utf8);
     }
 
