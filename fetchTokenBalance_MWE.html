@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Token Balance</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.6/web3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/erc721-metadata/dist/erc721-metadata.min.js"></script>
+</head>
+<body>
+  <h1>Token Balance</h1>
+  <div id="balance"></div>
+
+  <script>
+    // Initialize Web3
+    if (typeof web3 !== 'undefined') {
+      web3 = new Web3(web3.currentProvider);
+    } else {
+      alert('Please install a wallet extension like MetaMask to use this feature.');
+    }
+
+    // Token contract address and wallet address
+    const contractAddress = '0x...'; // Replace with the actual token contract address
+    const walletAddress = '0x...'; // Replace with the actual wallet address
+
+    // Fetch token balance
+    async function fetchTokenBalance() {
+      try {
+        // Create an instance of the ERC721Metadata library
+        const erc721 = new ERC721Metadata(web3);
+
+        // Fetch the token balance
+        const balance = await erc721.balanceOf(contractAddress, walletAddress);
+
+        // Display the balance in the HTML
+        const balanceElement = document.getElementById('balance');
+        balanceElement.textContent = 'Token Balance: ' + balance;
+      } catch (error) {
+        console.error('Error fetching token balance:', error);
+      }
+    }
+
+    // Call the function to fetch the token balance
+    fetchTokenBalance();
+  </script>
+</body>
+</html>
