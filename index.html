@@ -33,17 +33,10 @@
 <script>
     // WALLET CONNECT AND CHECK
     
-    // Check if Web3 is available
-    if (typeof web3 !== 'undefined') {
-      web3 = new Web3(web3.currentProvider);
-    } else {
-      // If Web3 is not available, prompt the user to install a compatible wallet extension
-      alert('Please install a wallet extension like MetaMask to use this feature.');
-    }
-
     async function getWalletAddress() {
       // Check if Web3 is available
       if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
         try {
           // Request access to the user's accounts
           const accounts = await web3.eth.requestAccounts();
@@ -88,8 +81,8 @@
             alert('The wallet address was not found in any array.');
           }
         } catch (error) {
-          // Handle error if user denies account access
-          alert('Failed to retrieve wallet address. Please grant access to your accounts.');
+          // If Web3 is not available, prompt the user to install a compatible wallet extension
+          alert('Please install a wallet extension like MetaMask to use this feature.');
         }
       }
     }
