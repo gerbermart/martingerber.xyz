@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Token Metadata</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+  <script>
+    async function getContractData() {
+      try {
+        const web3 = new Web3();
+        const contractAddress = '0x6412638eb6cec07f4378de0c796ee341257cb6d1';
+        const contractABI = ABI_HERE;
+
+        const contract = new web3.eth.Contract(contractABI, contractAddress);
+        const tokenId = 1;
+
+        // Get token URI from the contract
+        const tokenUri = await contract.methods.getTokenUri(tokenId).call();
+
+        // Fetch the metadata JSON from the provided URI
+        const response = await fetch(tokenUri);
+        const metadata = await response.json();
+
+        // Extract the CID from the metadata
+        const cid = metadata.animation_url.split('/').pop();
+
+        // Create an iframe to embed the IPFS object
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://ipfs.io/ipfs/${cid}`;
+        iframe.width = '100%';
+        iframe.height = '600px';
+
+        // Append the iframe to the document body
+        const container = document.getElementById('container');
+        container.appendChild(iframe);
+      } catch (error) {
+        console.log('Error:', error);
+      }
+    }
+  </script>
+</head>
+<body onload="getContractData()">
+  <h1>Token Metadata</h1>
+  <div id="container"></div>
+</body>
+</html>
