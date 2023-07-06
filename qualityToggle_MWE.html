@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* CSS Styles */
+    .rocker-switch-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .rocker-switch {
+      width: 250px;
+      height: 50px;
+      background-image: url('SLIDER.png');
+      background-size: cover;
+      background-position: center;
+      border-radius: 18.7px;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .rocker-switch-handle {
+      width: 118px;
+      height: 50px;
+      background-image: url('KNOB.png');
+      background-size: cover;
+      background-position: center;
+      position: absolute;
+      top: 0;
+      left: 30px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .rocker-switch-labels {
+      display: flex;
+      justify-content: space-between;
+      width: 260px;
+      margin-top: 10px;
+    }
+
+    .rocker-switch-text {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: black;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="rocker-switch-container">
+    <div class="rocker-switch" onclick="toggleSwitch()">
+      <div class="rocker-switch-handle"></div>
+    </div>
+    <div class="rocker-switch-labels">
+      <div class="rocker-switch-text">MP3</div>
+      <div class="rocker-switch-text">WAV</div>
+    </div>
+    <div id="output-text"></div>
+  </div>
+
+  <script>
+    // JavaScript code
+    let fileExtension = "MP3";
+
+    const rockerSwitchHandle = document.querySelector('.rocker-switch-handle');
+    const rockerSwitchLabels = document.querySelectorAll('.rocker-switch-text');
+    const outputText = document.querySelector('#output-text');
+
+    function toggleSwitch() {
+      if (fileExtension === "MP3") {
+        fileExtension = "WAV";
+        rockerSwitchHandle.style.transform = "translateX(75px)";
+        rockerSwitchLabels[0].classList.remove('active');
+        rockerSwitchLabels[1].classList.add('active');
+      } else {
+        fileExtension = "MP3";
+        rockerSwitchHandle.style.transform = "translateX(0)";
+        rockerSwitchLabels[0].classList.add('active');
+        rockerSwitchLabels[1].classList.remove('active');
+      }
+      outputText.textContent = `Selected file extension: ${fileExtension}`;
+    }
+  </script>
+</body>
+</html>
