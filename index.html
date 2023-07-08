@@ -32,6 +32,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.6/web3.min.js"></script>
 <script>
     // WALLET CONNECT AND CHECK
+    const buttonElement = document.createElement('button');
+    buttonElement.type = 'button';
+    buttonElement.className = 'button';
+    
     
     async function getWalletAddress() {
       // Check if Web3 is available
@@ -75,9 +79,6 @@
             // Display the result
             const resultElement = document.getElementById('countdownALLOW');
             resultElement.innerHTML = "<b>Allowlist Mint Open!</b>";
-            const buttonElement = document.createElement('button');
-            buttonElement.type = 'button';
-            buttonElement.className = 'button';
             buttonElement.textContent = `MINT HERE! (holding: ${foundInArrays.join(', ')})`;
             buttonElement.addEventListener('click', function() {
               window.open('topsecretlink2.html', '_blank');
@@ -85,12 +86,20 @@
             resultElement.appendChild(buttonElement);
           } else {
             // Address not found
-            alert('The wallet address was not found in any array.');
+            //alert('The wallet address was not found in any array.');
+            buttonElement.textContent = 'WALLET NOT IN ALLOWLIST';
+            buttonElement.style = "background-color: #b64917 ;color: white;"
           }
         } catch (error) {
           // If Web3 is not available, prompt the user to install a compatible wallet extension
-          alert('Please install a wallet extension like MetaMask to use this feature.');
+          //alert('Please install a wallet extension like MetaMask to use this feature.');
+          buttonElement.textContent = 'INSTALL METAMASK & REFRESH';
+          buttonElement.style = "background-color: #b64917 ;color: white;"
         }
+      } else {
+        //alert('Please install a wallet extension like MetaMask to use this feature.');
+        buttonElement.textContent = 'INSTALL METAMASK & REFRESH';
+        buttonElement.style = "background-color: #b64917 ;color: white;"
       }
     }
 
@@ -125,17 +134,14 @@
         // If countdown 1 is finished, display a message
         if (duration1.asMilliseconds() < 0) {
             clearInterval(countdownInterval);
-            countdownElement1.innerHTML = "<b>Public Mint Open!</b> <a href='topsecretlink2.html' class='button'>&nbsp MINT HERE &nbsp</a>";
+            countdownElement1.innerHTML = "<b>Public Mint Open!</b> <br><a href='topsecretlink2.html' class='button'> MINT HERE </a>";
         }
 
         // If countdown ALLOW is finished, display a message
         if (durationALLOW.asMilliseconds() < 0) {
             clearInterval(countdownInterval);
-            countdownElementALLOW.innerHTML = "<b>Allowlist Mint Open!</b>";
-            const buttonElement = document.createElement('button');
-            buttonElement.type = 'button';
-            buttonElement.className = 'button';
-            buttonElement.textContent = '&nbspCHECK ALLOWLIST ELIGIBILITY &nbsp';
+            countdownElementALLOW.innerHTML = "<b>Allowlist Mint Open!</b><br>";
+            buttonElement.textContent = 'CHECK ALLOWLIST ELIGIBILITY ';
             buttonElement.addEventListener('click', getWalletAddress);
             countdownElementALLOW.appendChild(buttonElement);
         }
