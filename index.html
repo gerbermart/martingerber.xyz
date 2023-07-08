@@ -78,7 +78,7 @@
           if (foundInArrays.length > 0) {
             // Display the result
             const resultElement = document.getElementById('countdownALLOW');
-            resultElement.innerHTML = "<b>Allowlist Mint Open!</b>";
+            resultElement.innerHTML = "<b>Allowlist Mint Open!</b><br>";
             buttonElement.textContent = `MINT HERE! (holding: ${foundInArrays.join(', ')})`;
             buttonElement.addEventListener('click', function() {
               window.open('topsecretlink2.html', '_blank');
@@ -149,7 +149,8 @@
         // If countdown 2 is finished, display a message
         if (duration2.asMilliseconds() < 0) {
             clearInterval(countdownInterval);
-            countdownElement2.innerHTML = "<b>DSP Release is Live!</b>";
+            countdownElement2.innerHTML = "<b>DSP Release is Live!</b><br>";
+            buttonElement.textContent = 'STREAM EP HERE';
         }
     }, 1000);
 
