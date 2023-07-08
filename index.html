@@ -75,11 +75,14 @@
             // Display the result
             const resultElement = document.getElementById('countdownALLOW');
             resultElement.innerHTML = "<b>Allowlist Mint Open!</b>";
-            const linkElement = document.createElement('a');
-            linkElement.href = "topsecretlink2.html";
-            linkElement.target = "_blank";
-            linkElement.textContent = `MINT HERE! (holding: ${foundInArrays.join(', ')})`;
-            resultElement.appendChild(linkElement);
+            const buttonElement = document.createElement('button');
+            buttonElement.type = 'button';
+            buttonElement.className = 'button';
+            buttonElement.textContent = `MINT HERE! (holding: ${foundInArrays.join(', ')})`;
+            buttonElement.addEventListener('click', function() {
+              window.open('topsecretlink2.html', '_blank');
+            });
+            resultElement.appendChild(buttonElement);
           } else {
             // Address not found
             alert('The wallet address was not found in any array.');
@@ -122,19 +125,19 @@
         // If countdown 1 is finished, display a message
         if (duration1.asMilliseconds() < 0) {
             clearInterval(countdownInterval);
-            countdownElement1.innerHTML = "<b>Public Mint Open!</b> <a href='topsecretlink2.html' class='button'> MINT HERE </a>";
+            countdownElement1.innerHTML = "<b>Public Mint Open!</b> <a href='topsecretlink2.html' class='button'>&nbsp MINT HERE &nbsp</a>";
         }
 
         // If countdown ALLOW is finished, display a message
         if (durationALLOW.asMilliseconds() < 0) {
             clearInterval(countdownInterval);
             countdownElementALLOW.innerHTML = "<b>Allowlist Mint Open!</b>";
-            const linkElement = document.createElement('a');
-            linkElement.href = "javascript:void(0)";
-            linkElement.onclick = getWalletAddress;
-            linkElement.className = 'button';
-            linkElement.textContent= " CHECK ALLOWLIST ELIGIBILITY ";
-            countdownElementALLOW.appendChild(linkElement);
+            const buttonElement = document.createElement('button');
+            buttonElement.type = 'button';
+            buttonElement.className = 'button';
+            buttonElement.textContent = '&nbspCHECK ALLOWLIST ELIGIBILITY &nbsp';
+            buttonElement.addEventListener('click', getWalletAddress);
+            countdownElementALLOW.appendChild(buttonElement);
         }
 
         // If countdown 2 is finished, display a message
