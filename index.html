@@ -73,9 +73,13 @@
           // Check if the address was found in any array
           if (foundInArrays.length > 0) {
             // Display the result
-            const resultElement = document.getElementById('connect-link');
-            //resultElement.style.display = 'block';
-            resultElement.innerHTML = `<a href="topsecretlink2.html" target="_blank">MINT HERE! (holding: ${foundInArrays.join(', ')})</a>`;
+            const resultElement = document.getElementById('countdownALLOW');
+            resultElement.innerHTML = "<b>Allowlist Mint Open!</b>";
+            const linkElement = document.createElement('a');
+            linkElement.href = "topsecretlink2.html";
+            linkElement.target = "_blank";
+            linkElement.textContent = `MINT HERE! (holding: ${foundInArrays.join(', ')})`;
+            resultElement.appendChild(linkElement);
           } else {
             // Address not found
             alert('The wallet address was not found in any array.');
@@ -118,13 +122,19 @@
         // If countdown 1 is finished, display a message
         if (duration1.asMilliseconds() < 0) {
             clearInterval(countdownInterval);
-            countdownElement1.innerHTML = "<b>Public Mint Open!</b> <a href='topsecretlink2.html' class='button'>&nbsp MINT HERE &nbsp</a>";
+            countdownElement1.innerHTML = "<b>Public Mint Open!</b> <a href='topsecretlink2.html' class='button'> MINT HERE </a>";
         }
 
         // If countdown ALLOW is finished, display a message
         if (durationALLOW.asMilliseconds() < 0) {
             clearInterval(countdownInterval);
-            countdownElementALLOW.innerHTML = "<b>Allowlist Mint Open!</b> <a id='connect-link' href='javascript:void(0)' style='display:block;' onclick='getWalletAddress()' class='button'>&nbsp CHECK ALLOWLIST ELIGIBILITY &nbsp</a>";
+            countdownElementALLOW.innerHTML = "<b>Allowlist Mint Open!</b>";
+            const linkElement = document.createElement('a');
+            linkElement.href = "javascript:void(0)";
+            linkElement.onclick = getWalletAddress;
+            linkElement.className = 'button';
+            linkElement.textContent= " CHECK ALLOWLIST ELIGIBILITY ";
+            countdownElementALLOW.appendChild(linkElement);
         }
 
         // If countdown 2 is finished, display a message
@@ -174,8 +184,6 @@
         } else {
             durationString += "<div style='display:inline' class='final_countdown'>in " + seconds + " seconds!</div>";
         }
-
-        
 
         return durationString;
     }
