@@ -112,8 +112,17 @@
     var countdownElementALLOW = document.getElementById('countdownALLOW');
     var countdownElement2 = document.getElementById('countdown2');
 
-    // Update the countdown every second
-    var countdownInterval = setInterval(function() {
+    // Set the countdown dates in PST
+    var countdownDate1 = moment.utc([2023, 6, 10, 17, 0, 0]); // July 10, 2023, 10:00 AM PST
+    var countdownDateALLOW = moment.utc([2023, 6, 3, 17, 0, 0]); // July 3, 2023, 10:00 AM PST
+    var countdownDate2 = moment.utc([2023, 7, 1, 17, 0, 0]); // August 1, 2023, 10:00 AM PST
+
+    var countdownElement1 = document.getElementById('countdown1');
+    var countdownElementALLOW = document.getElementById('countdownALLOW');
+    var countdownElement2 = document.getElementById('countdown2');
+
+    // Function to update the countdown elements every second
+    function updateCountdown() {
         // Get the current date and time in the user's local timezone
         var now = moment();
 
@@ -133,13 +142,11 @@
 
         // If countdown 1 is finished, display a message
         if (duration1.asMilliseconds() < 0) {
-            clearInterval(countdownInterval);
             countdownElement1.innerHTML = "<b>Public Mint Open!</b> <br><a href='topsecretlink2.html' class='button'> MINT HERE </a>";
         }
 
         // If countdown ALLOW is finished, display a message
         if (durationALLOW.asMilliseconds() < 0) {
-            clearInterval(countdownInterval);
             countdownElementALLOW.innerHTML = "<b>Allowlist Mint Open!</b><br>";
             buttonElement.textContent = 'CHECK ALLOWLIST ELIGIBILITY ';
             buttonElement.addEventListener('click', getWalletAddress);
@@ -148,12 +155,16 @@
 
         // If countdown 2 is finished, display a message
         if (duration2.asMilliseconds() < 0) {
-            clearInterval(countdownInterval);
             countdownElement2.innerHTML = "<b>DSP Release is Live!</b><br>";
             buttonElement.textContent = 'STREAM EP HERE';
         }
-    }, 1000);
+    }
 
+    // Initial call to update the countdown elements
+    updateCountdown();
+
+    // Update the countdown every second
+    setInterval(updateCountdown, 1000);
     
     // Format the duration as "X months X days X hours X minutes X seconds"
     function formatDuration(duration) {
