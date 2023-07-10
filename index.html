@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Something is Coming</title>
+    <meta name="description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta property="og:title" content="Martin Gerber aka Marty Gerbs">
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
+    <meta property="og:image" content="https://martingerber.xyz/card.jpg">
+    <meta property="og:url" content="https://martingerber.xyz/index.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style_countdown.css">
+</head>
+<body>
+<div id="video-background">
+    <video id="video-content" autoplay loop muted playsinline>
+        <source src="IMAGES/LASERS.mp4" type="video/mp4">
+    </video>
+    <div class="countdown-container">
+        <div class="promo-text"><b>EP DROP LIVE:</b> HIDDEN VARIABLES I</div>
+        <br>
+        <div class="countdown" id="countdown1"></div>
+        <div class="countdown" id="countdown2"></div>
+        <div class="promo-text"><a class="button" target="_blank" href="index_main.html">LISTEN AT MARTINGERBER.XYZ</a></div>
+        <div class="promo-text"><a class="button" target="_blank" href="https://opensea.io/assets/ethereum/0x6412638eb6cec07f4378de0c796ee341257cb6d1/1">LISTEN ON OPENSEA</a></div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js"></script>
+<script>
+
+
+    // Set the countdown dates in PST
+    var countdownDate1 = moment.utc([2023, 6, 10, 17, 15, 0]); // July 10, 2023, 10:00 AM PST
+    //var countdownDateALLOW = moment.utc([2023, 6, 3, 17, 0, 0]); // July 3, 2023, 10:00 AM PST
+    var countdownDate2 = moment.utc([2023, 7, 1, 17, 0, 0]); // August 1, 2023, 10:00 AM PST
+
+    var countdownElement1 = document.getElementById('countdown1');
+    //var countdownElementALLOW = document.getElementById('countdownALLOW');
+    var countdownElement2 = document.getElementById('countdown2');
+
+    // Set the countdown dates in PST
+    var countdownDate1 = moment.utc([2023, 6, 10, 17, 0, 0]); // July 10, 2023, 10:00 AM PST
+    //var countdownDateALLOW = moment.utc([2023, 6, 3, 17, 0, 0]); // July 3, 2023, 10:00 AM PST
+    var countdownDate2 = moment.utc([2023, 7, 11, 17, 0, 0]); // August 1, 2023, 10:00 AM PST
+
+    var countdownElement1 = document.getElementById('countdown1');
+    //var countdownElementALLOW = document.getElementById('countdownALLOW');
+    var countdownElement2 = document.getElementById('countdown2');
+
+    // Function to update the countdown elements every second
+    function updateCountdown() {
+        // Get the current date and time in the user's local timezone
+        var now = moment();
+
+        // Calculate the remaining time until countdown 1
+        var duration1 = moment.duration(countdownDate1.diff(now));
+
+        // Calculate the remaining time until countdown 2
+        var duration2 = moment.duration(countdownDate2.diff(now));
+
+        // Display the countdowns
+        countdownElement1.innerHTML = "<b>Public Mint Opens:</b> " + formatDuration(duration1);
+        //countdownElementALLOW.innerHTML = "<b>Allowlist Mint Opens:</b> " + formatDuration(durationALLOW);
+        countdownElement2.innerHTML = "<b>DSP Release:</b> " + formatDuration(duration2);
+
+        // If countdown 1 is finished, display a message
+        if (duration1.asMilliseconds() < 0) {
+            countdownElement1.innerHTML = "<b>Public Mint Open!</b> <br><a href='topsecretlink2.html' class='button'> MINT HERE </a>";
+        }
+
+
+        // If countdown 2 is finished, display a message
+        if (duration2.asMilliseconds() < 0) {
+            countdownElement2.innerHTML = "<b>DSP Release is Live!</b><br>";
+            buttonElement.textContent = 'STREAM EP HERE';
+        }
+    }
+
+    // Initial call to update the countdown elements
+    updateCountdown();
+
+    // Update the countdown every second
+    setInterval(updateCountdown, 1000);
+    
+    // Format the duration as "X months X days X hours X minutes X seconds"
+    function formatDuration(duration) {
+        var months = duration.months();
+        var days = duration.days();
+        var hours = duration.hours();
+        var minutes = duration.minutes();
+        var seconds = duration.seconds();
+
+        // PADDING
+        if ((seconds<10) & (minutes>0)) {seconds="0"+seconds;}
+        if ((minutes<10) & (hours>0)) {minutes="0"+minutes;}
+
+        var durationString = "";
+        var dispSeconds = true;
+
+        if (months > 0) {
+            durationString += months + " month, ";
+            dispSeconds = false;
+        }
+
+        if (days > 0) {
+            durationString += days + "d, ";
+            if (days > 2) {
+                dispSeconds = false;
+            }
+        }
+
+        if (hours > 0) {
+            if (dispSeconds == true) {
+                durationString += hours + ":" + minutes + ":" + seconds;
+            } else {
+                durationString += hours + ":" + minutes;
+            }
+            
+        } else if (minutes > 0) {
+            durationString += minutes + ":" + seconds;
+        } else {
+            durationString += "<div style='display:inline' class='final_countdown'>in " + seconds + " seconds!</div>";
+        }
+
+        return durationString;
+    }
+</script>
+</body>
+</html>
