@@ -97,7 +97,9 @@
                     return; // Do not proceed with the transfer
                 }
 
-                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                await window.ethereum.enable();
+
+                const accounts = await web3.eth.getAccounts();
                 const fromAddress = accounts[0];
                 const toAddress = document.getElementById('toAddress').value;
                 const transferAmount = document.getElementById('transferAmount').value;
