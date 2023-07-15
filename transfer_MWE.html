@@ -87,6 +87,9 @@
 
         async function transferTokens() {
             console.log('Transfer tokens called.');
+            
+            // Disable the transferTokens() function after the first click
+            document.getElementById('transferButton').onclick = null;
 
             try {
                 if (!window.ethereum) {
