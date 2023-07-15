@@ -78,6 +78,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.3/dist/web3.min.js"></script>
     <script>
         const tokenID = 1;
         let transferButtonClicked = false;
@@ -93,7 +94,10 @@
                     return; // Do not proceed with the transfer
                 }
 
-                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                await window.ethereum.enable();
+
+                const web3 = new Web3(window.ethereum);
+                const accounts = await web3.eth.getAccounts();
                 const fromAddress = accounts[0];
                 const toAddress = document.getElementById('toAddress').value;
                 const transferAmount = document.getElementById('transferAmount').value;
@@ -120,7 +124,6 @@
                 }
 
                 document.getElementById('txHash').textContent = tx.transactionHash;
-                openTransaction(tx.transactionHash);
             } catch (error) {
                 console.error('Error:', error);
                 if (error.code === 4001) {
