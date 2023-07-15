@@ -59,7 +59,7 @@
     </style>
 </head>
 <body>
-    <button id="transferButton" onclick="openModal()" class="button">TRANSFER</button>
+    <button id="transferButton" onclick="transferTokens()" class="button">TRANSFER</button>
 
     <div id="modal" class="modal">
         <div id="modalContent" class="modal-content">
@@ -80,6 +80,11 @@
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script>
         const tokenID = 1;
+
+        function openTransaction(txHash) {
+            window.open('https://goerli.etherscan.io/tx/' + txHash, '_blank');
+        }
+
         async function transferTokens() {
             console.log('Transfer tokens called.');
 
@@ -108,17 +113,20 @@
                     .on('transactionHash', (hash) => {
                         console.log('Transaction Hash:', hash);
                         // Update the UI with the transaction hash if needed
-                        document.getElementById('transferButton').innerHTML = '<a href="https://goerli.etherscan.io/tx/' + hash + '">TRANSFER IN PROGRESS</a>';
+                        document.getElementById('transferButton').onclick = () => openTransaction(hash);
+                        document.getElementById('transferButton').textContent = 'TRANSFER IN PROGRESS';
                     });
 
                 const receipt = await web3.eth.getTransactionReceipt(tx.transactionHash);
                 if (receipt.status) {
                     console.log('Transfer complete.');
-                    document.getElementById('transferButton').innerHTML = '<a href="https://goerli.etherscan.io/tx/' + tx.transactionHash + '">TRANSFER COMPLETE</a>';
+                    document.getElementById('transferButton').onclick = () => openTransaction(tx.transactionHash);
+                    document.getElementById('transferButton').textContent = 'TRANSFER COMPLETE';
                 } else {
                     console.log('Transaction failed.');
                     document.getElementById('message').textContent = 'Error: Transaction failed';
-                    document.getElementById('transferButton').innerHTML = '<a href="https://goerli.etherscan.io/tx/' + tx.transactionHash + '">TRANSFER FAILED:' + receipt.message + '</a>';
+                    document.getElementById('transferButton').onclick = () => openTransaction(tx.transactionHash);
+                    document.getElementById('transferButton').textContent = 'TRANSFER FAILED';
                 }
             } catch (error) {
                 console.error('Error:', error);
