@@ -59,7 +59,7 @@
     </style>
 </head>
 <body>
-    <button id="transferButton" onclick="handleTransfer()" class="button">TRANSFER</button>
+    <button id="transferButton" onclick="transferTokens()" class="button">TRANSFER</button>
 
     <div id="modal" class="modal">
         <div id="modalContent" class="modal-content">
@@ -72,19 +72,22 @@
                 <input type="number" id="transferAmount" required value="1">
             </div>
             <button id="confirmButton" class="modal-button">Confirm</button>
-            <button id="cancelButton" onclick="closeModal()" class="modal-button">Cancel</button>
+            <button id="cancelButton" class="modal-button">Cancel</button>
             <div id="txHash"></div>
             <div id="message"></div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.3/dist/web3.min.js"></script>
     <script>
         const tokenID = 1;
         let transferButtonClicked = false;
 
         async function transferTokens() {
             console.log('Transfer tokens called.');
+
+            if (transferButtonClicked) {
+                return;
+            }
 
             try {
                 if (!window.ethereum) {
@@ -94,15 +97,13 @@
                     return; // Do not proceed with the transfer
                 }
 
-                await window.ethereum.enable();
-
-                const web3 = new Web3(window.ethereum);
-                const accounts = await web3.eth.getAccounts();
+                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
                 const fromAddress = accounts[0];
                 const toAddress = document.getElementById('toAddress').value;
                 const transferAmount = document.getElementById('transferAmount').value;
 
                 // Update button with txHash
+                transferButtonClicked = true;
                 document.getElementById('transferButton').textContent = 'TRANSFER INITIATED';
 
                 const contractAddress = '0xade3d3e24a21bcfb782a78aff6470d423db1d2f0'; // Replace with your contract address
@@ -117,13 +118,13 @@
                 if (receipt.status) {
                     console.log('Transfer complete.');
                     document.getElementById('transferButton').textContent = 'TRANSFER COMPLETE';
+                    openTransactionLink(tx.transactionHash);
                 } else {
                     console.log('Transaction failed.');
                     document.getElementById('message').textContent = 'Error: Transaction failed';
                     document.getElementById('transferButton').textContent = 'TRANSFER FAILED';
+                    openTransactionLink(tx.transactionHash);
                 }
-
-                document.getElementById('txHash').textContent = tx.transactionHash;
             } catch (error) {
                 console.error('Error:', error);
                 if (error.code === 4001) {
@@ -133,26 +134,6 @@
                     console.log('Error: Transaction failed.');
                     document.getElementById('message').textContent = 'Error: Transaction failed';
                     document.getElementById('transferButton').textContent = 'TRANSFER FAILED';
-                }
-            }
-        }
-
-        function openTransaction(txHash) {
-            window.open('https://goerli.etherscan.io/tx/' + txHash, '_blank');
-        }
-
-        function handleTransfer() {
-            if (!transferButtonClicked) {
-                transferTokens();
-                closeModal();
-                transferButtonClicked = true;
-            } else {
-                const transferButton = document.getElementById('transferButton');
-                const buttonInnerText = transferButton.textContent;
-                const txHash = document.getElementById('txHash').textContent;
-
-                if (buttonInnerText === 'TRANSFER IN PROGRESS' || buttonInnerText === 'TRANSFER COMPLETE' || buttonInnerText === 'TRANSFER FAILED') {
-                    openTransaction(txHash);
                 }
             }
         }
@@ -168,6 +149,22 @@
             document.getElementById('txHash').textContent = '';
             document.getElementById('message').textContent = '';
         }
+
+        function openTransactionLink(transactionHash) {
+            const url = 'https://goerli.etherscan.io/tx/' + transactionHash;
+            window.open(url, '_blank');
+        }
+
+        document.getElementById('confirmButton').addEventListener('click', function () {
+            console.log('Confirm button clicked.');
+            transferTokens();
+            closeModal();
+        });
+
+        document.getElementById('cancelButton').addEventListener('click', function () {
+            console.log('Cancel button clicked.');
+            closeModal();
+        });
     </script>
 </body>
 </html>
