@@ -107,20 +107,20 @@
 
                 const tx = await contract.methods.safeTransferFrom(fromAddress, toAddress, tokenID, transferAmount).send({ from: fromAddress });
                 console.log('Transaction Hash:', tx.transactionHash);
-                document.getElementById('transferButton').innerHTML = 'TRANSFER IN PROGRESS';
-                document.getElementById('transferButton').disabled = true;
+                document.getElementById('transferButton').textContent = 'TRANSFER IN PROGRESS';
 
                 const receipt = await web3.eth.getTransactionReceipt(tx.transactionHash);
                 if (receipt.status) {
                     console.log('Transfer complete.');
-                    document.getElementById('transferButton').innerHTML = 'TRANSFER COMPLETE';
+                    document.getElementById('transferButton').textContent = 'TRANSFER COMPLETE';
                 } else {
                     console.log('Transaction failed.');
                     document.getElementById('message').textContent = 'Error: Transaction failed';
-                    document.getElementById('transferButton').innerHTML = 'TRANSFER FAILED:' + receipt.message;
+                    document.getElementById('transferButton').textContent = 'TRANSFER FAILED';
                 }
 
-                document.getElementById('transferButton').disabled = false;
+                document.getElementById('txHash').textContent = tx.transactionHash;
+                openTransaction(tx.transactionHash);
             } catch (error) {
                 console.error('Error:', error);
                 if (error.code === 4001) {
@@ -131,8 +131,6 @@
                     document.getElementById('message').textContent = 'Error: Transaction failed';
                     document.getElementById('transferButton').textContent = 'TRANSFER FAILED';
                 }
-
-                document.getElementById('transferButton').disabled = false;
             }
         }
 
@@ -147,10 +145,12 @@
                 transferButtonClicked = true;
             } else {
                 const transferButton = document.getElementById('transferButton');
-                const buttonInnerHTML = transferButton.innerHTML;
-                const txHash = buttonInnerHTML.split('"')[1];
+                const buttonInnerText = transferButton.textContent;
+                const txHash = document.getElementById('txHash').textContent;
 
-                openTransaction(txHash);
+                if (buttonInnerText === 'TRANSFER IN PROGRESS' || buttonInnerText === 'TRANSFER COMPLETE' || buttonInnerText === 'TRANSFER FAILED') {
+                    openTransaction(txHash);
+                }
             }
         }
 
