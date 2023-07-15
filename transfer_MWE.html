@@ -59,7 +59,7 @@
     </style>
 </head>
 <body>
-    <button id="transferButton" onclick="openModal()" class="button">TRANSFER</button>
+    <button id="transferButton" onclick="openModal()" class="button" disabled>TRANSFER</button>
 
     <div id="modal" class="modal">
         <div id="modalContent" class="modal-content">
@@ -71,17 +71,22 @@
                 <label for="transferAmount">Transfer Amount:</label>
                 <input type="number" id="transferAmount" required value="1">
             </div>
-            <button id="confirmButton" class="modal-button">Confirm</button>
+            <button id="confirmButton" class="modal-button" onclick="transferTokens()">Confirm</button>
             <div id="txHash"></div>
             <div id="message"></div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script>
         const tokenID = 1;
+        let transferButtonClicked = false;
+
         async function transferTokens() {
             console.log('Transfer tokens called.');
+
+            if (transferButtonClicked) {
+                return;
+            }
 
             try {
                 if (!window.ethereum) {
@@ -108,18 +113,23 @@
                     .on('transactionHash', (hash) => {
                         console.log('Transaction Hash:', hash);
                         // Update the UI with the transaction hash if needed
-                        document.getElementById('transferButton').innerHTML = '<a href="https://goerli.etherscan.io/tx/' + hash + '">TRANSFER IN PROGRESS</a>';
+                        document.getElementById('transferButton').textContent = 'TRANSFER IN PROGRESS';
+                        document.getElementById('transferButton').setAttribute('onclick', `openTransaction('${hash}')`);
                     });
 
                 const receipt = await web3.eth.getTransactionReceipt(tx.transactionHash);
                 if (receipt.status) {
                     console.log('Transfer complete.');
-                    document.getElementById('transferButton').innerHTML = '<a href="https://goerli.etherscan.io/tx/' + tx.transactionHash + '">TRANSFER COMPLETE</a>';
+                    document.getElementById('transferButton').textContent = 'TRANSFER COMPLETE';
+                    document.getElementById('transferButton').setAttribute('onclick', `openTransaction('${tx.transactionHash}')`);
                 } else {
                     console.log('Transaction failed.');
                     document.getElementById('message').textContent = 'Error: Transaction failed';
-                    document.getElementById('transferButton').innerHTML = '<a href="https://goerli.etherscan.io/tx/' + tx.transactionHash + '">TRANSFER FAILED:' + receipt.message + '</a>';
+                    document.getElementById('transferButton').textContent = `TRANSFER FAILED: ${receipt.message}`;
                 }
+
+                transferButtonClicked = true;
+                document.getElementById('transferButton').disabled = true;
             } catch (error) {
                 console.error('Error:', error);
                 if (error.code === 4001) {
@@ -143,6 +153,10 @@
             document.getElementById('modal').style.display = 'none';
             document.getElementById('txHash').textContent = '';
             document.getElementById('message').textContent = '';
+        }
+
+        function openTransaction(txHash) {
+            window.open(`https://goerli.etherscan.io/tx/${txHash}`, '_blank');
         }
 
         document.getElementById('confirmButton').addEventListener('click', function () {
