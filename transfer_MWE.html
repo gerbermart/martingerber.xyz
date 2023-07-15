@@ -59,7 +59,7 @@
     </style>
 </head>
 <body>
-    <button id="transferButton" onclick="openModal()" class="button">TRANSFER</button>
+    <button id="transferButton" onclick="transferTokens()" class="button">TRANSFER</button>
 
     <div id="modal" class="modal">
         <div id="modalContent" class="modal-content">
@@ -71,19 +71,28 @@
                 <label for="transferAmount">Transfer Amount:</label>
                 <input type="number" id="transferAmount" required value="1">
             </div>
-            <button id="confirmButton" class="modal-button">Confirm</button>
+            <div class="button-container">
+                <button id="confirmButton" class="modal-button" onclick="transferTokens()">Confirm</button>
+                <button id="cancelButton" class="modal-button" onclick="closeModal()">Cancel</button>
+            </div>
             <div id="txHash"></div>
             <div id="message"></div>
         </div>
     </div>
+    
+    
 
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script>
         const tokenID = 1;
         let transferInProgress = false; // Flag to track transfer in progress
-
+        
         async function transferTokens() {
             console.log('Transfer tokens called.');
+            
+            // Disable the transferTokens() function after the first click
+            document.getElementById('transferButton').onclick = null;
+
 
             if (transferInProgress) {
                 console.log('Transfer already in progress.');
@@ -96,6 +105,8 @@
                     console.log('MetaMask not installed.');
                     document.getElementById('transferButton').textContent = 'INSTALL METAMASK AND REFRESH';
                     return; // Do not proceed with the transfer
+                } else {
+                    openModal();
                 }
 
                 const web3 = new Web3(window.ethereum);
@@ -124,19 +135,19 @@
                         console.log('Transaction Hash:', hash);
                         // Update the UI with the transaction hash if needed
                         document.getElementById('transferButton').textContent = 'TRANSFER IN PROGRESS';
-                        openTransaction(hash); // Open transaction in a new tab
+                        document.getElementById('transferButton').onclick = openTransaction(hash); // Open transaction in a new tab
                     });
 
                 const receipt = await web3.eth.getTransactionReceipt(tx.transactionHash);
                 if (receipt.status) {
                     console.log('Transfer complete.');
                     document.getElementById('transferButton').textContent = 'TRANSFER COMPLETE';
-                    openTransaction(tx.transactionHash); // Open transaction in a new tab
+                    document.getElementById('transferButton').onclick = openTransaction(tx.transactionHash); // Open transaction in a new tab
                 } else {
                     console.log('Transaction failed.');
                     document.getElementById('message').textContent = 'Error: Transaction failed';
                     document.getElementById('transferButton').textContent = 'TRANSFER FAILED';
-                    openTransaction(tx.transactionHash); // Open transaction in a new tab
+                    document.getElementById('transferButton').onclick = openTransaction(tx.transactionHash); // Open transaction in a new tab
                 }
             } catch (error) {
                 console.error('Error:', error);
