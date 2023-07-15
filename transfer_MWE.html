@@ -79,9 +79,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script>
-        const web3 = new Web3(window.ethereum || 'https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID');
-        const tokenID = 1;
-
         async function transferTokens() {
             console.log('Transfer tokens called.');
 
@@ -93,7 +90,9 @@
                     return; // Do not proceed with the transfer
                 }
 
-                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                const web3 = new Web3(window.ethereum);
+
+                const accounts = await web3.eth.requestAccounts();
                 const fromAddress = accounts[0];
                 const toAddress = document.getElementById('toAddress').value;
                 const transferAmount = document.getElementById('transferAmount').value;
