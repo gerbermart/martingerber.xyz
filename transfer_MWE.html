@@ -81,6 +81,22 @@
     <script>
         const tokenID = 1;
         let transferButtonClicked = false;
+        let web3;
+
+        async function initializeWeb3() {
+            if (window.ethereum) {
+                web3 = new Web3(window.ethereum);
+                try {
+                    await window.ethereum.enable();
+                } catch (error) {
+                    console.error('User denied account access');
+                }
+            } else if (window.web3) {
+                web3 = new Web3(window.web3.currentProvider);
+            } else {
+                console.error('No Ethereum provider detected');
+            }
+        }
 
         async function transferTokens() {
             console.log('Transfer tokens called.');
@@ -90,14 +106,10 @@
             }
 
             try {
-                if (!window.ethereum) {
-                    // User does not have MetaMask installed
-                    console.log('MetaMask not installed.');
-                    document.getElementById('transferButton').textContent = 'INSTALL METAMASK AND REFRESH';
-                    return; // Do not proceed with the transfer
+                if (!web3) {
+                    console.log('Web3 not initialized.');
+                    return;
                 }
-
-                await window.ethereum.enable();
 
                 const accounts = await web3.eth.getAccounts();
                 const fromAddress = accounts[0];
@@ -156,6 +168,8 @@
             const url = 'https://goerli.etherscan.io/tx/' + transactionHash;
             window.open(url, '_blank');
         }
+
+        initializeWeb3();
 
         document.getElementById('confirmButton').addEventListener('click', function () {
             console.log('Confirm button clicked.');
