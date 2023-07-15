@@ -59,7 +59,7 @@
     </style>
 </head>
 <body>
-    <button id="transferButton" onclick="transferTokens()" class="button">TRANSFER</button>
+    <button id="transferButton" onclick="openModal()" class="button">TRANSFER</button>
 
     <div id="modal" class="modal">
         <div id="modalContent" class="modal-content">
@@ -100,15 +100,6 @@
             }
 
             try {
-                if (!window.ethereum) {
-                    // User does not have MetaMask installed
-                    console.log('MetaMask not installed.');
-                    document.getElementById('transferButton').textContent = 'INSTALL METAMASK AND REFRESH';
-                    return; // Do not proceed with the transfer
-                } else {
-                    openModal();
-                }
-
                 const web3 = new Web3(window.ethereum);
                 const accounts = await web3.eth.requestAccounts();
                 const fromAddress = accounts[0];
@@ -165,8 +156,15 @@
         }
 
         function openModal() {
-            console.log('Open modal.');
-            document.getElementById('modal').style.display = 'block';
+            if (!window.ethereum) {
+                // User does not have MetaMask installed
+                console.log('MetaMask not installed.');
+                document.getElementById('transferButton').textContent = 'INSTALL METAMASK AND REFRESH';
+                return; // Do not proceed with the transfer
+            } else {
+                console.log('Open modal.');
+                document.getElementById('modal').style.display = 'block';   
+            }
         }
 
         function closeModal() {
