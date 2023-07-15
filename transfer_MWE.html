@@ -59,7 +59,7 @@
     </style>
 </head>
 <body>
-    <button id="transferButton" onclick="openModal()" class="button" disabled>TRANSFER</button>
+    <button id="transferButton" onclick="transferTokens()" class="button">TRANSFER</button>
 
     <div id="modal" class="modal">
         <div id="modalContent" class="modal-content">
@@ -71,22 +71,19 @@
                 <label for="transferAmount">Transfer Amount:</label>
                 <input type="number" id="transferAmount" required value="1">
             </div>
-            <button id="confirmButton" class="modal-button" onclick="transferTokens()">Confirm</button>
+            <button id="confirmButton" class="modal-button">Confirm</button>
             <div id="txHash"></div>
             <div id="message"></div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script>
         const tokenID = 1;
-        let transferButtonClicked = false;
-
+        let transferInProgress = false;
+        
         async function transferTokens() {
             console.log('Transfer tokens called.');
-
-            if (transferButtonClicked) {
-                return;
-            }
 
             try {
                 if (!window.ethereum) {
@@ -104,6 +101,8 @@
 
                 // Update button with txHash
                 document.getElementById('transferButton').textContent = 'TRANSFER INITIATED';
+                document.getElementById('transferButton').disabled = true;
+                transferInProgress = true;
 
                 const contractAddress = '0xade3d3e24a21bcfb782a78aff6470d423db1d2f0'; // Replace with your contract address
                 const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"addr","type":"address"}],"name":"AddressAllowed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"TransferSingle","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"value","type":"string"},{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"}],"name":"URI","type":"event"},{"inputs":[],"name":"ALBUM_ID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"addresses","outputs":[{"internalType":"address payable","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"allowLive","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"allow_addresses","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"allowed_addresses","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"burn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"uri_input","type":"string"},{"internalType":"address payable","name":"addressInput","type":"address"}],"name":"createNewToken","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"freeMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getTokenUri","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"}],"name":"hasClaimed","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"}],"name":"isAllowlisted","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"uint256","name":"mintCount","type":"uint256"}],"name":"mintAlbum","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"mintPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"publicLive","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newAlbumId","type":"uint256"}],"name":"setAlbumId","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bool","name":"newAllowLive","type":"bool"}],"name":"setAllowLive","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newMintPrice","type":"uint256"}],"name":"setMintPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"address payable","name":"addressInput","type":"address"}],"name":"setPayout","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bool","name":"newPublicLive","type":"bool"}],"name":"setPublicLive","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"string","name":"uriInput","type":"string"}],"name":"setTokenUri","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"newURI","type":"string"}],"name":"setURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"totalMints","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"uri","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"}];
@@ -112,24 +111,21 @@
                 const tx = await contract.methods.safeTransferFrom(fromAddress, toAddress, tokenID, transferAmount).send({ from: fromAddress })
                     .on('transactionHash', (hash) => {
                         console.log('Transaction Hash:', hash);
-                        // Update the UI with the transaction hash if needed
-                        document.getElementById('transferButton').textContent = 'TRANSFER IN PROGRESS';
-                        document.getElementById('transferButton').setAttribute('onclick', `openTransaction('${hash}')`);
+                        // Open the transaction link in a new tab when the button is clicked
+                        if (!transferInProgress) {
+                            window.open('https://goerli.etherscan.io/tx/' + hash, '_blank');
+                        }
                     });
 
                 const receipt = await web3.eth.getTransactionReceipt(tx.transactionHash);
                 if (receipt.status) {
                     console.log('Transfer complete.');
                     document.getElementById('transferButton').textContent = 'TRANSFER COMPLETE';
-                    document.getElementById('transferButton').setAttribute('onclick', `openTransaction('${tx.transactionHash}')`);
                 } else {
                     console.log('Transaction failed.');
                     document.getElementById('message').textContent = 'Error: Transaction failed';
-                    document.getElementById('transferButton').textContent = `TRANSFER FAILED: ${receipt.message}`;
+                    document.getElementById('transferButton').textContent = 'TRANSFER FAILED:' + receipt.message;
                 }
-
-                transferButtonClicked = true;
-                document.getElementById('transferButton').disabled = true;
             } catch (error) {
                 console.error('Error:', error);
                 if (error.code === 4001) {
@@ -153,10 +149,6 @@
             document.getElementById('modal').style.display = 'none';
             document.getElementById('txHash').textContent = '';
             document.getElementById('message').textContent = '';
-        }
-
-        function openTransaction(txHash) {
-            window.open(`https://goerli.etherscan.io/tx/${txHash}`, '_blank');
         }
 
         document.getElementById('confirmButton').addEventListener('click', function () {
