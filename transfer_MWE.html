@@ -107,16 +107,16 @@
 
                 const tx = await contract.methods.safeTransferFrom(fromAddress, toAddress, tokenID, transferAmount).send({ from: fromAddress });
                 console.log('Transaction Hash:', tx.transactionHash);
-                document.getElementById('txHash').textContent = '<a href="https://goerli.etherscan.io/tx/'+tx.transactionHash+'">TRANSFER IN PROGRESS</a>';
+                document.getElementById('transferButton').innerHTML = '<a href="https://goerli.etherscan.io/tx/'+tx.transactionHash+'">TRANSFER IN PROGRESS</a>';
 
                 const receipt = await web3.eth.getTransactionReceipt(tx.transactionHash);
                 if (receipt.status) {
                     console.log('Transfer complete.');
-                    document.getElementById('transferButton').textContent = 'TRANSFER COMPLETE';
+                    document.getElementById('transferButton').innerHTML = '<a href="https://goerli.etherscan.io/tx/'+tx.transactionHash+'">TRANSFER COMPLETE</a>';
                 } else {
                     console.log('Transaction failed.');
                     document.getElementById('message').textContent = 'Error: Transaction failed';
-                    document.getElementById('transferButton').textContent = 'TRANSFER FAILED:'+receipt.message;
+                    document.getElementById('transferButton').innerHTML = '<a href="https://goerli.etherscan.io/tx/'+tx.transactionHash+'">TRANSFER FAILED:'+receipt.message+'</a>';
                 }
             } catch (error) {
                 console.error('Error:', error);
