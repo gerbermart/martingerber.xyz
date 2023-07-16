@@ -106,20 +106,15 @@
 		let transferInProgress = false; // Flag to track transfer in progress
 
         async function checkNetwork() {
-            try {
-                const web3 = new Web3(window.ethereum);
-                const networkId = await web3.eth.net.getId();
-                if (networkId === '0x5') {
-                console.log('Connected to the Goerli network.');
-                return true;
-                } else {
-                console.log('Please switch to the Goerli network.');
-                return false;
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                return false;
-            }
+            const expectedNetwork = 'goerli'; // Replace with the expected network name
+            var flag=true;
+            const provider = new Web3(window.ethereum);
+			const network = await provider.eth.net.getNetworkType();
+
+			if (network !== expectedNetwork) {
+				flag=false;
+			}
+            return flag;
         }
 
 
@@ -226,8 +221,8 @@
 				return; // Do not proceed with the transfer
 			} else {
                 // Check network
-                const isConnectedToGoerli = await checkNetwork();
-                if (!isConnectedToGoerli) {
+                const rightNetwork = await checkNetwork();
+                if (!rightNetwork) {
                     // Show error message or handle the case when the user is not on the Goerli network
                     document.getElementById('transferButton').innerHTML = '<b>SWITCH TO GOERLI & REFRESH</b>';
                     document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
