@@ -191,6 +191,28 @@
 			}
 		}
 
+		async function checkNetwork() {
+			try {
+				const provider = window.ethereum;
+				if (!provider) {
+					console.log('Ethereum provider not found.');
+					return false;
+				}
+				const network = await provider.request({ method: 'eth_chainId' });
+				// Replace 'expectedNetwork' with the network ID you are checking for
+				const expectedNetwork = '0x5';
+				if (network !== expectedNetwork) {
+					console.log('Unexpected network.');
+					return false;
+				}
+				return true; // Network is as expected
+			} catch (error) {
+				console.error('Error:', error);
+				return false; // Error occurred during network check
+			}
+		}
+
+
 		async function openModal() {
 			if (!window.ethereum) {
 				// User does not have MetaMask installed
@@ -203,26 +225,24 @@
 				web3 = new Web3(window.ethereum);
 				accounts = await web3.eth.requestAccounts();
 				fromAddress = accounts[0];
-				contract = await new web3.eth.Contract(contractABI, contractAddress);
-				userBalance = await balanceOf(fromAddress, tokenID);
-				document.getElementById('transferAmount').max = userBalance;
-				if (userBalance === 0) {
-					document.getElementById('transferButton').innerHTML = '<b>ZERO BALANCE: '+userBalance+'</b>';
-					document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
-				} else {
-					const provider = window.ethereum;
-					const network = await provider.request({ method: 'eth_chainId' });
-					// Replace 'expectedNetwork' with the network ID you are checking for
-					const expectedNetwork = '0x5';
-					if (network == expectedNetwork) {
+				rightNetwork = await checkNetwork();
+				if (rightNetwork) {
+					contract = await new web3.eth.Contract(contractABI, contractAddress);
+					userBalance = await balanceOf(fromAddress, tokenID);
+					document.getElementById('transferAmount').max = userBalance;
+					if (userBalance === 0) {
+						document.getElementById('transferButton').innerHTML = '<b>ZERO BALANCE: '+userBalance+'</b>';
+						document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
+					} else {
 						console.log('Open modal.');
 						document.getElementById('modal').style.display = 'block';
-					} else {
-						document.getElementById('transferButton').innerHTML = '<b>SWITCH TO GOERLI & REFRESH</b>';
-						document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
 					}
-					
+				} else {
+					document.getElementById('transferButton').innerHTML = '<b>SWITCH TO GOERLI & REFRESH</b>';
+					document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
 				}
+					
+				
 			}
 		}
 
