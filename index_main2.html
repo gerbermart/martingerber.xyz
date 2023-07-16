@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 	<title>Martin Gerber aka Marty Gerbs</title>
@@ -49,8 +48,8 @@
 			</div>
             <div class="row">
                 <p style="font-size:36px; margin: 20 0; text-align:left;">
-                    <a href="topsecretlink2.html" target="_blank"> <button class="button" style="font-size: 36px; width:400;"><b>MINT HERE</b></button></a>
-                    <a href="https://ipfs.io/ipfs/bafybeietmcxbyc2c3scpip7khglfu4zu5sblgsyp2626trev3ftnvonndy/" target="_blank"> <button class="button" style="font-size: 36px; width:400;"><b>LAUNCH EP</b></button></a>
+                    <a href="topsecretlink2.html" target="_blank"> <button class="button" style="font-size: 36px; width:300;"><b>MINT HERE</b></button></a>
+                    <a href="https://ipfs.io/ipfs/bafybeietmcxbyc2c3scpip7khglfu4zu5sblgsyp2626trev3ftnvonndy/" target="_blank"> <button class="button" style="font-size: 36px; width:300;"><b>LAUNCH EP</b></button></a>
                 </p>
             </div>
 			<div class="row">
@@ -66,7 +65,7 @@
 			<p style="font-size:36px; margin: 20 0; text-align:left;"><b>USE YOUR GERBS/NORLI/BONES TOKENS:</b></p>
 			<div class="row">
 				<a href="GATE.html" target="_blank">
-					<button class="button" style="font-size: 24px; width:800;"><span><b>UNLOCKABLE ARCHIVES</b></span></button>
+					<button class="button" style="font-size: 24px; width:800;"><span><b>UNLOCKABLE ARCHIVES (UNDER CONSTRUCTION)</b></span></button>
 				</a>
 			</div>
 			<br><br>
@@ -76,7 +75,7 @@
 	</br></br></br></br>
 	<div class="MAIN">
 		<div class="BORDER_DIV">
-			<div style="margin:20 0;">
+			<div style="margin:20 0; align-items:center;">
 				<div id="embedded-object"></div>
 			</div>
 		</div>
@@ -85,7 +84,7 @@
 	</br></br>
 	<div class="MAIN">
 		<div class="BORDER_DIV">
-			<p style="font-size:36px; margin: 20 0; text-align:left;"><b>UPCOMING PERFORMANCES: TBA</b></p>
+			<p style="font-size:36px; margin: 20 0; text-align:center;"><b>UPCOMING PERFORMANCES: TBA</b></p>
 			<div class="row">
 				<a href="PAST_GIGS.html" target="_blank">
 					<button class="button" style="font-size: 24px; width:800;"><span><b>PREVIOUS PERFORMANCES</b></span></button>
@@ -106,11 +105,32 @@
 		const tokenID = 1;
 		let transferInProgress = false; // Flag to track transfer in progress
 
+        async function checkNetwork() {
+            try {
+                const web3 = new Web3(window.ethereum);
+                const networkId = await web3.eth.net.getId();
+                if (networkId === '5') {
+                console.log('Connected to the Goerli network.');
+                return true;
+                } else {
+                console.log('Please switch to the Goerli network.');
+                return false;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                return false;
+            }
+        }
+
+
+
+
 		async function transferTokens() {
 			console.log('Transfer tokens called.');
 
 			// Disable the transferTokens() function after the first click
 			document.getElementById('transferButton').onclick = null;
+            document.getElementById('transferButton').style = 'background-color:red;';
 
 			if (transferInProgress) {
 				console.log('Transfer already in progress.');
@@ -136,7 +156,7 @@
 				transferInProgress = true; // Set transfer in progress flag
 
 				const contractAddress = '0xade3d3e24a21bcfb782a78aff6470d423db1d2f0'; // Replace with your contract address
-				const contractABI = ABI_HERE;
+				const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"addr","type":"address"}],"name":"AddressAllowed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"TransferSingle","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"value","type":"string"},{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"}],"name":"URI","type":"event"},{"inputs":[],"name":"ALBUM_ID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"addresses","outputs":[{"internalType":"address payable","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"allowLive","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"allow_addresses","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"allowed_addresses","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"burn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"uri_input","type":"string"},{"internalType":"address payable","name":"addressInput","type":"address"}],"name":"createNewToken","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"freeMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getTokenUri","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"}],"name":"hasClaimed","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"}],"name":"isAllowlisted","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"uint256","name":"mintCount","type":"uint256"}],"name":"mintAlbum","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"mintPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"publicLive","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newAlbumId","type":"uint256"}],"name":"setAlbumId","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bool","name":"newAllowLive","type":"bool"}],"name":"setAllowLive","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newMintPrice","type":"uint256"}],"name":"setMintPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"address payable","name":"addressInput","type":"address"}],"name":"setPayout","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bool","name":"newPublicLive","type":"bool"}],"name":"setPublicLive","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"string","name":"uriInput","type":"string"}],"name":"setTokenUri","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"newURI","type":"string"}],"name":"setURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"totalMints","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"uri","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"}];
 				const contract = new web3.eth.Contract(contractABI, contractAddress);
 
 				async function balanceOf(account, id) {
@@ -153,26 +173,29 @@
 				document.getElementById('transferAmount').max = maxTransferAmount;
 				const userBalance = await balanceOf(fromAddress, tokenID);
 				if (userBalance === 0) {
-					document.getElementById('transferButton').textContent = 'ZERO BALANCE';
+					document.getElementById('transferButton').innerHTML = '<b>ZERO BALANCE</b>';
+                    document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
 					closeModal();
 				} else {
 					const tx = await contract.methods.safeTransferFrom(fromAddress, toAddress, tokenID, transferAmount).send({ from: fromAddress })
 						.on('transactionHash', (hash) => {
 							console.log('Transaction Hash:', hash);
 							// Update the UI with the transaction hash if needed
-							document.getElementById('transferButton').textContent = 'TRANSFER IN PROGRESS';
+							document.getElementById('transferButton').innerHTML = '<b>TRANSFER IN PROGRESS</b>';
+                            document.getElementById('transferButton').style = 'background-color:#2b8c00; color:white;';
 							document.getElementById('transferButton').onclick = function () { openTransaction(hash); }; // Open transaction in a new tab
 						});
 
 					const receipt = await web3.eth.getTransactionReceipt(tx.transactionHash);
 					if (receipt.status) {
 						console.log('Transfer complete.');
-						document.getElementById('transferButton').textContent = 'TRANSFER COMPLETE';
+						document.getElementById('transferButton').innerHTML = '<b>TRANSFER COMPLETE</b>';
 						document.getElementById('transferButton').onclick = function () { openTransaction(tx.transactionHash); }; // Open transaction in a new tab
 					} else {
 						console.log('Transaction failed.');
 						document.getElementById('message').textContent = 'Error: Transaction failed';
-						document.getElementById('transferButton').textContent = 'TRANSFER FAILED';
+						document.getElementById('transferButton').innerHTML = '<b>TRANSFER FAILED</b>';
+                        document.getElementById('transferButton').style = 'background-color:#b64917;';
 						document.getElementById('transferButton').onclick = function () { openTransaction(tx.transactionHash); }; // Open transaction in a new tab
 					}
 				}
@@ -181,25 +204,38 @@
 				if (error.code === 4001) {
 					console.log('User rejected the transaction.');
 					document.getElementById('message').textContent = 'User rejected the transaction.';
+                    document.getElementById('transferButton').innerHTML = '<b>TRANSFER REJECTED BY USER</b>';
+                    document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
 				} else {
 					console.log('Error: Transaction failed.');
 					document.getElementById('message').textContent = 'Error: Transaction failed';
-					document.getElementById('transferButton').textContent = 'TRANSFER FAILED';
+					document.getElementById('transferButton').innerHTML = '<b>TRANSFER FAILED</b>';
+                    document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
 				}
 			} finally {
 				transferInProgress = false; // Reset transfer in progress flag
 			}
 		}
 
-		function openModal() {
+		async function openModal() {
 			if (!window.ethereum) {
 				// User does not have MetaMask installed
 				console.log('MetaMask not installed.');
-				document.getElementById('transferButton').textContent = 'INSTALL METAMASK AND REFRESH';
+				document.getElementById('transferButton').innerHTML = '<b>INSTALL METAMASK AND REFRESH</b>';
+                document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
 				return; // Do not proceed with the transfer
 			} else {
-				console.log('Open modal.');
-				document.getElementById('modal').style.display = 'block';
+                // Check network
+                const isConnectedToGoerli = await checkNetwork();
+                if (!isConnectedToGoerli) {
+                    // Show error message or handle the case when the user is not on the Goerli network
+                    document.getElementById('transferButton').innerHTML = '<b>SWITCH TO GOERLI & REFRESH</b>';
+                    document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
+                    return;
+                } else {
+                    console.log('Open modal.');
+				    document.getElementById('modal').style.display = 'block';
+                }
 			}
 		}
 

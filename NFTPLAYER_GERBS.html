@@ -113,14 +113,14 @@
             <div class="column"><video class="video" id="RELINQUISH" width="100%" playsinline autoplay muted loop poster="IMAGES/STATIC.gif" onclick="resetborders(); this.style='border:10px solid #2a9e00; width:180px; height: 180px;'; document.getElementById('player').src=song_dict.RELINQUISH;"><source src="IMAGES/RELINQUISH.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
         </div>
         <div class="row">
-            <audio id="player" preload controls autoplay onended="nextsong()">
+            <audio id="player" preload controls onended="nextsong()">
                 <source src="https://arweave.net/kcFp5ZQRvOXSRlx3nxPKirZrcpxOAZr7B2NbhzrVYCc" type="audio/wav">
                 Your browser does not support the audio element.
             </audio> 
         </div>
         <br>
         <div class="row">
-            <button onclick="nextsong();" class="button">NEXT SONG</button>
+            <button onclick="nextsong();" class="button"><b>NEXT SONG</b></button>
         </div>
         
     </body>
