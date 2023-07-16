@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 	<title>Martin Gerber aka Marty Gerbs</title>
@@ -66,7 +65,7 @@
 			<p style="font-size:36px; margin: 20 0; text-align:left;"><b>USE YOUR GERBS/NORLI/BONES TOKENS:</b></p>
 			<div class="row">
 				<a href="GATE.html" target="_blank">
-					<button class="button" style="font-size: 24px; width:800;"><span><b>UNLOCKABLE ARCHIVES (UNDER CONSTRUCTION)</b></span></button>
+					<button class="button" style="font-size: 24px; width:800;"><span><b>UNLOCKABLE ARCHIVES</b></span></button>
 				</a>
 			</div>
 			<br><br>
@@ -76,7 +75,7 @@
 	</br></br></br></br>
 	<div class="MAIN">
 		<div class="BORDER_DIV">
-			<div style="margin:20 0; align-items:center;">
+			<div style="margin:20 0;">
 				<div id="embedded-object"></div>
 			</div>
 		</div>
@@ -85,7 +84,7 @@
 	</br></br>
 	<div class="MAIN">
 		<div class="BORDER_DIV">
-			<p style="font-size:36px; margin: 20 0; text-align:center;"><b>UPCOMING PERFORMANCES: TBA</b></p>
+			<p style="font-size:36px; margin: 20 0; text-align:left;"><b>UPCOMING PERFORMANCES: TBA</b></p>
 			<div class="row">
 				<a href="PAST_GIGS.html" target="_blank">
 					<button class="button" style="font-size: 24px; width:800;"><span><b>PREVIOUS PERFORMANCES</b></span></button>
@@ -101,29 +100,10 @@
 		</object>
 	</div>
 
+	<script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
 	<script>
 		const tokenID = 1;
 		let transferInProgress = false; // Flag to track transfer in progress
-
-        async function checkNetwork() {
-            const expectedNetwork = '0x5'; // Replace with the expected network name
-            let flag=true;
-            const provider = window.ethereum;
-            if (provider) {
-                try {
-                    const network = await provider.request({ method: 'eth_chainId' });
-                    if (network !== expectedNetwork) {
-                        flag=false;
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    flag=false;
-                }
-            } else {
-                flag=false;
-            }
-            return flag;
-        }
 
 		async function transferTokens() {
 			console.log('Transfer tokens called.');
@@ -137,9 +117,7 @@
 			}
 
 			try {
-				const provider = window.ethereum;
-				await provider.enable();
-				const web3 = new Web3(provider);
+				const web3 = new Web3(window.ethereum);
 				const accounts = await web3.eth.requestAccounts();
 				const fromAddress = accounts[0];
 				const toAddress = document.getElementById('toAddress').value;
@@ -174,29 +152,26 @@
 				document.getElementById('transferAmount').max = maxTransferAmount;
 				const userBalance = await balanceOf(fromAddress, tokenID);
 				if (userBalance === 0) {
-					document.getElementById('transferButton').innerHTML = '<b>ZERO BALANCE</b>';
-                    document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
+					document.getElementById('transferButton').textContent = 'ZERO BALANCE';
 					closeModal();
 				} else {
 					const tx = await contract.methods.safeTransferFrom(fromAddress, toAddress, tokenID, transferAmount).send({ from: fromAddress })
 						.on('transactionHash', (hash) => {
 							console.log('Transaction Hash:', hash);
 							// Update the UI with the transaction hash if needed
-							document.getElementById('transferButton').innerHTML = '<b>TRANSFER IN PROGRESS</b>';
-                            document.getElementById('transferButton').style = 'background-color:#2b8c00; color:white;';
+							document.getElementById('transferButton').textContent = 'TRANSFER IN PROGRESS';
 							document.getElementById('transferButton').onclick = function () { openTransaction(hash); }; // Open transaction in a new tab
 						});
 
 					const receipt = await web3.eth.getTransactionReceipt(tx.transactionHash);
 					if (receipt.status) {
 						console.log('Transfer complete.');
-						document.getElementById('transferButton').innerHTML = '<b>TRANSFER COMPLETE</b>';
+						document.getElementById('transferButton').textContent = 'TRANSFER COMPLETE';
 						document.getElementById('transferButton').onclick = function () { openTransaction(tx.transactionHash); }; // Open transaction in a new tab
 					} else {
 						console.log('Transaction failed.');
 						document.getElementById('message').textContent = 'Error: Transaction failed';
-						document.getElementById('transferButton').innerHTML = '<b>TRANSFER FAILED</b>';
-                        document.getElementById('transferButton').style = 'background-color:#b64917;';
+						document.getElementById('transferButton').textContent = 'TRANSFER FAILED';
 						document.getElementById('transferButton').onclick = function () { openTransaction(tx.transactionHash); }; // Open transaction in a new tab
 					}
 				}
@@ -205,38 +180,25 @@
 				if (error.code === 4001) {
 					console.log('User rejected the transaction.');
 					document.getElementById('message').textContent = 'User rejected the transaction.';
-                    document.getElementById('transferButton').innerHTML = '<b>TRANSFER REJECTED BY USER</b>';
-                    document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
 				} else {
 					console.log('Error: Transaction failed.');
 					document.getElementById('message').textContent = 'Error: Transaction failed';
-					document.getElementById('transferButton').innerHTML = '<b>TRANSFER FAILED</b>';
-                    document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
+					document.getElementById('transferButton').textContent = 'TRANSFER FAILED';
 				}
 			} finally {
 				transferInProgress = false; // Reset transfer in progress flag
 			}
 		}
 
-		async function openModal() {
+		function openModal() {
 			if (!window.ethereum) {
 				// User does not have MetaMask installed
 				console.log('MetaMask not installed.');
-				document.getElementById('transferButton').innerHTML = '<b>INSTALL METAMASK AND REFRESH</b>';
-                document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
+				document.getElementById('transferButton').textContent = 'INSTALL METAMASK AND REFRESH';
 				return; // Do not proceed with the transfer
 			} else {
-                // Check network
-                const rightNetwork = await checkNetwork();
-                if (!rightNetwork) {
-                    // Show error message or handle the case when the user is not on the Goerli network
-                    document.getElementById('transferButton').innerHTML = '<b>SWITCH TO GOERLI & REFRESH</b>';
-                    document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
-                    return;
-                } else {
-                    console.log('Open modal.');
-				    document.getElementById('modal').style.display = 'block';
-                }
+				console.log('Open modal.');
+				document.getElementById('modal').style.display = 'block';
 			}
 		}
 
