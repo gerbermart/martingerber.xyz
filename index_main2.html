@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Martin Gerber aka Marty Gerbs</title>
+	<meta name="description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<meta property="og:title" content="Martin Gerber aka Marty Gerbs">
+	<meta property="og:type" content="article" />
+	<meta property="og:description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
+	<meta property="og:image" content="https://martingerber.xyz/card.jpg">
+	<meta property="og:url" content="https://martingerber.xyz/index.html">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="viewport">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<div class="HEADER">
+		<object data="HEADER.html" width="1280" height="975">
+			Your browser doesn’t support the object tag.
+		</object>
+	</div>
+	<div style="clear:both;"></div>
+	</br></br>
+	<div class="MAIN">
+		<div class="BORDER_DIV">
+			<div id="modal" class="modal">
+				<div id="modalContent" class="modal-content">
+					<div class="input-field">
+						<label for="toAddress">Recipient Address:</label>
+						<input type="text" id="toAddress" required>
+					</div>
+					<div class="input-field">
+						<label for="transferAmount">Transfer Amount:</label>
+						<input type="number" id="transferAmount" required value="1">
+					</div>
+					<div class="button-container">
+						<button id="confirmButton" class="modal-button" onclick="transferTokens()">Confirm</button>
+						<br>
+						<button id="cancelButton" class="modal-button" onclick="closeModal()">Cancel</button>
+					</div>
+					<div id="txHash"></div>
+					<div id="message"></div>
+				</div>
+			</div>
+			<p style="font-size:36px; margin: 20 0; text-align:left;"><b>HIDDEN VARIABLES I</b></p>
+			<div class="row">
+				<iframe src="https://ipfs.io/ipfs/bafybeietmcxbyc2c3scpip7khglfu4zu5sblgsyp2626trev3ftnvonndy/" height="425vw" width="50%"></iframe>
+			</div>
+            <div class="row">
+                <p style="font-size:36px; margin: 20 0; text-align:left;">
+                    <a href="topsecretlink2.html" target="_blank"> <button class="button" style="font-size: 36px; width:400;"><b>MINT HERE</b></button></a>
+                    <a href="https://ipfs.io/ipfs/bafybeietmcxbyc2c3scpip7khglfu4zu5sblgsyp2626trev3ftnvonndy/" target="_blank"> <button class="button" style="font-size: 36px; width:400;"><b>LAUNCH EP</b></button></a>
+                </p>
+            </div>
+			<div class="row">
+				<button id="transferButton" onclick="openModal()" class="button"><b>TRANSFER YOUR HIDDEN VARIABLES NFTs</b></button>
+			</div>
+			<br><br>
+		</div>
+	</div>
+	<div style="clear:both;"></div>
+	</br></br>
+	<div class="MAIN">
+		<div class="BORDER_DIV">
+			<p style="font-size:36px; margin: 20 0; text-align:left;"><b>USE YOUR GERBS/NORLI/BONES TOKENS:</b></p>
+			<div class="row">
+				<a href="GATE.html" target="_blank">
+					<button class="button" style="font-size: 24px; width:800;"><span><b>UNLOCKABLE ARCHIVES</b></span></button>
+				</a>
+			</div>
+			<br><br>
+		</div>
+	</div>
+	<div style="clear:both;"></div></br>
+	</br></br></br></br>
+	<div class="MAIN">
+		<div class="BORDER_DIV">
+			<div style="margin:20 0;">
+				<div id="embedded-object"></div>
+			</div>
+		</div>
+	</div>
+	<div style="clear:both;"></div>
+	</br></br>
+	<div class="MAIN">
+		<div class="BORDER_DIV">
+			<p style="font-size:36px; margin: 20 0; text-align:left;"><b>UPCOMING PERFORMANCES: TBA</b></p>
+			<div class="row">
+				<a href="PAST_GIGS.html" target="_blank">
+					<button class="button" style="font-size: 24px; width:800;"><span><b>PREVIOUS PERFORMANCES</b></span></button>
+				</a>
+			</div>
+			<br><br>
+		</div>
+	</div>
+	<div style="clear:both;"></div></br>
+	<div class="MAIN">
+		<object data="MAIN.html" width="1280" height="4500">
+			Your browser doesn't support the object tag.
+		</object>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+	<script>
+		const tokenID = 1;
+		let transferInProgress = false; // Flag to track transfer in progress
+
+		async function transferTokens() {
+			console.log('Transfer tokens called.');
+
+			// Disable the transferTokens() function after the first click
+			document.getElementById('transferButton').onclick = null;
+
+			if (transferInProgress) {
+				console.log('Transfer already in progress.');
+				return; // Do not proceed if transfer is already in progress
+			}
+
+			try {
+				const web3 = new Web3(window.ethereum);
+				const accounts = await web3.eth.requestAccounts();
+				const fromAddress = accounts[0];
+				const toAddress = document.getElementById('toAddress').value;
+				const transferAmount = document.getElementById('transferAmount').value;
+
+				// Validate address
+				if (!web3.utils.isAddress(toAddress)) {
+					console.log('Invalid recipient address.');
+					document.getElementById('message').textContent = 'Error: Invalid recipient address';
+					return; // Do not proceed with the transfer
+				}
+
+				// Update button with txHash
+				document.getElementById('transferButton').textContent = 'TRANSFER INITIATED';
+				transferInProgress = true; // Set transfer in progress flag
+
+				const contractAddress = '0xade3d3e24a21bcfb782a78aff6470d423db1d2f0'; // Replace with your contract address
+				const contractABI = ABI_HERE;
+				const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+				async function balanceOf(account, id) {
+					try {
+						const balance = await contract.methods.balanceOf(account, id).call();
+						return balance;
+					} catch (error) {
+						console.error('Error:', error);
+						return 0;
+					}
+				}
+
+				const maxTransferAmount = await balanceOf(fromAddress, tokenID);
+				document.getElementById('transferAmount').max = maxTransferAmount;
+				const userBalance = await balanceOf(fromAddress, tokenID);
+				if (userBalance === 0) {
+					document.getElementById('transferButton').textContent = 'ZERO BALANCE';
+					closeModal();
+				} else {
+					const tx = await contract.methods.safeTransferFrom(fromAddress, toAddress, tokenID, transferAmount).send({ from: fromAddress })
+						.on('transactionHash', (hash) => {
+							console.log('Transaction Hash:', hash);
+							// Update the UI with the transaction hash if needed
+							document.getElementById('transferButton').textContent = 'TRANSFER IN PROGRESS';
+							document.getElementById('transferButton').onclick = function () { openTransaction(hash); }; // Open transaction in a new tab
+						});
+
+					const receipt = await web3.eth.getTransactionReceipt(tx.transactionHash);
+					if (receipt.status) {
+						console.log('Transfer complete.');
+						document.getElementById('transferButton').textContent = 'TRANSFER COMPLETE';
+						document.getElementById('transferButton').onclick = function () { openTransaction(tx.transactionHash); }; // Open transaction in a new tab
+					} else {
+						console.log('Transaction failed.');
+						document.getElementById('message').textContent = 'Error: Transaction failed';
+						document.getElementById('transferButton').textContent = 'TRANSFER FAILED';
+						document.getElementById('transferButton').onclick = function () { openTransaction(tx.transactionHash); }; // Open transaction in a new tab
+					}
+				}
+			} catch (error) {
+				console.error('Error:', error);
+				if (error.code === 4001) {
+					console.log('User rejected the transaction.');
+					document.getElementById('message').textContent = 'User rejected the transaction.';
+				} else {
+					console.log('Error: Transaction failed.');
+					document.getElementById('message').textContent = 'Error: Transaction failed';
+					document.getElementById('transferButton').textContent = 'TRANSFER FAILED';
+				}
+			} finally {
+				transferInProgress = false; // Reset transfer in progress flag
+			}
+		}
+
+		function openModal() {
+			if (!window.ethereum) {
+				// User does not have MetaMask installed
+				console.log('MetaMask not installed.');
+				document.getElementById('transferButton').textContent = 'INSTALL METAMASK AND REFRESH';
+				return; // Do not proceed with the transfer
+			} else {
+				console.log('Open modal.');
+				document.getElementById('modal').style.display = 'block';
+			}
+		}
+
+		function closeModal() {
+			console.log('Close modal.');
+			document.getElementById('modal').style.display = 'none';
+			document.getElementById('txHash').textContent = '';
+			document.getElementById('message').textContent = '';
+		}
+
+		function openTransaction(txHash) {
+			console.log('Open transaction:', txHash);
+			window.open('https://goerli.etherscan.io/tx/' + txHash, '_blank');
+		}
+
+		document.getElementById('confirmButton').addEventListener('click', function () {
+			console.log('Confirm button clicked.');
+			//transferTokens();
+			closeModal();
+		});
+
+		// JavaScript code to dynamically embed the object
+		var embeddedObject = document.createElement("object");
+		embeddedObject.setAttribute("data", "NFTPLAYER_GERBS.html");
+		embeddedObject.setAttribute("width", "2000px");
+		embeddedObject.setAttribute("height", "800px");
+		embeddedObject.textContent = "Your browser doesn't support the object tag.";
+		document.getElementById("embedded-object").appendChild(embeddedObject);
+	</script>
+</body>
+</html>
