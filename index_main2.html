@@ -229,7 +229,7 @@
 				userBalance = await balanceOf(fromAddress, tokenID);
 				document.getElementById('transferAmount').max = userBalance;
 				if (userBalance === 0) {
-					document.getElementById('transferButton').innerHTML = '<b>ZERO BALANCE</b>';
+					document.getElementById('transferButton').innerHTML = '<b>ZERO BALANCE: '+userBalance+'</b>';
 					document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
 				} else {
 					rightNetwork = await checkNetwork();
