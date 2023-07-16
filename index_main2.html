@@ -224,6 +224,9 @@
                     document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
                     return;
                 } else {
+					const web3 = new Web3(window.ethereum);
+					const accounts = await web3.eth.requestAccounts();
+					const fromAddress = accounts[0];
 					const maxTransferAmount = await balanceOf(fromAddress, tokenID);
 					document.getElementById('transferAmount').max = maxTransferAmount;
                     console.log('Open modal.');
