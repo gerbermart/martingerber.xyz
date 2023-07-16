@@ -109,7 +109,7 @@
             try {
                 const web3 = new Web3(window.ethereum);
                 const networkId = await web3.eth.net.getId();
-                if (networkId === '5') {
+                if (networkId === '0x5') {
                 console.log('Connected to the Goerli network.');
                 return true;
                 } else {
