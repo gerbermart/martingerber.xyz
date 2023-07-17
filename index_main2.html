@@ -229,7 +229,8 @@
 				if (rightNetwork) {
 					contract = await new web3.eth.Contract(contractABI, contractAddress);
 					userBalance = await balanceOf(fromAddress, tokenID);
-					if (userBalance === 0) {
+					console.log('User has '+userBalance+' tokens')
+					if (userBalance == 0) {
 						document.getElementById('transferButton').innerHTML = '<b>ZERO BALANCE: '+userBalance+'</b>';
 						document.getElementById('transferButton').style = 'background-color:#b64917; color:white;';
 					} else {
