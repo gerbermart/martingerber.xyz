@@ -146,7 +146,7 @@
 						console.log('Transaction Hash:', hash);
 						// Update the UI with the transaction hash if needed
 						document.getElementById('transferButton').innerHTML = '<b>TRANSFER IN PROGRESS</b>';
-						document.getElementById('transferButton').style = 'color:#2b8c00; background-color:white;';
+						document.getElementById('transferButton').style = 'background-color:#36b300; color:white;';
 						document.getElementById('transferButton').onclick = function () { openTransaction(hash); }; // Open transaction in a new tab
 					});
 
@@ -154,7 +154,7 @@
 				if (receipt.status) {
 					console.log('Transfer complete.');
 					document.getElementById('transferButton').innerHTML = '<b>TRANSFER COMPLETE</b>';
-					document.getElementById('transferButton').style = 'color:#2b8c00; background-color:white;';
+					document.getElementById('transferButton').style = 'background-color:#2b8c00; color:white;';
 					document.getElementById('transferButton').onclick = function () { openTransaction(tx.transactionHash); }; // Open transaction in a new tab
 				} else {
 					console.log('Transaction failed.');
