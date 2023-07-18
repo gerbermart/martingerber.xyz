@@ -10,12 +10,18 @@
     background-color: black;
     margin: 0;
     padding: 0;
+    pointer-events: none; /* Disable all touch events on the image */
+    touch-action: none; /* Disable touch gestures */
+    user-select: none;
     }
 
     #gameContainer {
     width:100%;
     margin: 0 auto;
     position: relative;
+    pointer-events: none; /* Disable all touch events on the image */
+    touch-action: none; /* Disable touch gestures */
+    user-select: none;
     }
 
     #gameCanvas {
@@ -25,6 +31,9 @@
     transform: translate(-50%, -50%);
     width: 58%;
     z-index: 2;
+    pointer-events: none; /* Disable all touch events on the image */
+    touch-action: none; /* Disable touch gestures */
+    user-select: none;
     }
 
     #image {
