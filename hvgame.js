@@ -61,33 +61,33 @@ function keyUpHandler(e) {
 }
 
 // Touch event listeners
-canvas.addEventListener("touchstart", touchStartHandler, false);
-canvas.addEventListener("touchend", touchEndHandler, false);
-canvas.addEventListener("touchmove", touchMoveHandler, { passive: false });
+document.addEventListener("touchstart", touchStartHandler, false);
+document.addEventListener("touchend", touchEndHandler, false);
+document.addEventListener("touchmove", touchMoveHandler, { passive: false });
 
 // Disable pinch-to-zoom and double-tap-to-zoom
 document.addEventListener('gesturestart', function (e) {
     e.preventDefault();
 });
-  
 
 function touchMoveHandler(e) {
     e.preventDefault();
 }
 
 function touchStartHandler(e) {
-  var touchX = e.changedTouches[0].clientX;
-  if (touchX < paddleX + paddleWidth / 2) {
-    leftPressed = true;
-  } else if (touchX > paddleX + paddleWidth / 2) {
-    rightPressed = true;
-  }
+    var touchX = e.changedTouches[0].clientX;
+    if (touchX < paddleX + paddleWidth / 2) {
+        leftPressed = true;
+    } else if (touchX > paddleX + paddleWidth / 2) {
+        rightPressed = true;
+    }
 }
 
 function touchEndHandler(e) {
-  leftPressed = false;
-  rightPressed = false;
+    leftPressed = false;
+    rightPressed = false;
 }
+
 
 
 function collisionDetection() {
