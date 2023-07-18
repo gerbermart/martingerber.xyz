@@ -8,10 +8,17 @@
 
   <script>
     function sendEmail() {
+      var name = prompt("Please enter your name:");
+      if (!name) {
+        return; // Exit if the user cancels or doesn't enter a name
+      }
+      
+      var score = 42; // Assume a dummy score of 42
+      
       var formData = new FormData();
       formData.append("_replyto", "gerbermart@gmail.com");
-      formData.append("_subject", "Hello");
-      formData.append("Message", "Hello World");
+      formData.append("_subject", "High Score Notification");
+      formData.append("Message", name + ": " + score);
 
       fetch("https://formspree.io/f/mleyddwk", {
         method: "POST",
