@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Send Email Example</title>
+  <script src="https://unpkg.com/formspree@latest"></script>
+</head>
+<body>
+  <button onclick="sendEmail()">Send Email</button>
+
+  <script>
+    function sendEmail() {
+      var form = document.createElement("form");
+      form.setAttribute("action", "https://formspree.io/f/gerbermart@gmail.com");
+      form.setAttribute("method", "POST");
+      
+      var recipientInput = document.createElement("input");
+      recipientInput.setAttribute("type", "hidden");
+      recipientInput.setAttribute("name", "_replyto");
+      recipientInput.setAttribute("value", "gerbermart@gmail.com");
+      
+      var subjectInput = document.createElement("input");
+      subjectInput.setAttribute("type", "hidden");
+      subjectInput.setAttribute("name", "_subject");
+      subjectInput.setAttribute("value", "Hello");
+      
+      var messageInput = document.createElement("input");
+      messageInput.setAttribute("type", "hidden");
+      messageInput.setAttribute("name", "Message");
+      messageInput.setAttribute("value", "Hello World");
+      
+      form.appendChild(recipientInput);
+      form.appendChild(subjectInput);
+      form.appendChild(messageInput);
+      
+      document.body.appendChild(form);
+      
+      form.submit();
+      
+      document.body.removeChild(form);
+    }
+  </script>
+</body>
+</html>
