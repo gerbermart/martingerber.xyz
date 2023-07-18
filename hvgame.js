@@ -65,6 +65,12 @@ canvas.addEventListener("touchstart", touchStartHandler, false);
 canvas.addEventListener("touchend", touchEndHandler, false);
 canvas.addEventListener("touchmove", touchMoveHandler, { passive: false });
 
+// Disable pinch-to-zoom and double-tap-to-zoom
+document.addEventListener('gesturestart', function (e) {
+    e.preventDefault();
+});
+  
+
 function touchMoveHandler(e) {
     e.preventDefault();
 }
