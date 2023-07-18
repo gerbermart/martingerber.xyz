@@ -3,15 +3,48 @@
 <head>
   <title>Brick Breaker</title>
   <style>
-    #gameCanvas {
-      background: black;
-      margin: 0 auto;
-      display: block;
+    body {
+    background: black;
+    margin: 0;
+    padding: 0;
     }
+
+    #gameContainer {
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+    }
+
+    #gameCanvas {
+    position: absolute;
+    left: 360px;
+    top: 430px;
+    transform: translate(-50%, -50%);
+    width: 420px;
+    height: 290px;
+    z-index: 1;
+    }
+
+    #image {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    }
+
+
+
+
+
   </style>
 </head>
 <body>
-  <canvas id="gameCanvas" width="480" height="320"></canvas>
+  <div id="gameContainer">
+    <canvas id="gameCanvas" width="480" height="320"></canvas>
+    <img id="image" src="hvgame.png">
+  </div>
   <script src="hvgame.js"></script>
 </body>
 </html>

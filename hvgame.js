@@ -63,6 +63,11 @@ function keyUpHandler(e) {
 // Touch event listeners
 canvas.addEventListener("touchstart", touchStartHandler, false);
 canvas.addEventListener("touchend", touchEndHandler, false);
+canvas.addEventListener("touchmove", touchMoveHandler, { passive: false });
+
+function touchMoveHandler(e) {
+    e.preventDefault();
+}
 
 function touchStartHandler(e) {
   var touchX = e.changedTouches[0].clientX;
