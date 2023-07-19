@@ -32,9 +32,8 @@
 
     #gameCanvas {
     position: absolute;
-    margin-left: 50%;
-    margin-top: 59%;
-    transform: translate(-50%, -50%);
+    margin-left: 21%;
+    margin-top: 39%;
     width: 58%;
     z-index: 2;
     pointer-events: none; /* Disable all touch events on the image */
@@ -70,6 +69,10 @@
   <div id="gameContainer">
     <canvas id="gameCanvas" width="480" height="320"></canvas>
   </div>
+  <audio id="player" preload onended="playNextTrack()">
+    <source src="hvgame/1_DICE.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio> 
   <script src="hvgame.js"></script>
 </body>
 </html>

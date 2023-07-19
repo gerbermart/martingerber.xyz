@@ -18,7 +18,7 @@
       var formData = new FormData();
       formData.append("_replyto", "gerbermart@gmail.com");
       formData.append("_subject", "High Score Notification");
-      formData.append("Message", name + ": " + score);
+      formData.append("Message", name + "("+score+"): " + address);
 
       fetch("https://formspree.io/f/mleyddwk", {
         method: "POST",
