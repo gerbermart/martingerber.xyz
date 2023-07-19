@@ -69,7 +69,7 @@
   <div id="gameContainer">
     <canvas id="gameCanvas" width="480" height="320"></canvas>
   </div>
-  <audio id="player" preload onended="playNextTrack()">
+  <audio id="player" preload>
     <source src="hvgame/1_DICE.mp3" type="audio/mp3">
     Your browser does not support the audio element.
 </audio> 
@@ -162,7 +162,7 @@
     var brickOffsetTop = 30;
     var brickOffsetLeft = 30;
     var bricks = [];
-    var lives = 1; // Number of lives
+    var lives = 3; // Number of lives
     var gameRunning = true;
     var gameStarted = false;
     var gameFinished = false;
@@ -222,7 +222,7 @@
         currentTrackIndex = (currentTrackIndex + 1) % tracks.length; // Loop to the next track
     }
 
-    //audio.addEventListener("ended", playNextTrack);
+    audio.addEventListener("ended", playNextTrack);
 
     // Start playing the first track
     //playNextTrack();
