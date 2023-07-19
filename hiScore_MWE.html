@@ -2,19 +2,19 @@
 <html>
 <head>
     <title>Hi Score Page</title>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-    <script src="hiScore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
 </head>
 <body>
     <h1>Enter your score!</h1>
     <form id="score-form">
         <input type="text" id="name-input" placeholder="Your name">
         <input type="number" id="score-input" placeholder="Your score">
-        <input type="text" id="wallet-input" placeholder="Your Wallet Address (optional)">
+        <input type="text" id="wallet-input" placeholder="Your wallet address">
         <button type="submit">Submit Score</button>
     </form>
     <h2>Top 10 Scores:</h2>
     <ul id="top-scores"></ul>
+    <script src="hiScore.js"></script>
 </body>
 </html>
