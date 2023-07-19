@@ -626,11 +626,17 @@ function showGameOverText(text) {
                 ctx.fillText(
                     "PASTE WALLET ADDRESS TO WIN PRIZE",
                     canvas.width / 2,
-                    canvas.height / 2 + 60
+                    canvas.height / 2 + 50
                 );
 
                 ctx.fillText(
                     "ADDRESS WILL NOT BE DISPLAYED ON SCOREBOARD",
+                    canvas.width / 2,
+                    canvas.height / 2 + 70
+                );
+
+                ctx.fillText(
+                    "PRESS ENTER TO SUBMIT OR SKIP",
                     canvas.width / 2,
                     canvas.height / 2 + 90
                 );
