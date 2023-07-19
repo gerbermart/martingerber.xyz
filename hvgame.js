@@ -40,7 +40,7 @@ var paddleSpeed=1.5; // multiplier on the ball speed
 var colorBricksOne = "#2b8c00";
 var colorBricksTwo = "#0052cc";
 var colorBricksThree = "#b64917";
-var oldHighScore = 0;
+var oldHighScore = 2940;
 var oldTopScore = 0;
 var playerName = "";
 var highScoreAddress = ""; // Variable to store the wallet address
@@ -84,7 +84,7 @@ async function playNextTrack() {
     ctx.font = "14px Arial";
     ctx.fillStyle = colorBricksOne;
     ctx.textAlign = "center";
-    ctx.fillText("MARTIN GERBER - " + tracknames[currentTrackIndex].toUpperCase(), canvas.width / 2, canvas.height);
+    ctx.fillText("SONG: " + tracknames[currentTrackIndex].toUpperCase(), canvas.width / 2, canvas.height);
     currentTrackIndex = (currentTrackIndex + 1) % tracks.length; // Loop to the next track
 }
 
@@ -548,10 +548,10 @@ function dispScoreboard() {
     ctx.fillText("TOP SCORES", canvas.width / 2, canvas.height / 2 + 25);
     ctx.font = "16px Arial";
     ctx.textAlign = "start"; 
-    ctx.fillText("1) MARTY GERBS:", 25, canvas.height / 2 + 50);
-    ctx.fillText("1680", 175, canvas.height / 2 + 50);
-    ctx.fillText("2) -----:", 25, canvas.height / 2 + 70);
-    ctx.fillText("0", 175, canvas.height / 2 + 70);
+    ctx.fillText("1) WAYAK:", 25, canvas.height / 2 + 50);
+    ctx.fillText("2940", 175, canvas.height / 2 + 50);
+    ctx.fillText("2) MARTY GERBS:", 25, canvas.height / 2 + 70);
+    ctx.fillText("1680", 175, canvas.height / 2 + 70);
     ctx.fillText("3) -----", 25, canvas.height / 2 + 90);
     ctx.fillText("0", 175, canvas.height / 2 + 90);
     ctx.fillText("4) -----", 25, canvas.height / 2 + 110);
