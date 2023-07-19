@@ -349,7 +349,6 @@ function startNextLevel() {
     resetBricks();
     countdown = initialCountdown;
     setTimeout(function () {
-        gameRunning = true;
         draw();
     }, 2000); // Start the game after 5 seconds
 }
@@ -359,7 +358,6 @@ function startNextLife() {
     resetPaddle();
     countdown = initialCountdown;
     setTimeout(function () {
-        gameRunning = true;
         draw();
     }, 2000); // Start the game after 5 seconds
 }
@@ -422,7 +420,7 @@ document.addEventListener("keydown", function (e) {
         playNextTrack();
         gameStarted = true;
         draw(); // Start the first draw event
-    } else {
+    } else if (gameRunning) {
         // Toggle the gamePaused variable
         gamePaused = !gamePaused;
         if (!gameFinished) {
@@ -471,6 +469,8 @@ function draw() {
         countdown--;
         setTimeout(draw, 1000);
         return;
+    } else {
+        gameRunning = true;
     }
 
     collisionDetection();
@@ -548,26 +548,26 @@ function dispScoreboard() {
     ctx.fillText("TOP SCORES", canvas.width / 2, canvas.height / 2 + 25);
     ctx.font = "16px Arial";
     ctx.textAlign = "start"; 
-    ctx.fillText("1) MARTY GERBS:", 50, canvas.height / 2 + 50);
+    ctx.fillText("1) MARTY GERBS:", 25, canvas.height / 2 + 50);
     ctx.fillText("1680", 175, canvas.height / 2 + 50);
-    ctx.fillText("2) -----:", 50, canvas.height / 2 + 70);
+    ctx.fillText("2) -----:", 25, canvas.height / 2 + 70);
     ctx.fillText("0", 175, canvas.height / 2 + 70);
-    ctx.fillText("3) -----", 50, canvas.height / 2 + 90);
+    ctx.fillText("3) -----", 25, canvas.height / 2 + 90);
     ctx.fillText("0", 175, canvas.height / 2 + 90);
-    ctx.fillText("4) -----", 50, canvas.height / 2 + 110);
+    ctx.fillText("4) -----", 25, canvas.height / 2 + 110);
     ctx.fillText("0", 175, canvas.height / 2 + 110);
-    ctx.fillText("5) -----", 50, canvas.height / 2 + 130);
+    ctx.fillText("5) -----", 25, canvas.height / 2 + 130);
     ctx.fillText("0", 175, canvas.height / 2 + 130);
     ctx.fillText("6) -----", canvas.width / 2 + 50, canvas.height / 2 + 50);
-    ctx.fillText("0", canvas.width / 2 + 25 + 150, canvas.height / 2 + 50);
+    ctx.fillText("0", canvas.width / 2 + 50 + 150, canvas.height / 2 + 50);
     ctx.fillText("7) -----", canvas.width / 2 + 50, canvas.height / 2 + 70);
-    ctx.fillText("0", canvas.width / 2 + 25 + 150, canvas.height / 2 + 70);
+    ctx.fillText("0", canvas.width / 2 + 50 + 150, canvas.height / 2 + 70);
     ctx.fillText("8) -----", canvas.width / 2 + 50, canvas.height / 2 + 90);
-    ctx.fillText("0", canvas.width / 2 + 25 + 150, canvas.height / 2 + 90);
+    ctx.fillText("0", canvas.width / 2 + 50 + 150, canvas.height / 2 + 90);
     ctx.fillText("9) -----", canvas.width / 2 + 50, canvas.height / 2 + 110);
-    ctx.fillText("0", canvas.width / 2 + 25 + 150, canvas.height / 2 + 110);
+    ctx.fillText("0", canvas.width / 2 + 50 + 150, canvas.height / 2 + 110);
     ctx.fillText("10) ----", canvas.width / 2 + 50, canvas.height / 2 + 130);
-    ctx.fillText("0", canvas.width / 2 + 25 + 150, canvas.height / 2 + 130);
+    ctx.fillText("0", canvas.width / 2 + 50 + 150, canvas.height / 2 + 130);
     
 }
 
