@@ -96,7 +96,7 @@
     var score = 0;
     
     async function addScore() {
-            await addDoc(collection(db, 'scores'), {
+        await addDoc(collection(db, 'scores'), {
             name: playerName,
             score: parseInt(score),
             wallet: highScoreAddress,
@@ -114,12 +114,10 @@
     async function getTopScores() {
         const scoresQuery = query(collection(db, 'scores'), orderBy('score', 'desc'), limit(10));
         const scoresSnapshot = await getDocs(scoresQuery);
-        topScoresList.innerHTML = '';
         topScores = [];  // Reset the array before populating it
 
-        scoresSnapshot.forEach((doc) => {
+        await scoresSnapshot.forEach((doc) => {
             const scoreData = doc.data();
-            topScoresList.innerHTML += `<li>${scoreData.name} - ${scoreData.score}</li>`;
             topScores.push(scoreData.score);  // Add the score to the array
             topNames.push(scoreData.name)
         });
@@ -164,7 +162,7 @@
     var brickOffsetTop = 30;
     var brickOffsetLeft = 30;
     var bricks = [];
-    var lives = 3; // Number of lives
+    var lives = 1; // Number of lives
     var gameRunning = true;
     var gameStarted = false;
     var gameFinished = false;
@@ -217,10 +215,10 @@
     async function playNextTrack() {
         audio.src = 'hvgame/' + tracks[currentTrackIndex];
         audio.play();
-        ctx.font = "14px Arial";
+        ctx.font = "10px Arial";
         ctx.fillStyle = colorBricksOne;
         ctx.textAlign = "center";
-        ctx.fillText("SONG: " + tracknames[currentTrackIndex].toUpperCase(), canvas.width / 2, canvas.height);
+        ctx.fillText("SONG: MARTIN GERBER - " + tracknames[currentTrackIndex].toUpperCase(), canvas.width / 2, canvas.height);
         currentTrackIndex = (currentTrackIndex + 1) % tracks.length; // Loop to the next track
     }
 
@@ -237,6 +235,9 @@
             rightPressed = true;
         } else if (e.key == "Left" || e.key == "ArrowLeft") {
             leftPressed = true;
+        }
+        if (e.key.toUpperCase() == 'N' && gameRunning) {
+            playNextTrack();
         }
     }
 
@@ -371,35 +372,6 @@
             }
         }
 
-
-        // Paddle collision detection
-        if (
-            y + dy > paddleY - ballRadius - paddleHeight &&
-            y + dy < paddleY - ballRadius - paddleHeight &&
-            x + dx > paddleX - ballRadius &&
-            x + dx < paddleX + ballRadius + paddleWidth
-        ) {
-            var collisionPoint = x - (paddleX + paddleWidth / 2);
-            var maxAngle = 30; // Adjust this angle as needed
-
-            // Calculate the reflection angle based on the collision point
-            var reflectionAngle = (collisionPoint / (paddleWidth / 2)) * (maxAngle * Math.PI / 180);
-
-            // Update the velocity angle while maintaining the speed
-            var angle = Math.atan2(dy, dx); // Get the current angle
-            angle -= reflectionAngle; // Apply the reflection angle
-
-            // accelerate the ball
-            ballSpeed *= (1+acceleration/100);
-
-            // Update the velocity components
-            //dx = Math.cos(angle) * ballSpeed; // Update the x-component of velocity
-            //dy = -Math.sin(angle) * ballSpeed; // Update the y-component of velocity
-            dy = -ballSpeed;
-            dx = ballSpeed/Math.tan(angle);
-            
-            console.log("Ball hit paddle");
-        }
     }
 
 
@@ -628,24 +600,47 @@
             dy = -dy;
             console.log("Ball hit vertical wall");
         } else if (y + dy > paddleY - paddleHeight - ballRadius) {
-            if (x > paddleX && x < paddleX + paddleWidth) {
-                dy = -dy;
+            if (x + dx > paddleX - ballRadius && x + dx < paddleX + ballRadius + paddleWidth) {
+                var collisionPoint = x - (paddleX + paddleWidth / 2);
+                var maxAngle = 30; // Adjust this angle as needed
+
+                // Calculate the reflection angle based on the collision point
+                var reflectionAngle = (collisionPoint / (paddleWidth / 2)) * (maxAngle * Math.PI / 180);
+
+                // Update the velocity angle while maintaining the speed
+                var angle = Math.atan2(dy, dx); // Get the current angle
+                console.log("angle in " + angle)
+                angle -= reflectionAngle; // Apply the reflection angle
+                console.log("angle out " + angle)
+
+                // accelerate the ball
+                ballSpeed *= (1+acceleration/100);
+
+                // Update the velocity components
+                //dx = Math.cos(angle) * ballSpeed; // Update the x-component of velocity
+                //dy = -Math.sin(angle) * ballSpeed; // Update the y-component of velocity
+                dy = -ballSpeed;
+                dx = ballSpeed/Math.tan(angle);
+                
                 console.log("Ball hit paddle");
+
             } else {
-                lives--;
-                if (lives === 0) {
-                    console.log("GAME OVER");
-                    gameRunning = false;
-                    gameFinished = true;
-                    showGameOverText("GAME OVER");
-                } else {
-                    gameRunning = false;
-                    if (lives>1) {
-                        showGameOverText(lives + " LIVES LEFT");
+                if (y > canvas.height + ballRadius) {
+                    lives--;
+                    if (lives === 0) {
+                        console.log("GAME OVER");
+                        gameRunning = false;
+                        gameFinished = true;
+                        showGameOverText("GAME OVER");
                     } else {
-                        showGameOverText(lives + " LIFE LEFT");
+                        gameRunning = false;
+                        if (lives>1) {
+                            showGameOverText(lives + " LIVES LEFT");
+                        } else {
+                            showGameOverText(lives + " LIFE LEFT");
+                        }
+                        setTimeout(startNextLife, 2000);
                     }
-                    setTimeout(startNextLife, 2000);
                 }
             }
         }
@@ -675,11 +670,11 @@
         ctx.font = "14px Arial";
         ctx.fillStyle = colorBricksOne;
         ctx.textAlign = "center";
-        ctx.fillText("MARTIN GERBER - " + tracknames[currentTrackIndex-1].toUpperCase(), canvas.width / 2, canvas.height);
+        ctx.fillText("SONG: MARTIN GERBER - " + tracknames[currentTrackIndex-1].toUpperCase(), canvas.width / 2, canvas.height);
     }
 
-    function dispScoreboard() {
-        getTopScores();
+    async function dispScoreboard() {
+        await getTopScores();
         // Display the top scores
         ctx.font = "20px Arial";
         ctx.fillText("TOP SCORES", canvas.width / 2, canvas.height / 2 + 25);
@@ -696,11 +691,11 @@
         }
         for (let i = 5; i < 10; i++) { 
             if (i<topNames.length) {
-                ctx.fillText(i+1+") "+topNames[i]+":", canvas.width / 2 + 50, canvas.height / 2 + 50 + (20*i));
-                ctx.fillText(topScores[i], canvas.width / 2 + 50 + 150, canvas.height / 2 + 50 + (20*i));
+                ctx.fillText(i+1+") "+topNames[i]+":", canvas.width / 2 + 50, canvas.height / 2 + 50 + (20*(i-5)));
+                ctx.fillText(topScores[i], canvas.width / 2 + 50 + 150, canvas.height / 2 + 50 + (20*(i-5)));
             } else {
-                ctx.fillText(i+1+") -----:", 25, canvas.height / 2 + 50 + (20*i));
-                ctx.fillText("0", 175, canvas.height / 2 + 50 + (20*i));
+                ctx.fillText(i+1+") -----:", canvas.width / 2 + 50, canvas.height / 2 + 50 + (20*(i-5)));
+                ctx.fillText("0", canvas.width / 2 + 50 + 150, canvas.height / 2 + 50 + (20*(i-5)));
             }
         }
         
@@ -790,7 +785,9 @@
                     }
                 } else if (e.key.length === 1 && e.key !== "v" && !e.ctrlKey && !e.metaKey) {
                     // Capture alphanumeric characters (excluding "v" when used with Ctrl or Command)
-                    playerName += (e.key).toUpperCase();
+                    if (playerName.length<12) {
+                        playerName += (e.key).toUpperCase();
+                    }
                     drawPlayerName();
                 }
                 } else {
