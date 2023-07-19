@@ -1,62 +1,47 @@
-// Firebase initialization
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from 'firebase/firestore';
+
 const firebaseConfig = {
-    apiKey: "AIzaSyApr_r_rEFmo_CxRmM3UapGW56eUybOsyc",
-    authDomain: "hiddenvariables-393304.firebaseapp.com",
-    projectId: "hiddenvariables-393304",
-    storageBucket: "hiddenvariables-393304.appspot.com",
-    messagingSenderId: "189667231661",
-    appId: "1:189667231661:web:3292e7668c2f42ccdcc324"
+  apiKey: "AIzaSyApr_r_rEFmo_CxRmM3UapGW56eUybOsyc",
+  authDomain: "hiddenvariables-393304.firebaseapp.com",
+  projectId: "hiddenvariables-393304",
+  storageBucket: "hiddenvariables-393304.appspot.com",
+  messagingSenderId: "189667231661",
+  appId: "1:189667231661:web:c702a1f213dfa6a3dcc324"
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-let db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore();
 
-// Submit form
-const form = document.querySelector('#score-form');
+// Grab HTML elements
+const scoreForm = document.getElementById('score-form');
+const nameInput = document.getElementById('name-input');
+const scoreInput = document.getElementById('score-input');
+const walletInput = document.getElementById('wallet-input');
+const topScoresList = document.getElementById('top-scores');
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let name = document.querySelector('#name-input').value;
-    let score = document.querySelector('#score-input').value;
-    let wallet = document.querySelector('#wallet-input').value;
-    
-    let data = {
-        name: name,
-        score: parseInt(score),
-        wallet_address: wallet || null
-    };
-
-    db.collection('hiddenvariables-393304').doc('ru7FP2itWlTlSzrgA1Qv').set(data)
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+// Add new score
+scoreForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  await addDoc(collection(db, 'scores'), {
+    name: nameInput.value,
+    score: parseInt(scoreInput.value),
+    wallet: walletInput.value,
+  });
+  nameInput.value = '';
+  scoreInput.value = '';
+  walletInput.value = '';
 });
 
-// Get top scores
-db.collection('hiddenvariables-393304').doc('ru7FP2itWlTlSzrgA1Qv').get()
-    .then((doc) => {
-        if (doc.exists) {
-            console.log("Document data:", doc.data());
-            displayScores(doc.data());
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-        }
-    })
-    .catch((error) => {
-        console.log("Error getting document:", error);
-    });
-
-function displayScores(scores) {
-    let scoreList = document.querySelector('#top-scores');
-    scoreList.innerHTML = '';
-    scores.sort((a,b) => b.score - a.score).slice(0,10).forEach(score => {
-        let li = document.createElement('li');
-        li.textContent = `${score.name}: ${score.score}`;
-        scoreList.appendChild(li);
-    });
+// Get and display top scores
+async function getTopScores() {
+  const scoresQuery = query(collection(db, 'scores'), orderBy('score', 'desc'), limit(10));
+  const scoresSnapshot = await getDocs(scoresQuery);
+  topScoresList.innerHTML = '';
+  scoresSnapshot.forEach((doc) => {
+    const scoreData = doc.data();
+    topScoresList.innerHTML += `<li>${scoreData.name} - ${scoreData.score}</li>`;
+  });
 }
+
+getTopScores();
