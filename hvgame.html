@@ -100,7 +100,7 @@
             name: playerName,
             score: parseInt(score),
             wallet: highScoreAddress,
-        });
+        })
     };
 
     // GAME MODULE BEGINS BY GRABBING HIGH SCORES
@@ -213,13 +213,17 @@
     var audio = document.getElementById("player")
 
     async function playNextTrack() {
+        if (currentTrackIndex >= tracks.length) {
+            currentTrackIndex=0;
+        }
         audio.src = 'hvgame/' + tracks[currentTrackIndex];
         audio.play();
         ctx.font = "10px Arial";
         ctx.fillStyle = colorBricksOne;
         ctx.textAlign = "center";
+        ctx.clearRect(0,canvas.height-10,canvas.width,10)
         ctx.fillText("SONG: MARTIN GERBER - " + tracknames[currentTrackIndex].toUpperCase(), canvas.width / 2, canvas.height);
-        currentTrackIndex = (currentTrackIndex + 1) % tracks.length; // Loop to the next track
+        currentTrackIndex += 1;
     }
 
     audio.addEventListener("ended", playNextTrack);
@@ -236,7 +240,7 @@
         } else if (e.key == "Left" || e.key == "ArrowLeft") {
             leftPressed = true;
         }
-        if (e.key.toUpperCase() == 'N' && gameRunning) {
+        if (e.key.toUpperCase() == 'N' && (gameRunning || gameFinished)) {
             playNextTrack();
         }
     }
@@ -625,12 +629,11 @@
                 console.log("Ball hit paddle");
 
             } else {
-                if (y > canvas.height + ballRadius) {
+                if (y > canvas.height - 2*ballRadius) {
                     lives--;
                     if (lives === 0) {
                         console.log("GAME OVER");
                         gameRunning = false;
-                        gameFinished = true;
                         showGameOverText("GAME OVER");
                     } else {
                         gameRunning = false;
@@ -674,34 +677,35 @@
     }
 
     async function dispScoreboard() {
-        await getTopScores();
+        gameFinished = true;
         // Display the top scores
         ctx.font = "20px Arial";
-        ctx.fillText("TOP SCORES", canvas.width / 2, canvas.height / 2 + 25);
+        const yOffset=25;
+        ctx.fillText("TOP SCORES", canvas.width / 2, canvas.height / 2 + yOffset - 25);
         ctx.font = "16px Arial";
         ctx.textAlign = "start"; 
         for (let i = 0; i < 5; i++) { 
             if (i<topNames.length) {
-                ctx.fillText(i+1+") "+topNames[i]+":", 25, canvas.height / 2 + 50 + (20*i));
-                ctx.fillText(topScores[i], 175, canvas.height / 2 + 50 + (20*i));
+                ctx.fillText(i+1+") "+topNames[i]+":", 25, canvas.height / 2 + yOffset + (20*i));
+                ctx.fillText(topScores[i], 175, canvas.height / 2 + yOffset + (20*i));
             } else {
-                ctx.fillText(i+1+") -----:", 25, canvas.height / 2 + 50 + (20*i));
-                ctx.fillText("0", 175, canvas.height / 2 + 50 + (20*i));
+                ctx.fillText(i+1+") -----:", 25, canvas.height / 2 + yOffset + (20*i));
+                ctx.fillText("0", 175, canvas.height / 2 + yOffset + (20*i));
             }
         }
         for (let i = 5; i < 10; i++) { 
             if (i<topNames.length) {
-                ctx.fillText(i+1+") "+topNames[i]+":", canvas.width / 2 + 50, canvas.height / 2 + 50 + (20*(i-5)));
-                ctx.fillText(topScores[i], canvas.width / 2 + 50 + 150, canvas.height / 2 + 50 + (20*(i-5)));
+                ctx.fillText(i+1+") "+topNames[i]+":", canvas.width / 2 + 50, canvas.height / 2 + yOffset + (20*(i-5)));
+                ctx.fillText(topScores[i], canvas.width / 2 + 50 + 150, canvas.height / 2 + yOffset + (20*(i-5)));
             } else {
-                ctx.fillText(i+1+") -----:", canvas.width / 2 + 50, canvas.height / 2 + 50 + (20*(i-5)));
-                ctx.fillText("0", canvas.width / 2 + 50 + 150, canvas.height / 2 + 50 + (20*(i-5)));
+                ctx.fillText(i+1+") -----:", canvas.width / 2 + 50, canvas.height / 2 + yOffset + (20*(i-5)));
+                ctx.fillText("0", canvas.width / 2 + 50 + 150, canvas.height / 2 + yOffset + (20*(i-5)));
             }
         }
         
     }
 
-    function showGameOverText(text) {
+    async function showGameOverText(text) {
         ctx.font = "48px Arial";
         ctx.fillStyle = colorBricksOne;
         ctx.textAlign = "center";
@@ -734,100 +738,99 @@
             // Draw the player's name and cursor
             drawPlayerName();
         
-            function keyDownHandler(e) {
+            async function keyDownHandler(e) {
                 if (!highScoreAddressEntered) {
-                // Handle player name input
-                if (e.key === "Enter") {
-                    if (playerName) {
-                    // Player submitted the name
-                    console.log("Player Name:", playerName);
-                    // Perform further processing with the playerName variable
-        
-                    // Clear the name prompt text
-                    ctx.clearRect(
-                        0,
-                        canvas.height/2,
-                        1000,
-                        canvas.height/2-10
-                    );
-        
-                    stage = "address";
-                    // Update the text for the wallet address prompt
-                    ctx.fillText(
-                        "PASTE WALLET ADDRESS TO WIN PRIZE",
-                        canvas.width / 2,
-                        canvas.height / 2 + 50
-                    );
-
-                    ctx.fillText(
-                        "ADDRESS WILL NOT BE DISPLAYED ON SCOREBOARD",
-                        canvas.width / 2,
-                        canvas.height / 2 + 70
-                    );
-
-                    ctx.fillText(
-                        "PRESS ENTER TO SUBMIT OR SKIP",
-                        canvas.width / 2,
-                        canvas.height / 2 + 90
-                    );
-        
-                    highScoreAddressEntered = true; // escapes this function
-                    stage="final";
-                    
-                    }
-                } else if (e.key === "Backspace") {
-                    // Handle the backspace key
-                    e.preventDefault(); // Prevent the default backspace behavior
-        
-                    if (playerName.length > 0) {
-                    playerName = playerName.slice(0, -1);
-                    drawPlayerName();
-                    }
-                } else if (e.key.length === 1 && e.key !== "v" && !e.ctrlKey && !e.metaKey) {
-                    // Capture alphanumeric characters (excluding "v" when used with Ctrl or Command)
-                    if (playerName.length<12) {
-                        playerName += (e.key).toUpperCase();
-                    }
-                    drawPlayerName();
-                }
-                } else {
-                // Handle wallet address input
-                if (e.key === "Enter") {
-                    if (highScoreAddress) {
-                    // Player submitted the wallet address
-                    console.log("Wallet Address:", highScoreAddress);
-                    // Perform further processing with the highScoreAddress variable
+                    // Handle player name input
                     if (e.key === "Enter") {
-                        // Clear the screen
-                        ctx.clearRect(0, 0, canvas.width, canvas.height-10);
-                
-                        // Display the "Thank you" message
-                        ctx.font = "30px Arial";
-                        ctx.fillStyle = colorBricksOne;
-                        ctx.textAlign = "center"; // Align the text to the center position
-                        ctx.fillText("THANK YOU FOR PLAYING!!", canvas.width / 2, canvas.height / 2 - 100);
-                        ctx.font = "24px Arial";
-                        addScore();
-                        ctx.fillText("SCORE ("+score+") SUBMITTED!", canvas.width / 2, canvas.height / 2 - 60);
-                        ctx.fillText("SCOREBOARD UPDATED MANUALLY...", canvas.width / 2, canvas.height / 2 - 35);
-                        ctx.fillText("CHECK BACK LATER", canvas.width / 2, canvas.height / 2 - 10);
-                
-                        dispScoreboard();
+                        if (playerName) {
+                        // Player submitted the name
+                        console.log("Player Name:", playerName);
+                        // Perform further processing with the playerName variable
+            
+                        // Clear the name prompt text
+                        ctx.clearRect(
+                            0,
+                            canvas.height/2,
+                            1000,
+                            canvas.height/2-10
+                        );
+            
+                        stage = "address";
+                        // Update the text for the wallet address prompt
+                        ctx.fillText(
+                            "PASTE WALLET ADDRESS TO WIN PRIZE",
+                            canvas.width / 2,
+                            canvas.height / 2 + 50
+                        );
+
+                        ctx.fillText(
+                            "ADDRESS WILL NOT BE DISPLAYED ON SCOREBOARD",
+                            canvas.width / 2,
+                            canvas.height / 2 + 70
+                        );
+
+                        ctx.fillText(
+                            "PRESS ENTER TO SUBMIT OR SKIP",
+                            canvas.width / 2,
+                            canvas.height / 2 + 90
+                        );
+            
+                        highScoreAddressEntered = true; // escapes this function
+                        stage="final";
+                        
+                        }
+                    } else if (e.key === "Backspace") {
+                        // Handle the backspace key
+                        e.preventDefault(); // Prevent the default backspace behavior
+            
+                        if (playerName.length > 0) {
+                        playerName = playerName.slice(0, -1);
+                        drawPlayerName();
+                        }
+                    } else if (e.key.length === 1 && e.key !== "v" && !e.ctrlKey && !e.metaKey) {
+                        // Capture alphanumeric characters (excluding "v" when used with Ctrl or Command)
+                        if (playerName.length<12) {
+                            playerName += (e.key).toUpperCase();
+                        }
+                        drawPlayerName();
                     }
+                } else if (!gameFinished) {
+                // Handle wallet address input
+                    if (e.key === "Enter") {
+                        if (!highScoreAddress) {
+                            highScoreAddress="";
+                        }
+                        console.log("Wallet Address:", highScoreAddress);
+                        // Perform further processing with the highScoreAddress variable
+                        if (e.key === "Enter") {
+                            // Clear the screen
+                            ctx.clearRect(0, 0, canvas.width, canvas.height-10);
+                    
+                            // Display the "Thank you" message
+                            ctx.font = "30px Arial";
+                            ctx.fillStyle = colorBricksOne;
+                            ctx.textAlign = "center"; // Align the text to the center position
+                            ctx.fillText("THANK YOU FOR PLAYING!!", canvas.width / 2, canvas.height / 2 - 100);
+                            ctx.font = "24px Arial";
+                            addScore().then(() => getTopScores()).then(() => dispScoreboard());
+                            ctx.fillText("SCORE ("+score+") SUBMITTED!", canvas.width / 2, canvas.height / 2 - 60);
+                            ctx.fillText("PLAY AGAIN TO SEE YOUR SCORE", canvas.width / 2, canvas.height / 2 - 35);
+                            
+                        }
+                        
+                    } else if (e.key === "Backspace") {
+                        // Handle the backspace key
+                        e.preventDefault(); // Prevent the default backspace behavior
+            
+                        if (highScoreAddress.length > 0) {
+                        highScoreAddress = highScoreAddress.slice(0, -1);
+                        drawWalletAddress();
+                        }
+                    } else if (e.key.length === 1 && e.key !== "v" && !e.ctrlKey && !e.metaKey) {
+                        // Capture alphanumeric characters (excluding "v" when used with Ctrl or Command)
+                        highScoreAddress += e.key;
+                        drawWalletAddress();
                     }
-                } else if (e.key === "Backspace") {
-                    // Handle the backspace key
-                    e.preventDefault(); // Prevent the default backspace behavior
-        
-                    if (highScoreAddress.length > 0) {
-                    highScoreAddress = highScoreAddress.slice(0, -1);
-                    drawWalletAddress();
-                    }
-                } else if (e.key.length === 1 && e.key !== "v" && !e.ctrlKey && !e.metaKey) {
-                    // Capture alphanumeric characters (excluding "v" when used with Ctrl or Command)
-                    highScoreAddress += e.key;
-                    drawWalletAddress();
-                }
                 }
             }
         
@@ -837,20 +840,22 @@
                 var clipboardData = e.clipboardData || window.clipboardData;
                 var pastedText = clipboardData.getData("text");
                 if (!highScoreAddressEntered) {
-                playerName += pastedText;
-                drawPlayerName();
+                    playerName += pastedText;
+                    console.log('drawPlayerName')
+                    drawPlayerName();
                 } else {
-                highScoreAddress += pastedText;
-                drawWalletAddress();
+                    highScoreAddress += pastedText;
+                    console.log('drawWalletAddress')
+                    drawWalletAddress();
                 }
             });
         
             function drawPlayerName() {
                 ctx.clearRect(
                 0,
-                canvas.height - 90,
+                canvas.height - 60,
                 1000,
-                80
+                50
                 );
         
                 ctx.font = "16px Arial";
@@ -877,9 +882,9 @@
             function drawWalletAddress() {
                 ctx.clearRect(
                     0,
-                    canvas.height - 90,
+                    canvas.height - 60,
                     1000,
-                    80
+                    50
                 ); // Clear previous text and cursor
         
                 ctx.font = "16px Arial";
@@ -920,12 +925,12 @@
             ctx.font = "30px Arial";
             ctx.fillStyle = colorBricksOne;
             ctx.textAlign = "center"; // Align the text to the center position
-            ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2 - 100);
+            ctx.fillText("GAME OVER", canvas.width / 2, 40);
             ctx.font = "24px Arial";
-            ctx.fillText("THANK YOU FOR PLAYING!", canvas.width / 2, canvas.height / 2 - 60);
-            ctx.fillText("GET A HIGH SCORE TO WIN", canvas.width / 2, canvas.height / 2 - 35);
-            ctx.fillText("WEEKLY GIVEAWAYS", canvas.width / 2, canvas.height / 2 - 10);
-            ctx.fillText("REFRESH BROWSER TO TRY AGAIN", canvas.width / 2, canvas.height);
+            ctx.fillText("THANK YOU FOR PLAYING!", canvas.width / 2, 75);
+            ctx.fillText("GET A HIGH SCORE TO WIN", canvas.width / 2, 100);
+            ctx.fillText("WEEKLY GIVEAWAYS", canvas.width / 2, 125);
+            ctx.fillText("REFRESH BROWSER TO TRY AGAIN", canvas.width / 2, canvas.height-20);
 
             dispScoreboard();
         }
