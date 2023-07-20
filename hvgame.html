@@ -4,23 +4,26 @@
   <title>Brick Breaker</title>
   <style>
     body {
-    background-image: url("hvgame.png");
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-    background-color: black;
-    margin: 0;
-    padding: 0;
-    pointer-events: none; /* Disable all touch events on the image */
-    touch-action: none; /* Disable touch gestures */
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-text-select: none;
-    -webkit-user-select: none;
+        background-color: black;
+        background-image: url("hvgame.png");
+        background-repeat: no-repeat;
+        background-size: 720px auto;
+        background-color: none;
+        background-position: center top;
+        margin: 0;
+        padding: 0;
+        pointer-events: none; /* Disable all touch events on the image */
+        touch-action: none; /* Disable touch gestures */
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-text-select: none;
+        -webkit-user-select: none;
     }
 
     #gameContainer {
-    width:100%;
-    margin: 0 auto;
+    width: 420px;
+    margin: auto;
+    margin-top: 285px;
     position: relative;
     pointer-events: none; /* Disable all touch events on the image */
     touch-action: none; /* Disable touch gestures */
@@ -32,9 +35,7 @@
 
     #gameCanvas {
     position: absolute;
-    margin-left: 21%;
-    margin-top: 39%;
-    width: 58%;
+    width: 100%;
     z-index: 2;
     pointer-events: none; /* Disable all touch events on the image */
     touch-action: none; /* Disable touch gestures */
