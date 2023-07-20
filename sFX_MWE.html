@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sound Test</title>
+</head>
+<body>
+    <button id="btnSound1">Play Sound 1</button>
+    <button id="btnSound2">Play Sound 2</button>
+
+    <audio id="sound1" src="1.mp3" preload="auto"></audio>
+    <audio id="sound2" src="2.mp3" preload="auto"></audio>
+
+    <script type="text/javascript">
+        document.getElementById('btnSound1').addEventListener('click', function() {
+            document.getElementById('sound1').play();
+        });
+
+        document.getElementById('btnSound2').addEventListener('click', function() {
+            document.getElementById('sound2').play();
+        });
+    </script>
+</body>
+</html>

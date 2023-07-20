@@ -41,7 +41,7 @@
         position: absolute;
         top: 0;
         left: 50%;
-        width: 130%;
+        width: 130vw;
         max-width: 900px;
         height: 150%;  
         background: url('hvgame.png') center top / 100% auto no-repeat;
@@ -97,6 +97,7 @@
         left: 50%;
         width: 100%;
         max-width: 800px;
+        max-height: 400px;
         height: 120%;  
     }
 
@@ -105,7 +106,7 @@
         margin-top: 30%; 
         margin-left: -35%;
         position: relative;
-        height: 40%;
+        height: 100%;
         background: black;
         z-index: 2; /* This will sit between the video and the overlay image */
     }
@@ -119,12 +120,12 @@
         background: black;
         z-index: 2; /* This will sit between the video and the overlay image */
         opacity: 36%;
-	pointer-events: none; /* Disable all touch events on the image */
-    touch-action: none; /* Disable touch gestures */
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-text-select: none;
-    -webkit-user-select: none;
+        pointer-events: none; /* Disable all touch events on the image */
+        touch-action: none; /* Disable touch gestures */
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-text-select: none;
+        -webkit-user-select: none;
 	    
     }
 
