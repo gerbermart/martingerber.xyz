@@ -41,12 +41,12 @@
         position: absolute;
         top: 0;
         left: 50%;
-        width: 100%;
+        width: 130%;
         max-width: 900px;
-        height: 120%;  
+        height: 150%;  
         background: url('hvgame.png') center top / 100% auto no-repeat;
         z-index: 3;
-        transform: translate(-50%,0%);
+        transform: translate(-48%,-2%);
     }
 
 
@@ -89,6 +89,25 @@
     -moz-user-select: none;
     -webkit-text-select: none;
     -webkit-user-select: none;
+    }
+
+    .black-square-contaniner {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 100%;
+        max-width: 800px;
+        height: 120%;  
+    }
+
+    .black-square {
+        width: 75%; 
+        margin-top: 30%; 
+        margin-left: -35%;
+        position: relative;
+        height: 40%;
+        background: black;
+        z-index: 2; /* This will sit between the video and the overlay image */
     }
 
     .black-fade {
