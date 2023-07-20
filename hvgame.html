@@ -763,6 +763,21 @@
         
             // Start the cursor blinking
             cursorBlinkInterval = setInterval(blinkCursor, 500);
+
+            // Add an invisible text input for mobile keyboard simulation
+            var inputElement = document.createElement('input');
+            inputElement.style.position = "absolute";
+            inputElement.style.opacity = "0";
+            inputElement.style.height = "0";
+            inputElement.style.width = "0";
+            document.body.appendChild(inputElement);
+
+            // Bring up the keyboard
+            inputElement.focus();
+
+            // Listen for keydown events to capture the player's name input
+            document.addEventListener("keydown", keyDownHandler, false);
+
         
             // Listen for keydown events to capture the player's name input
             document.addEventListener("keydown", keyDownHandler, false);
@@ -786,6 +801,12 @@
                             1000,
                             canvas.height/2-10
                         );
+
+                        // Dismiss the keyboard
+                                inputElement.blur();
+
+                                // Remove the invisible text input
+                                document.body.removeChild(inputElement);
             
                         stage = "address";
                         // Update the text for the wallet address prompt
@@ -844,9 +865,11 @@
                             ctx.textAlign = "center"; // Align the text to the center position
                             ctx.fillText("THANK YOU FOR PLAYING!!", canvas.width / 2, canvas.height / 2 - 100);
                             ctx.font = "24px Arial";
-                            addScore().then(() => getTopScores()).then(() => dispScoreboard());
+                            addScore();
+                            getTopScores();
+                            dispScoreboard();
                             ctx.fillText("SCORE ("+score+") SUBMITTED!", canvas.width / 2, canvas.height / 2 - 60);
-                            ctx.fillText("PLAY AGAIN TO SEE YOUR SCORE", canvas.width / 2, canvas.height / 2 - 35);
+                            ctx.fillText("REFRESH BROWSER TO PLAY AGAIN", canvas.width / 2, canvas.height / 2 - 35);
                             
                         }
                         
@@ -962,7 +985,7 @@
             ctx.fillText("THANK YOU FOR PLAYING!", canvas.width / 2, 75);
             ctx.fillText("GET A HIGH SCORE TO WIN", canvas.width / 2, 100);
             ctx.fillText("WEEKLY GIVEAWAYS", canvas.width / 2, 125);
-            ctx.fillText("REFRESH BROWSER TO TRY AGAIN", canvas.width / 2, canvas.height-20);
+            ctx.fillText("REFRESH BROWSER TO PLAY AGAIN", canvas.width / 2, canvas.height-20);
 
             dispScoreboard();
         }
