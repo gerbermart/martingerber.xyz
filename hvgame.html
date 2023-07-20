@@ -982,8 +982,10 @@
 
             if (text === "GAME OVER") {
                 ctx.clearRect(0,0,canvas.width,canvas.height-10);
-                playerName = window.prompt("Submit score! name:").toUpperCase();
-                highScoreAddress = window.prompt("Enter your wallet address (to win):");
+                if (score > oldTopScore){
+                    playerName = window.prompt("Submit score! name:").toUpperCase();
+                    highScoreAddress = window.prompt("Enter your wallet address (to win):");
+                }
                 
                 // Display the "Thank you" message
                 ctx.font = "30px Arial";
@@ -991,9 +993,11 @@
                 ctx.textAlign = "center"; // Align the text to the center position
                 ctx.fillText("THANK YOU FOR PLAYING!!", canvas.width / 2, canvas.height / 2 - 100);
                 ctx.font = "24px Arial";
-                addScore().then(() => getTopScores()).then(() => dispScoreboard());
-                ctx.fillText("SCORE ("+score+") SUBMITTED!", canvas.width / 2, canvas.height / 2 - 60);
-                ctx.fillText("PLAY AGAIN TO SEE YOUR SCORE", canvas.width / 2, canvas.height / 2 - 35);
+                if (score > oldTopScore){
+                    addScore().then(() => getTopScores()).then(() => dispScoreboard());
+                    ctx.fillText("SCORE ("+score+") SUBMITTED!", canvas.width / 2, canvas.height / 2 - 60);
+                }
+                ctx.fillText("REFRESH TO PLAY AGAIN", canvas.width / 2, canvas.height / 2 - 35);
             }
             
         }
