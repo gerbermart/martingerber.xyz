@@ -746,15 +746,15 @@
     }
 
     async function showGameOverText(text) {
-        if (!isMobile) {
-
-            ctx.font = "48px Arial";
-            ctx.fillStyle = colorBricksOne;
-            ctx.textAlign = "center";
-            ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-            ctx.font = "24px Arial";
-            ctx.fillText("Score: " + score, canvas.width / 2, canvas.height / 2 + 30);
         
+        ctx.font = "48px Arial";
+        ctx.fillStyle = colorBricksOne;
+        ctx.textAlign = "center";
+        ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+        ctx.font = "24px Arial";
+        ctx.fillText("Score: " + score, canvas.width / 2, canvas.height / 2 + 30);
+        
+        if (!isMobile) {
             if (text === "GAME OVER") {
             if (score > oldTopScore) {
                 if (score > oldHighScore) {
@@ -979,19 +979,22 @@
             }
         } else {
             // Mobile handling
-            ctx.clearRect(0,0,canvas.width,canvas.height-10);
-            playerName = window.prompt("Submit score! name:").toUpperCase();
-            highScoreAddress = window.prompt("Enter your wallet address (to win):");
-            
-            // Display the "Thank you" message
-            ctx.font = "30px Arial";
-            ctx.fillStyle = colorBricksOne;
-            ctx.textAlign = "center"; // Align the text to the center position
-            ctx.fillText("THANK YOU FOR PLAYING!!", canvas.width / 2, canvas.height / 2 - 100);
-            ctx.font = "24px Arial";
-            addScore().then(() => getTopScores()).then(() => dispScoreboard());
-            ctx.fillText("SCORE ("+score+") SUBMITTED!", canvas.width / 2, canvas.height / 2 - 60);
-            ctx.fillText("PLAY AGAIN TO SEE YOUR SCORE", canvas.width / 2, canvas.height / 2 - 35);
+
+            if (text === "GAME OVER") {
+                ctx.clearRect(0,0,canvas.width,canvas.height-10);
+                playerName = window.prompt("Submit score! name:").toUpperCase();
+                highScoreAddress = window.prompt("Enter your wallet address (to win):");
+                
+                // Display the "Thank you" message
+                ctx.font = "30px Arial";
+                ctx.fillStyle = colorBricksOne;
+                ctx.textAlign = "center"; // Align the text to the center position
+                ctx.fillText("THANK YOU FOR PLAYING!!", canvas.width / 2, canvas.height / 2 - 100);
+                ctx.font = "24px Arial";
+                addScore().then(() => getTopScores()).then(() => dispScoreboard());
+                ctx.fillText("SCORE ("+score+") SUBMITTED!", canvas.width / 2, canvas.height / 2 - 60);
+                ctx.fillText("PLAY AGAIN TO SEE YOUR SCORE", canvas.width / 2, canvas.height / 2 - 35);
+            }
             
         }
     }
