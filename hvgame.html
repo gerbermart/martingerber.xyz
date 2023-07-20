@@ -101,7 +101,39 @@
             score: parseInt(score),
             wallet: highScoreAddress,
         })
-    };
+
+        // Add the score and name to the local arrays and sort
+        topScores.push(score);
+        topNames.push(playerName);
+        sortTopScoresAndNames();
+
+        // Update the high and low scores
+        oldHighScore = topScores[0];  // The highest score in the array
+        if (topScores.length == 10) {
+            oldTopScore = topScores[9];  // The lowest score in the top 10
+        } else {
+            oldTopScore = 0; // still room left on the partly-empty top 10
+        }
+    }
+
+    // Function to sort topScores and topNames arrays based on the scores
+    function sortTopScoresAndNames() {
+        let combined = [];
+        for(let i = 0; i < topScores.length; i++) {
+            combined.push({
+                'score': topScores[i],
+                'name': topNames[i]
+            });
+        }
+
+        combined.sort((a, b) => b.score - a.score);
+
+        for(let i = 0; i < combined.length; i++) {
+            topScores[i] = combined[i].score;
+            topNames[i] = combined[i].name;
+        }
+    }
+
 
     // GAME MODULE BEGINS BY GRABBING HIGH SCORES
     
