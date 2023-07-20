@@ -3,80 +3,131 @@
 <head>
   <title>Brick Breaker</title>
   <style>
-    body {
-        background-color: black;
-        background-image: url("hvgame.png");
-        background-repeat: no-repeat;
-        background-size: 935px auto;
-        background-color: none;
-        background-position: center top;
+    body, html {
+        height: 100%;
         margin: 0;
         padding: 0;
-        pointer-events: none; /* Disable all touch events on the image */
-        touch-action: none; /* Disable touch gestures */
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-text-select: none;
+        -webkit-user-select: none;
+        background: none;
+        overflow: hidden; /* Disable all scrolling */
+    }
+
+    .background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .background video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1; /* This will sit beneath the overlay image */
+        object-fit: fill;
+    }
+
+    .overlay-image {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 100%;
+        max-width: 900px;
+        height: 120%;  
+        background: url('hvgame.png') center top / 100% auto no-repeat;
+        z-index: 3;
+        transform: translate(-50%,0%);
+    }
+
+
+    #gameContainer {
+        width: 53%; 
+        margin-left: 22%;
+        margin-top: 38%; /* If original image height was 900px and original margin-top was 370px */
+        position: relative;
+        pointer-events: none;
+        touch-action: none;
         user-select: none;
         -moz-user-select: none;
         -webkit-text-select: none;
         -webkit-user-select: none;
     }
 
-    
-
-    #gameContainer {
-    width: 545px;
-    margin: auto;
-    margin-top: 370px;
-    position: relative;
-    pointer-events: none; /* Disable all touch events on the image */
-    touch-action: none; /* Disable touch gestures */
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-text-select: none;
-    -webkit-user-select: none;
-    }
 
     #gameCanvas {
-    position: absolute;
-    width: 100%;
-    z-index: 2;
-    pointer-events: none; /* Disable all touch events on the image */
-    touch-action: none; /* Disable touch gestures */
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-text-select: none;
-    -webkit-user-select: none;
-    }
-
-    #image {
-    width: 100%;
-    height: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    pointer-events: none; /* Disable all touch events on the image */
-    touch-action: none; /* Disable touch gestures */
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-text-select: none;
-    -webkit-user-select: none;
+        position: absolute;
+        width: 100%;
+        z-index: 4;
+        pointer-events: none;
+        touch-action: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-text-select: none;
+        -webkit-user-select: none;
     }
 
 
+    .black-square-contaniner {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 100%;
+        max-width: 900px;
+        height: 120%;  
+    }
 
+    .black-square {
+        width: 65%; 
+        margin-top: 30%; 
+        margin-left: -32%;
+        position: relative;
+        height: 40%;
+        background: black;
+        z-index: 2; /* This will sit between the video and the overlay image */
+    }
+
+    .black-fade {
+        width: 100%; 
+        margin-top: 0%; 
+        margin-left: 0%;
+        position: absolute;
+        height: 100%;
+        background: black;
+        z-index: 2; /* This will sit between the video and the overlay image */
+        opacity: 36%;
+    }
 
 
   </style>
 </head>
 <body>
-  <div id="gameContainer">
-    <canvas id="gameCanvas" width="480" height="320"></canvas>
-  </div>
-  <audio id="player" preload>
-    <source src="hvgame/1_DICE.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-</audio> 
+    <div class="background">
+        <video playsinline autoplay muted loop>
+            <source src="IMAGES/LASERS.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="black-square-contaniner">
+            <div class="black-square"></div> <!-- New div for the black square -->
+        </div> <!-- New div for the black square -->
+        <div class="black-fade"></div> <!-- New div for the black square -->
+        <div class="overlay-image">
+            <div id="gameContainer">
+                <canvas id="gameCanvas" width="480" height="320"></canvas>
+            </div>
+        </div>
+        <audio id="player" preload>
+            <source src="hvgame/1_DICE.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio> 
+    </div>  
+     
 <script type="module">
+
+
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     console.log('Mobile: '+isMobile)
 
