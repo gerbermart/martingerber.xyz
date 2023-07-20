@@ -7,6 +7,8 @@
         height: 100%;
         margin: 0;
         padding: 0;
+        pointer-events: none; /* Disable all touch events on the image */
+        touch-action: none; /* Disable touch gestures */
         user-select: none;
         -moz-user-select: none;
         -webkit-text-select: none;
@@ -23,13 +25,17 @@
 
     .background video {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1; /* This will sit beneath the overlay image */
-        object-fit: fill;
+        top: 50%;
+        left: 50%;
+        min-width: 100vw;
+        min-height: 100vh;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        object-fit: cover;
     }
+
 
     .overlay-image {
         position: absolute;
@@ -70,24 +76,19 @@
         -webkit-user-select: none;
     }
 
-
-    .black-square-contaniner {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        width: 100%;
-        max-width: 900px;
-        height: 120%;  
-    }
-
-    .black-square {
-        width: 65%; 
-        margin-top: 30%; 
-        margin-left: -32%;
-        position: relative;
-        height: 40%;
-        background: black;
-        z-index: 2; /* This will sit between the video and the overlay image */
+    #image {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none; /* Disable all touch events on the image */
+    touch-action: none; /* Disable touch gestures */
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-text-select: none;
+    -webkit-user-select: none;
     }
 
     .black-fade {
@@ -99,6 +100,13 @@
         background: black;
         z-index: 2; /* This will sit between the video and the overlay image */
         opacity: 36%;
+	pointer-events: none; /* Disable all touch events on the image */
+    touch-action: none; /* Disable touch gestures */
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-text-select: none;
+    -webkit-user-select: none;
+	    
     }
 
 
@@ -106,7 +114,7 @@
 </head>
 <body>
     <div class="background">
-        <video playsinline autoplay muted loop>
+        <video playsinline autoplay muted loop preload="auto">
             <source src="IMAGES/LASERS.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
