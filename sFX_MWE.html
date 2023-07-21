@@ -6,17 +6,37 @@
 <body>
     <button id="btnSound1">Play Sound 1</button>
     <button id="btnSound2">Play Sound 2</button>
-
-    <audio id="sound1" src="1.mp3" preload="auto"></audio>
-    <audio id="sound2" src="2.mp3" preload="auto"></audio>
+    <button id="btnSound3">Play Sound 2</button>
+    <button id="btnSound4">Play Sound 2</button>
 
     <script type="text/javascript">
+        var paddleHitSrc = "hvgame/paddleHit.mp3";
+        var brickHitSrc = "hvgame/brickHit.mp3";
+        var brickDestroySrc = "hvgame/brickDestroy.mp3";
+        var lostLifeSrc = "hvgame/lostLife.mp3";
+
+        function playFX(fX) {
+            var sound = new Audio(fX)
+            sound.play().catch(e => console.error('Error playing '+fX+' sound:', e));
+        }
+
         document.getElementById('btnSound1').addEventListener('click', function() {
-            document.getElementById('sound1').play();
+            playFX(paddleHitSrc);
         });
 
         document.getElementById('btnSound2').addEventListener('click', function() {
-            document.getElementById('sound2').play();
+            var sound2 = new Audio(brickHitSrc);
+            sound2.play().catch(e => console.error('Error playing sound 2:', e));
+        });
+
+        document.getElementById('btnSound3').addEventListener('click', function() {
+            var sound3 = new Audio(brickDestroySrc);
+            sound3.play().catch(e => console.error('Error playing sound 3:', e));
+        });
+
+        document.getElementById('btnSound4').addEventListener('click', function() {
+            var sound4 = new Audio(lostLifeSrc);
+            sound4.play().catch(e => console.error('Error playing sound 4:', e));
         });
     </script>
 </body>

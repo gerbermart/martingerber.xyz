@@ -156,6 +156,23 @@
      
 <script type="module">
 
+    // SFX
+
+    var paddleHitSrc = "hvgame/paddleHit.mp3";
+    var brickHitSrc = "hvgame/brickHit.mp3";
+    var brickDestroySrc = "hvgame/brickDestroy.mp3";
+    var lostLifeSrc = "hvgame/lostLife.mp3";
+
+    function playFX(fX) {
+        var sound = new Audio(fX)
+        sound.volume = 0.2;
+        if (fX==brickDestroySrc) {
+            sound.volume = 0.15;
+        }
+        sound.play().catch(e => console.error('Error playing '+fX+' sound:', e));
+    }
+
+    // Mobile Checker
 
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     console.log('Mobile: '+isMobile)
@@ -436,11 +453,14 @@
                             var points = 10 * level * (brickRowCount - r);
                             score += points;
                             console.log("Brick destroyed:", brick);
+                            playFX(brickDestroySrc);
                             console.log("Points earned:", points);
                             console.log("Total Score:", score);
                         } else if (brick.status === 2) {
+                            playFX(brickHitSrc);
                             brick.color = colorBricksTwo; // Change to Yellow
                         } else if (brick.status === 1) {
+                            playFX(brickHitSrc);
                             brick.color = colorBricksThree; // Change to Red
                         }
 
@@ -569,6 +589,7 @@
         ctx.font = "16px Arial";
         ctx.fillStyle = colorBricksOne;
         ctx.textAlign = "start"; // Align the text to the start position
+        document.getElementById("player").volume = 1;
         ctx.fillText(
             "Get ready for Level " + level + " in " + countdown,
             canvas.width / 2,
@@ -750,10 +771,13 @@
                 dx = ballSpeed/Math.tan(angle);
                 
                 console.log("Ball hit paddle");
+                playFX(paddleHitSrc);
 
             } else {
                 if (y > canvas.height - 2*ballRadius) {
                     lives--;
+                    playFX(lostLifeSrc);
+                    document.getElementById("player").volume = 0.25;
                     if (lives === 0) {
                         console.log("GAME OVER");
                         gameRunning = false;
@@ -839,6 +863,7 @@
         
         if (!isMobile) {
             if (text === "GAME OVER") {
+                setTimeout(function(){document.getElementById("player").volume = 1;},3000);
             if (score > oldTopScore) {
                 if (score > oldHighScore) {
                     ctx.fillText("NEW HIGH SCORE!", canvas.width / 2, canvas.height / 2 + 60);
