@@ -98,7 +98,7 @@
         left: 50%;
         width: 100%;
         max-width: 800px;
-        max-height: 400px;
+        max-height: 450px;
         height: 120%;  
     }
 
@@ -414,9 +414,9 @@
             draw(); // Start the first draw event
         }
         var touchX = e.changedTouches[0].clientX;
-        if (touchX < paddleX + paddleWidth / 2) {
+        if (touchX < canvas.width/2) {
             leftPressed = true;
-        } else if (touchX > paddleX + paddleWidth / 2) {
+        } else if (touchX >= canvas.width/2) {
             rightPressed = true;
         }
     }
