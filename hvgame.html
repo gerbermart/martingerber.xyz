@@ -163,12 +163,14 @@
     var brickDestroySrc = "hvgame/brickDestroy.mp3";
     var lostLifeSrc = "hvgame/lostLife.mp3";
 
-    function playFX(fX) {
+    function playFX(fX,muteFX) {
         var sound = new Audio(fX)
-        sound.volume = 0.2;
-        if (fX==brickDestroySrc) {
-            sound.volume = 0.15;
-        }
+        if (!muteFX){
+            sound.volume = 0.2;
+            if (fX==brickDestroySrc) {
+                sound.volume = 0.15;
+            }
+        } else {sound.volume = 0;}
         sound.play().catch(e => console.error('Error playing '+fX+' sound:', e));
     }
 
@@ -353,6 +355,13 @@
     var audio = document.getElementById("player")
 
     async function playNextTrack() {
+        // (re)initialize sFX
+        
+        playFX(paddleHitSrc,true);
+        playFX(brickHitSrc,true);
+        playFX(brickDestroySrc,true);
+        playFX(lostLifeSrc,true);
+        
         if (currentTrackIndex >= tracks.length) {
             currentTrackIndex=0;
         }
