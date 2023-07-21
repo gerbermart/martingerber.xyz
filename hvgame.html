@@ -1100,7 +1100,7 @@
                 ctx.fillStyle = colorBricksOne;
                 ctx.textAlign = "center"; // Align the text to the center position
                 ctx.fillText("GAME OVER: "+score, canvas.width / 2, 40);
-                ctx.fillText("THANK YOU FOR PLAYING!!", canvas.width / 2, canvas.height / 2 - 100);
+                ctx.fillText("THANK YOU FOR PLAYING!!", canvas.width / 2, canvas.height / 2 - 85);
                 ctx.font = "24px Arial";
                 if (score > oldTopScore){
                     addScore().then(() => getTopScores()).then(() => dispScoreboard());
