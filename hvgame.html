@@ -1075,7 +1075,7 @@
                 ctx.font = "30px Arial";
                 ctx.fillStyle = colorBricksOne;
                 ctx.textAlign = "center"; // Align the text to the center position
-                ctx.fillText("GAME OVER", canvas.width / 2, 40);
+                ctx.fillText("GAME OVER: "+score, canvas.width / 2, 40);
                 ctx.font = "24px Arial";
                 ctx.fillText("THANK YOU FOR PLAYING!", canvas.width / 2, 75);
                 ctx.fillText("GET A HIGH SCORE TO WIN", canvas.width / 2, 100);
@@ -1099,6 +1099,7 @@
                 ctx.font = "30px Arial";
                 ctx.fillStyle = colorBricksOne;
                 ctx.textAlign = "center"; // Align the text to the center position
+                ctx.fillText("GAME OVER: "+score, canvas.width / 2, 40);
                 ctx.fillText("THANK YOU FOR PLAYING!!", canvas.width / 2, canvas.height / 2 - 100);
                 ctx.font = "24px Arial";
                 if (score > oldTopScore){
@@ -1106,6 +1107,7 @@
                     ctx.fillText("SCORE ("+score+") SUBMITTED!", canvas.width / 2, canvas.height / 2 - 60);
                 }
                 ctx.fillText("REFRESH TO PLAY AGAIN", canvas.width / 2, canvas.height / 2 - 35);
+                dispScoreboard();
             }
             
         }
