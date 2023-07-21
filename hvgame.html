@@ -163,7 +163,7 @@
     var brickDestroySrc = "hvgame/brickDestroy.mp3";
     var lostLifeSrc = "hvgame/lostLife.mp3";
 
-    function playFX(fX,muteFX) {
+    async function playFX(fX,muteFX) {
         var sound = new Audio(fX)
         if (!muteFX){
             sound.volume = 0.3;
