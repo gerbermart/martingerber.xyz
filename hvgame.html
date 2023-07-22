@@ -287,7 +287,7 @@
     var ballShrink = 0.95;
     var paddleShrink = 0.8;
     var paddleHeight = 10;
-    var paddleWidth = 125;
+    var paddleWidth = 150;
     var paddleX = (canvas.width - paddleWidth) / 2;
     var paddleY = canvas.height - 25;
     var levelSpeedDelta = 1.2;
@@ -317,6 +317,12 @@
     var countdown = initialCountdown;
     var ballSpeedOne = 2.5; // life-level, level-level ball speed
     var ballSpeed = ballSpeedOne; // Initial ball speed
+    var initialSpeedLimit = 30;
+    var speedLimit = initialSpeedLimit;
+    var speedLimitGrow = 1.05;
+    var initialMaxAngle = 0.7 * Math.PI/2; // max norm deviation tolerated
+    var maxAngle = initialMaxAngle;
+    var maxAngleGrow = 1.02;
     var initialAngle = Math.PI/4 + (Math.random() * Math.PI/2);
     var dx = ballSpeed/Math.tan(initialAngle)
     var dy = -ballSpeed;
@@ -617,6 +623,8 @@
     function startNextLevel() {
         level++;
         paddleWidth*=paddleShrink;
+        speedLimit*=speedLimitGrow;
+        maxAngle=Math.min(maxAngleGrow*maxAngle,Math.PI/2);
         resetBall();
         resetPaddle();
         resetBricks();
@@ -775,19 +783,21 @@
         } else if (y + dy > paddleY - paddleHeight - ballRadius) {
             if (x + dx > paddleX - ballRadius && x + dx < paddleX + ballRadius + paddleWidth) {
                 var collisionPoint = x - (paddleX + paddleWidth / 2);
-                var maxAngle = 30; // Adjust this angle as needed
+                var angleMag = 30; // Adjust this angle as needed
 
                 // Calculate the reflection angle based on the collision point
-                var reflectionAngle = (collisionPoint / (paddleWidth / 2)) * (maxAngle * Math.PI / 180);
+                var reflectionAngle = (collisionPoint / (paddleWidth / 2)) * (angleMag * Math.PI / 180);
 
                 // Update the velocity angle while maintaining the speed
                 var angle = Math.atan2(dy, dx); // Get the current angle
                 console.log("angle in " + angle)
+
                 angle -= reflectionAngle; // Apply the reflection angle
+                angle = Math.sign(angle-Math.PI/2)*Math.min(Math.abs(angle-Math.PI/2),maxAngle) + Math.PI/2; // note: theta zero for x>0 y=0
                 console.log("angle out " + angle)
 
                 // accelerate the ball
-                ballSpeed *= (1+acceleration/100);
+                ballSpeed = Math.min(ballSpeed*(1+acceleration/100),speedLimit);
 
                 // Update the velocity components
                 //dx = Math.cos(angle) * ballSpeed; // Update the x-component of velocity
@@ -1207,6 +1217,8 @@
         level = 1;
         countdown = initialCountdown;
         ballSpeed = ballSpeedOne; // Initial ball speed
+        speedLimit = initialSpeedLimit;
+        maxAngle = initialMaxAngle;
         initialAngle = Math.PI/4 + (Math.random() * Math.PI/2);
         dx = ballSpeed/Math.tan(initialAngle)
         dy = -ballSpeed;
