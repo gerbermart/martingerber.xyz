@@ -169,7 +169,7 @@
     var lostLifeSrc = "hvgame/lostLife.mp3";
 
     async function playFX(fX,muteFX) {
-        if (!isMobile) {
+        if (!isMobile && !muteAllFX) {
             var sound = new Audio(fX)
             if (!muteFX){
                 sound.volume = 0.3;
@@ -310,6 +310,8 @@
     var gameStarted = false;
     var gameFinished = false;
     var gameReset = false;
+    var muteSoundtrack = false;
+    var muteAllFX = false;
     var level = 1;
     const initialCountdown = 3;
     var countdown = initialCountdown;
@@ -718,8 +720,10 @@
             ctx.textAlign = "left";
             ctx.fillText("R           -   RESTART GAME", canvas.width / 2, canvas.height / 2+40);
             ctx.fillText("N           -   NEXT SONG", canvas.width / 2, canvas.height / 2+60);
-            ctx.fillText("1 - 7       -   SELECT TRACK", canvas.width / 2, canvas.height / 2+80);
-            ctx.fillText("SPACE  -   PAUSE GAME", canvas.width / 2, canvas.height / 2+100);
+            ctx.fillText("M           -   MUTE SOUNDTRACK", canvas.width / 2, canvas.height / 2+80);
+            ctx.fillText("S            -   MUTE FX", canvas.width / 2, canvas.height / 2+100);
+            ctx.fillText("1 - 7       -   SELECT TRACK", canvas.width / 2, canvas.height / 2+120);
+            ctx.fillText("SPACE  -   PAUSE GAME", canvas.width / 2, canvas.height / 2+140);
             return; // Exit the function without updating the game state
         }
         // Check if the game is paused
@@ -1137,6 +1141,17 @@
     document.addEventListener("keydown", function (e) {
         if (e.key.toUpperCase() == 'R' && (gameRunning || gameFinished) && countdown == 0) {
             restartGame();
+        }
+        if (e.key.toUpperCase() == "M") {
+            if (!muteSoundtrack) {
+                audio.volume = 0;
+            } else {
+                audio.volume = 1;
+            }
+            muteSoundtrack = !muteSoundtrack;
+        }
+        if (e.key.toUpperCase() == "S") {
+            muteAllFX = !muteAllFX;
         }
         if (e.key == 1) {
             currentTrackIndex = 0;
