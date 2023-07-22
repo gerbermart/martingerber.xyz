@@ -281,6 +281,8 @@
     // GAME CODE BELOW 
 
     var devMode = false;
+    let previousTime = Date.now();
+    let currentTime, timeElapsed;
     var canvas = document.getElementById("gameCanvas");
     var ctx = canvas.getContext("2d");
     var ballRadius = 10;
@@ -764,8 +766,19 @@
 
         collisionDetection();
 
-        x += dx;
-        y += dy;
+        currentTime = Date.now();
+        timeElapsed = (currentTime - previousTime) / 20;  // convert milliseconds to seconds
+
+        if (timeElapsed>5) {timeElapsed=5;}
+
+        console.log(timeElapsed)
+
+        //timeElapsd = Math.max(timeElapsed,1);
+
+        x += dx * timeElapsed * ballSpeed / Math.abs(dy);
+        y += Math.sign(dy) * ballSpeed * timeElapsed;
+
+        previousTime = currentTime;
 
         if (rightPressed && paddleX < canvas.width - paddleWidth) {
             paddleX += paddleSpeed * ballSpeed;
