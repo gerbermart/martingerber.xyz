@@ -1135,7 +1135,7 @@
     }
 
     document.addEventListener("keydown", function (e) {
-        if (e.key.toUpperCase() == 'R') {
+        if (e.key.toUpperCase() == 'R' && (gameRunning || gameFinished) && countdown == 0) {
             restartGame();
         }
         if (e.key == 1) {
