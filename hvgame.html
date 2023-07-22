@@ -718,7 +718,8 @@
             ctx.textAlign = "left";
             ctx.fillText("R           -   RESTART GAME", canvas.width / 2, canvas.height / 2+40);
             ctx.fillText("N           -   NEXT SONG", canvas.width / 2, canvas.height / 2+60);
-            ctx.fillText("SPACE  -   PAUSE GAME", canvas.width / 2, canvas.height / 2+80);
+            ctx.fillText("1 - 7       -   SELECT TRACK", canvas.width / 2, canvas.height / 2+80);
+            ctx.fillText("SPACE  -   PAUSE GAME", canvas.width / 2, canvas.height / 2+100);
             return; // Exit the function without updating the game state
         }
         // Check if the game is paused
@@ -1136,6 +1137,34 @@
     document.addEventListener("keydown", function (e) {
         if (e.key.toUpperCase() == 'R') {
             restartGame();
+        }
+        if (e.key == 1) {
+            currentTrackIndex = 0;
+            playNextTrack();
+        }
+        if (e.key == 2) {
+            currentTrackIndex = 1;
+            playNextTrack();
+        }
+        if (e.key == 3) {
+            currentTrackIndex = 2;
+            playNextTrack();
+        }
+        if (e.key == 4) {
+            currentTrackIndex = 3;
+            playNextTrack();
+        }
+        if (e.key == 5) {
+            currentTrackIndex = 4;
+            playNextTrack();
+        }
+        if (e.key == 6) {
+            currentTrackIndex = 5;
+            playNextTrack();
+        }
+        if (e.key == 7) {
+            currentTrackIndex = 6;
+            playNextTrack();
         }
     });
 
