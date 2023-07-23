@@ -167,6 +167,7 @@
     var brickHitSrc = "hvgame/brickHit.mp3";
     var brickDestroySrc = "hvgame/brickDestroy.mp3";
     var lostLifeSrc = "hvgame/lostLife.mp3";
+    var youWinSrc = "hvgame/youWin.mp3";
 
     async function playFX(fX,muteFX) {
         if (!isMobile && !muteAllFX) {
@@ -865,6 +866,7 @@
         if (destroyedBrickCount === brickCount) {
             gameRunning = false;
             console.log("YOU WIN");
+            playFX(youWinSrc);
             showGameOverText("YOU WIN");
             setTimeout(startNextLevel, 2000);
         }
