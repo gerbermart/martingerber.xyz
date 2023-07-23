@@ -281,7 +281,7 @@
     // GAME CODE BELOW 
 
     var devMode = false;
-    let previousTime = Date.now();
+    let previousTime
     let currentTime, timeElapsed;
     var canvas = document.getElementById("gameCanvas");
     var ctx = canvas.getContext("2d");
@@ -319,16 +319,19 @@
     var countdown = initialCountdown;
     var ballSpeedOne = 2.5; // life-level, level-level ball speed
     var ballSpeed = ballSpeedOne; // Initial ball speed
-    var initialSpeedLimit = 30;
+    var initialSpeedLimit = 3 * ballSpeedOne;
     var speedLimit = initialSpeedLimit;
     var speedLimitGrow = 1.05;
+    var timeLimit = 5;
     var initialMaxAngle = 0.7 * Math.PI/2; // max norm deviation tolerated
     var maxAngle = initialMaxAngle;
     var maxAngleGrow = 1.02;
     var initialAngle = Math.PI/4 + (Math.random() * Math.PI/2);
     var dx = ballSpeed/Math.tan(initialAngle)
     var dy = -ballSpeed;
-    var acceleration = 5; // in percent-per-paddle-collision
+    var R = dx / dy;
+    var initialAcceleration = 0.05 * ballSpeedOne;
+    var acceleration = initialAcceleration; // added per collision
     var paddleSpeed=1.5; // multiplier on the ball speed 
     var colorBricksOne = "#2b8c00";
     var colorBricksTwo = "#0052cc";
@@ -436,6 +439,7 @@
         if (!gameStarted) {
             if (!gameReset) {playNextTrack();}
             gameStarted = true;
+            previousTime = Date.now();
             draw(); // Start the first draw event
         }
         var touchX = e.changedTouches[0].clientX;
@@ -549,6 +553,8 @@
 
 
     function drawBall() {
+        //previousTime = Date.now();
+        
         ctx.beginPath();
         ctx.arc(x, y, ballRadius, 0, Math.PI * 2); //* Math.pow(ballShrink, level - 1)
         ctx.fillStyle = colorBricksOne;
@@ -632,6 +638,7 @@
         resetBricks();
         countdown = initialCountdown;
         setTimeout(function () {
+            previousTime = Date.now();
             draw();
         }, 2000); // Start the game after 5 seconds
     }
@@ -641,16 +648,18 @@
         resetPaddle();
         countdown = initialCountdown;
         setTimeout(function () {
+            previousTime = Date.now();
             draw();
         }, 2000); // Start the game after 5 seconds
     }
 
     function resetBall() {
+        
         x = canvas.width / 2;
         y = paddleY - 30;
 
         ballSpeed = ballSpeedOne*Math.pow(levelSpeedDelta, level - 1); // Increase ball speed
-        acceleration = acceleration*Math.pow(1.05, level - 1); // Increase ball speed
+        acceleration *= 1.05; // Increase ball speed
 
         console.log(ballSpeed);
         console.log(acceleration);
@@ -702,12 +711,14 @@
         if (!gameStarted) {
             if (!gameReset) {playNextTrack();}
             gameStarted = true;
+            previousTime = Date.now();
             draw(); // Start the first draw event
         } else if (gameRunning) {
             // Toggle the gamePaused variable
             gamePaused = !gamePaused;
             if (!gameFinished) {
                 if (!gamePaused) {
+                    previousTime = Date.now();
                     draw();
                     document.getElementById("player").play();
                 } else {
@@ -767,23 +778,21 @@
         collisionDetection();
 
         currentTime = Date.now();
-        timeElapsed = (currentTime - previousTime) / 15;  // convert milliseconds to seconds
+        timeElapsed = (currentTime - previousTime) / 16;  // convert milliseconds to seconds
 
-        if (timeElapsed>5) {timeElapsed=5;}
+        timeElapsed = Math.min(timeElapsed,timeLimit);
 
-        console.log(timeElapsed)
+        //console.log('dt = '+timeElapsed)
 
-        //timeElapsd = Math.max(timeElapsed,1);
-
-        x += dx * timeElapsed * ballSpeed / Math.abs(dy);
-        y += Math.sign(dy) * ballSpeed * timeElapsed;
+        x += dx * timeElapsed;//Math.min(dx * timeElapsed,speedLimit);
+        y += dy * timeElapsed;//Math.min(dy * timeElapsed,speedLimit);
 
         previousTime = currentTime;
 
         if (rightPressed && paddleX < canvas.width - paddleWidth) {
-            paddleX += paddleSpeed * ballSpeed;
+            paddleX += paddleSpeed * ballSpeed * timeElapsed;
         } else if (leftPressed && paddleX > 0) {
-            paddleX -= paddleSpeed * ballSpeed;
+            paddleX -= paddleSpeed * ballSpeed * timeElapsed;
         }
 
         if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
@@ -810,7 +819,8 @@
                 console.log("angle out " + angle)
 
                 // accelerate the ball
-                ballSpeed = Math.min(ballSpeed*(1+acceleration/100),speedLimit);
+                ballSpeed = Math.min(ballSpeed+acceleration,speedLimit);
+                console.log('Ball speed: '+ballSpeed)
 
                 // Update the velocity components
                 //dx = Math.cos(angle) * ballSpeed; // Update the x-component of velocity
@@ -897,7 +907,7 @@
                 ctx.fillText("0", canvas.width / 2 + 50 + 150, canvas.height / 2 + yOffset + (20*(i-5)));
             }
         }
-        
+        //previousTime = Date.now();
     }
 
     async function showGameOverText(text) {
@@ -1235,7 +1245,7 @@
         initialAngle = Math.PI/4 + (Math.random() * Math.PI/2);
         dx = ballSpeed/Math.tan(initialAngle)
         dy = -ballSpeed;
-        acceleration = 5; // in percent-per-paddle-collision
+        acceleration = initialAcceleration; // in percent-per-paddle-collision
         score = 0;
 
         // Create the bricks
@@ -1247,10 +1257,12 @@
         }
 
         ctx.clearRect(0,0,canvas.width,canvas.height);
+        previousTime = Date.now();
         draw();
+        
     }
 
-        
+    previousTime = Date.now();        
     draw();
   </script>
 </body>
