@@ -170,7 +170,7 @@
     var youWinSrc = "hvgame/youWin.mp3";
 
     async function playFX(fX,muteFX) {
-        if (!isMobile && !muteAllFX) {
+        if (!muteAllFX) { //!isMobile && 
             var sound = new Audio(fX)
             if (!muteFX){
                 sound.volume = 0.3;
