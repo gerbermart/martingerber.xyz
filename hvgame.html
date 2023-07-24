@@ -172,15 +172,7 @@
     async function playFX(fX,muteFX) {
         if (!muteAllFX) { //!isMobile && 
             var sound = new Audio(fX)
-            if (!muteFX){
-                sound.volume = 0.3;
-                if (fX==brickDestroySrc) {
-                    sound.volume = 0.2;
-                }
-                if (fX==lostLifeSrc) {
-                    sound.volume=0.2;
-                }
-            } else {sound.volume = 0;}
+            if (muteFX) {sound.volume = 0;}
             sound.play().catch(e => console.error('Error playing '+fX+' sound:', e));
         }
     }
