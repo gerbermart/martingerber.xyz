@@ -163,19 +163,42 @@
 
     // SFX
 
-    var paddleHitSrc = "hvgame/paddleHit.mp3";
-    var brickHitSrc = "hvgame/brickHit.mp3";
-    var brickDestroySrc = "hvgame/brickDestroy.mp3";
-    var lostLifeSrc = "hvgame/lostLife.mp3";
-    var youWinSrc = "hvgame/youWin.mp3";
+    var fxVolume = 1; // replaced during initialization
 
-    async function playFX(fX,muteFX) {
-        if (!muteAllFX) { //!isMobile && 
-            var sound = new Audio(fX)
-            if (muteFX) {sound.volume = 0;}
-            sound.play().catch(e => console.error('Error playing '+fX+' sound:', e));
+    // Define your sounds
+    var audioSources = {
+    paddleHitSrc: "hvgame/paddleHit.mp3",
+    brickHitSrc: "hvgame/brickHit.mp3",
+    brickDestroySrc: "hvgame/brickDestroy.mp3",
+    lostLifeSrc: "hvgame/lostLife.mp3",
+    youWinSrc: "hvgame/youWin.mp3"
+    };
+
+    // Preload the audio files and create a pool for each sound
+    var audioPools = {};
+
+    for (var key in audioSources) {
+        audioPools[key] = [];
+        for (var i = 0; i < 3; i++) {  // Change this number based on how many simultaneous sounds you need
+            var audio2 = new Audio(audioSources[key]);
+            audio2.preload = 'auto';
+            audio2.load();
+            audioPools[key].push(audio2);
         }
     }
+
+    // Function to play a sound
+    function playFX(soundKey) {
+        if (!muteAllFX) {
+            // Find the first audio in the pool that is not currently playing
+            var sound = audioPools[soundKey].find(audio2 => audio2.paused);
+            if (sound) {
+                sound.volume = fxVolume; // for initialization
+                sound.play().catch(e => console.error('Error playing '+soundKey+' sound:', e));
+            }
+        }
+    }
+
     
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
@@ -367,12 +390,6 @@
     var audio = document.getElementById("player")
 
     async function playNextTrack() {
-        // (re)initialize sFX
-        
-        playFX(paddleHitSrc,true);
-        playFX(brickHitSrc,true);
-        playFX(brickDestroySrc,true);
-        playFX(lostLifeSrc,true);
         
         if (currentTrackIndex >= tracks.length) {
             currentTrackIndex=0;
@@ -430,7 +447,19 @@
 
     function touchStartHandler(e) {
         if (!gameStarted) {
-            if (!gameReset) {playNextTrack();}
+            if (!gameReset) {
+                // initialize sFX
+        
+                fxVolume = 0;
+                playFX("paddleHitSrc");
+                playFX("brickHitSrc");
+                playFX("brickDestroySrc");
+                playFX("lostLifeSrc");
+                playFX("youWinSrc");
+                fxVolume = 1;
+        
+                playNextTrack();
+            }
             gameStarted = true;
             previousTime = Date.now();
             draw(); // Start the first draw event
@@ -475,16 +504,16 @@
                             var points = 10 * level * (brickRowCount - r);
                             score += points;
                             console.log("Brick destroyed:", brick);
-                            playFX(brickDestroySrc);
+                            playFX("brickDestroySrc");
                             console.log("Points earned:", points);
                             console.log("Total Score:", score);
                         } else if (brick.status === 2) {
-                            playFX(brickHitSrc);
+                            playFX("brickHitSrc");
                             brick.color = colorBricksTwo; // Change to Yellow
                         } else if (brick.status === 1) {
-                            playFX(brickHitSrc);
+                            playFX("brickHitSrc");
                             brick.color = colorBricksThree; // Change to Red
-                        } else if (brick.status > 2) {playFX(brickHitSrc);}
+                        } else if (brick.status > 2) {playFX("brickHitSrc");}
 
                         // Perform reflection based on the collision side
                         var hitFromTop = false;
@@ -702,7 +731,19 @@
     document.addEventListener("keydown", function (e) {
     if (e.key === " ") { // Check if the pressed key is the space bar
         if (!gameStarted) {
-            if (!gameReset) {playNextTrack();}
+            if (!gameReset) {
+                // initialize sFX
+        
+                muteAllFX = true;
+                playFX("paddleHitSrc",true);
+                playFX("brickHitSrc",true);
+                playFX("brickDestroySrc",true);
+                playFX("lostLifeSrc",true);
+                playFX("youWinSrc",true);
+                muteAllFX = false;
+        
+                playNextTrack();
+            }
             gameStarted = true;
             previousTime = Date.now();
             draw(); // Start the first draw event
@@ -822,12 +863,12 @@
                 dx = ballSpeed/Math.tan(angle);
                 
                 console.log("Ball hit paddle");
-                playFX(paddleHitSrc);
+                playFX("paddleHitSrc");
 
             } else {
                 if (y > canvas.height - 2*ballRadius) {
                     lives--;
-                    playFX(lostLifeSrc);
+                    playFX("lostLifeSrc");
                     document.getElementById("player").volume = 0.25;
                     if (lives === 0) {
                         console.log("GAME OVER");
@@ -858,7 +899,7 @@
         if (destroyedBrickCount === brickCount) {
             gameRunning = false;
             console.log("YOU WIN");
-            playFX(youWinSrc);
+            playFX("youWinSrc");
             showGameOverText("YOU WIN");
             setTimeout(startNextLevel, 2000);
         }
