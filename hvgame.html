@@ -230,6 +230,20 @@
             wallet: highScoreAddress,
         })
 
+        // Check if player name already exists in topNames
+        const playerIndex = topNames.indexOf(playerName);
+
+        // If player name exists and the new score is lower than the existing score, return early
+        if (playerIndex !== -1 && score < topScores[playerIndex]) {
+            return;
+        }
+
+        // If player name exists and the new score is higher, remove the old score
+        if (playerIndex !== -1) {
+            topScores.splice(playerIndex, 1);
+            topNames.splice(playerIndex, 1);
+        }
+
         // Add the score and name to the local arrays and sort
         topScores.push(score);
         topNames.push(playerName);
@@ -243,6 +257,7 @@
             oldTopScore = 0; // still room left on the partly-empty top 10
         }
     }
+
 
     // Function to sort topScores and topNames arrays based on the scores
     function sortTopScoresAndNames() {
@@ -273,14 +288,20 @@
     // List of names to replace
     var replaceNames = ["SOZO", "GERBS"];
 
-    // Get and display top scores
     async function getTopScores() {
         const scoresQuery = query(collection(db, 'scores'), orderBy('score', 'desc'), limit(100));
         const scoresSnapshot = await getDocs(scoresQuery);
         let playerScores = {};  // Use an object to keep track of the top score for each player
 
+        const filterNames = ['TEST','MOBILE MART','DEBUG','MARTY FAILS','MARTIN'];
+
         await scoresSnapshot.forEach((doc) => {
             let scoreData = doc.data();
+
+            // If the player's name contains any of the phrases in filterNames, ignore this score
+            if (filterNames.some(filterName => scoreData.name.toUpperCase().includes(filterName))) {
+                return;
+            }
 
             // Replace any name containing BILL, JENNY, or EARL with those respective names
             for (let name of replaceNames) {
@@ -318,6 +339,7 @@
         console.log("Highest Score: " + oldHighScore);
         console.log("Lowest Score in Top 10: " + oldTopScore);
     }
+
 
     getTopScores();
 
@@ -1226,9 +1248,9 @@
                 if (score > oldTopScore){
                     addScore().then(() => getTopScores()).then(() => dispScoreboard());
                     ctx.fillText("SCORE ("+score+") SUBMITTED!", canvas.width / 2, canvas.height / 2 - 60);
-                }
+                } else {dispScoreboard();}
                 ctx.fillText("REFRESH TO PLAY AGAIN", canvas.width / 2, canvas.height / 2 - 35);
-                dispScoreboard();
+
             }
             
         }
