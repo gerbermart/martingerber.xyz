@@ -270,31 +270,57 @@
     var topScores = [];
     var topNames = [];
 
+    // List of names to replace
+    var replaceNames = ["SOZO", "GERBS"];
+
     // Get and display top scores
     async function getTopScores() {
-        const scoresQuery = query(collection(db, 'scores'), orderBy('score', 'desc'), limit(10));
+        const scoresQuery = query(collection(db, 'scores'), orderBy('score', 'desc'), limit(100));
         const scoresSnapshot = await getDocs(scoresQuery);
-        topScores = [];  // Reset the array before populating it
+        let playerScores = {};  // Use an object to keep track of the top score for each player
 
         await scoresSnapshot.forEach((doc) => {
-            const scoreData = doc.data();
-            topScores.push(scoreData.score);  // Add the score to the array
-            topNames.push(scoreData.name)
+            let scoreData = doc.data();
+
+            // Replace any name containing BILL, JENNY, or EARL with those respective names
+            for (let name of replaceNames) {
+                let regex = new RegExp(name, "i");  // Case-insensitive match
+                if (regex.test(scoreData.name)) {
+                    scoreData.name = name;
+                    break;
+                }
+            }
+
+            if (!playerScores[scoreData.name] || playerScores[scoreData.name] < scoreData.score) {
+                // If this is the first score for the player, or if it's higher than their previous top score, save it
+                playerScores[scoreData.name] = scoreData.score;
+            }
         });
 
-        oldHighScore = topScores[0];  // The highest score in the array
-        if (topScores.length == 10) {
-            oldTopScore = topScores[9];  // The lowest score in the top 10
-        } else {
-            oldTopScore = 0; // still room left on the partly-empty top 10
+        // Convert the playerScores object to an array of {name, score} objects
+        let scoresArray = Object.entries(playerScores).map(([name, score]) => ({name, score}));
+
+        // Sort the array by score in descending order
+        scoresArray.sort((a, b) => b.score - a.score);
+
+        // If there are more than 10 scores, trim the array down to the top 10
+        if (scoresArray.length > 10) {
+            scoresArray.length = 10;
         }
+
+        // Update topScores and topNames to reflect the top 10 unique players
+        topScores = scoresArray.map(entry => entry.score);
+        topNames = scoresArray.map(entry => entry.name);
+
+        oldHighScore = topScores[0];  // The highest score in the array
+        oldTopScore = topScores[topScores.length - 1];  // The lowest score in the top 10
 
         console.log("Highest Score: " + oldHighScore);
         console.log("Lowest Score in Top 10: " + oldTopScore);
     }
 
-
     getTopScores();
+
 
     // GAME CODE BELOW 
 
@@ -1222,6 +1248,12 @@
         }
         if (e.key.toUpperCase() == "S") {
             muteAllFX = !muteAllFX;
+        }
+        if (e.key.toUpperCase() == "D") {
+            // Developer function:
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            getTopScores();
+            dispScoreboard();
         }
         if (e.key == 1) {
             currentTrackIndex = 0;
