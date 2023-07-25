@@ -303,6 +303,10 @@
                 return;
             }
 
+            if (scoreData.name==""){
+                return;
+            }
+
             // Replace any name containing BILL, JENNY, or EARL with those respective names
             for (let name of replaceNames) {
                 let regex = new RegExp(name, "i");  // Case-insensitive match
