@@ -176,9 +176,11 @@
 
     // Preload the audio files and create a pool for each sound
     var audioPools = {};
+    var playerLimit;
 
     for (var key in audioSources) {
         audioPools[key] = [];
+        if (isMobile) {playerLimit=1;} else {playerLimit=3;}
         for (var i = 0; i < 3; i++) {  // Change this number based on how many simultaneous sounds you need
             var audio2 = new Audio(audioSources[key]);
             audio2.preload = 'auto';
