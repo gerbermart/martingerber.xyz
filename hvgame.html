@@ -286,7 +286,7 @@
     var topNames = [];
 
     // List of names to replace
-    var replaceNames = ["SOZO", "GERBS"];
+    var replaceNames = ["SOZO", "GERBS",'CRYPTDEJURE'];
 
     async function getTopScores() {
         const scoresQuery = query(collection(db, 'scores'), orderBy('score', 'desc'), limit(100));
@@ -303,7 +303,7 @@
                 return;
             }
 
-            if (scoreData.name==""){
+            if (scoreData.name.trim().length === 0){
                 return;
             }
 
