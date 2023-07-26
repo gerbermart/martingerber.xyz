@@ -289,7 +289,7 @@
     var replaceNames = ["SOZO", "GERBS",'CRYPTDEJURE'];
 
     async function getTopScores() {
-        const scoresQuery = query(collection(db, 'scores'), orderBy('score', 'desc'), limit(100));
+        const scoresQuery = query(collection(db, 'scores'), orderBy('score', 'desc'));
         const scoresSnapshot = await getDocs(scoresQuery);
         let playerScores = {};  // Use an object to keep track of the top score for each player
 
