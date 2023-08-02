@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Something is Coming</title>
+    <title>Martin Gerber Music</title>
     <meta name="description" content="come explore the music & artwork of Martin Gerber (aka Marty Gerbs)">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta property="og:title" content="Martin Gerber aka Marty Gerbs">
@@ -19,14 +19,15 @@
         <source src="IMAGES/LASERS.mp4" type="video/mp4">
     </video>
     <div class="countdown-container">
-        <div class="promo-text"><b>EP RELEASE:</b> HIDDEN VARIABLES I</div>
+        <div class="promo-text"><b>EP RELEASE:</b> HIDDEN VARIABLES</div>
         <br>
-        <div class="promo-text"><a class="button" target="_blank" href="index_main.html">LISTEN AT MARTINGERBER.XYZ</a></div>
-        <div class="promo-text"><a class="button" target="_blank" href="https://opensea.io/assets/ethereum/0x6412638eb6cec07f4378de0c796ee341257cb6d1/1">LISTEN ON OPENSEA</a></div>
+        <!-- <div class="promo-text"><a class="button" target="_blank" href="index_main.html">LISTEN AT MARTINGERBER.XYZ</a></div>
+        <div class="promo-text"><a class="button" target="_blank" href="https://opensea.io/assets/ethereum/0x6412638eb6cec07f4378de0c796ee341257cb6d1/1">LISTEN ON OPENSEA</a></div> -->
         <br>
         <div class="countdown" id="countdown1"></div>
         <br>
         <div class="countdown" id="countdown2"></div>
+        <div class="promo-text"><b>MORE TO SEE HERE:</b><br><a class="button" target="_blank" href="hvgame.html">LAUNCH GAME</a><a class="button" target="_blank" href="index_main.html">MAIN SITE</a></div>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -60,14 +61,14 @@
 
         // If countdown 1 is finished, display a message
         if (duration1.asMilliseconds() < 0) {
-            countdownElement1.innerHTML = "<b>Allowlist & Public Mint Open!</b> <br><a href='topsecretlink2.html' class='button'> MINT HERE </a>";
+            countdownElement1.innerHTML = "<b>PUBLIC MINT CLOSING SOON!</b> <br><a href='topsecretlink2.html' class='button'> MINT HERE </a>";
         }
 
 
         // If countdown 2 is finished, display a message
         if (duration2.asMilliseconds() < 0) {
-            countdownElement2.innerHTML = "<b>DSP Release is Live!</b><br><a href='https://open.spotify.com/album/4IWuSRxykfBDdv1HpeC8xA?si=6Wc4uXdOSSGQpVGXpXbfbg' class='button'> STREAM ON SPOTIFY </a>";
-            buttonElement.textContent = '<a href="https://distrokid.com/hyperfollow/martingerber/hidden-variables">STREAM EP HERE</a>';
+            countdownElement2.innerHTML = "<b>STREAM & PURCHASE HERE:</b><br><a href='https://open.spotify.com/album/4IWuSRxykfBDdv1HpeC8xA?si=6Wc4uXdOSSGQpVGXpXbfbg' target='_blank' class='button'> SPOTIFY </a><a href='https://music.apple.com/us/album/hidden-variables/1698519407' target='_blank' class='button'> APPLE MUSIC </a><a href='https://music.amazon.ca/albums/B0CCF2C1BZ?marketplaceId=A2EUQ1WTGCTBG2&musicTerritory=CA&ref=dm_sh_0yBp5H8x3AjnKD0s8JXRDEGZT' target='_blank' class='button'> AMAZON </a>"; 
+            //buttonElement.textContent = '<a href="https://distrokid.com/hyperfollow/martingerber/hidden-variables">STREAM EP HERE</a>';
         }
     }
 
