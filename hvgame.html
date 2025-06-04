@@ -1225,7 +1225,7 @@
                 ctx.fillText("GAME OVER: "+score, canvas.width / 2, 40);
                 ctx.font = "24px Arial";
                 ctx.fillText("THANK YOU FOR PLAYING!", canvas.width / 2, 75);
-                ctx.fillText("GET A NEW HIGH SCORE TO WIN", canvas.width / 2, 100);
+                //ctx.fillText("GET A NEW HIGH SCORE TO WIN", canvas.width / 2, 100);
                 //ctx.fillText("WEEKLY GIVEAWAYS", canvas.width / 2, 125);
                 ctx.fillText("HIT R TO PLAY AGAIN", canvas.width / 2, canvas.height-20);
     
@@ -1239,7 +1239,7 @@
                 ctx.clearRect(0,0,canvas.width,canvas.height-10);
                 if (score > oldTopScore){
                     playerName = window.prompt("Submit score! name:").toUpperCase();
-                    highScoreAddress = window.prompt("Enter your wallet address (to win):");
+                    //highScoreAddress = window.prompt("Enter your wallet address (to win):");
                 }
                 
                 // Display the "Thank you" message
