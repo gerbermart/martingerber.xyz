@@ -1,0 +1,122 @@
+<!doctype html>
+<html><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PEPE/USD — High-Level Summary</title>
+<style>
+  :root {
+    --bg:#0b0e14; --panel:#111622; --panel2:#0e1420; --text:#e6eef6; --muted:#95a3b3; --accent:#5dd0ff;
+    --buy:#2ecc71; --sell:#ff5c5c; --hold:#f1c40f;
+  }
+  body { margin:0; padding:24px; background:var(--bg); color:var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+  .container { max-width:1200px; margin:0 auto; }
+  .banner { background:linear-gradient(180deg,var(--panel),var(--panel2)); border:1px solid #1d2638; border-radius:16px; padding:16px; margin-bottom:16px; }
+  .banner-title { font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+  .banner-state { font-size:26px; font-weight:800; margin-top:4px; }
+  .banner .buy { color:var(--buy); }
+  .banner .sell { color:var(--sell); }
+  .banner .hold { color:var(--hold); }
+  .reason { color:var(--muted); margin-top:6px; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap:12px; }
+  .tf-card { background:linear-gradient(180deg,var(--panel),var(--panel2)); border:1px solid #1d2638; border-radius:12px; padding:12px; }
+  .tf-hdr { font-size:14px; font-weight:700; margin-bottom:6px; }
+  .age { font-size:12px; color:var(--muted); margin-left:6px; }
+  .age.stale { color:var(--sell); }
+  .tf-row { display:flex; justify-content:space-between; margin:4px 0; }
+  .tf-row.small { font-size:12px; color:var(--muted); }
+  .tf-probs { display:flex; gap:10px; flex-wrap:wrap; font-size:12px; color:var(--muted); margin:6px 0 2px 0; }
+  .val.buy { color:var(--buy); font-weight:700; }
+  .val.sell { color:var(--sell); font-weight:700; }
+  .val.hold { color:var(--hold); font-weight:700; }
+  .tf-probs .buy { color:var(--buy); font-weight:600; }
+  .tf-probs .sell { color:var(--sell); font-weight:600; }
+  .tf-probs .hold { color:var(--hold); font-weight:600; }
+  .tf-foot { color:var(--muted); font-size:11px; margin-top:6px; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="banner">
+      <div class="banner-title">High-Level State</div>
+      <div class="banner-state buy">SCALP BUY</div>
+      <div class="reason">1m strong BUY; higher TFs not against you</div>
+    </div>
+    <div class="grid">
+      
+<div class="tf-card">
+  <div class="tf-hdr">1M <span class="age">2m</span></div>
+  <div class="tf-row"><span>Model</span> <span class="val buy">BUY</span></div>
+  <div class="tf-probs">
+    <span class="buy">BUY 89.3%</span>
+    <span class="">HOLD 4.9%</span>
+    <span class="">SELL 5.8%</span>
+
+  </div>
+  <div class="tf-row"><span>Rules</span> <span class="val sell">SELL</span></div>
+  <div class="tf-row small"><span>Rule score</span> <span class="val">-1</span></div>
+  <div class="tf-foot">bar: 2025-09-21T07:14:00+00:00<br/>gen: 2025-09-21T07:15:58.507455+00:00</div>
+</div>
+
+
+<div class="tf-card">
+  <div class="tf-hdr">5M <span class="age">0m</span></div>
+  <div class="tf-row"><span>Model</span> <span class="val hold">HOLD</span></div>
+  <div class="tf-probs">
+    <span class="buy">BUY 48.8%</span>
+    <span class="">HOLD 5.9%</span>
+    <span class="">SELL 45.3%</span>
+
+  </div>
+  <div class="tf-row"><span>Rules</span> <span class="val buy">BUY</span></div>
+  <div class="tf-row small"><span>Rule score</span> <span class="val">+1</span></div>
+  <div class="tf-foot">bar: 2025-09-21T07:15:00+00:00<br/>gen: 2025-09-21T07:17:24.114683+00:00</div>
+</div>
+
+
+<div class="tf-card">
+  <div class="tf-hdr">15M <span class="age">9m</span></div>
+  <div class="tf-row"><span>Model</span> <span class="val hold">HOLD</span></div>
+  <div class="tf-probs">
+    <span class="buy">BUY 51.0%</span>
+    <span class="">HOLD 2.8%</span>
+    <span class="">SELL 46.2%</span>
+
+  </div>
+  <div class="tf-row"><span>Rules</span> <span class="val sell">SELL</span></div>
+  <div class="tf-row small"><span>Rule score</span> <span class="val">-1</span></div>
+  <div class="tf-foot">bar: 2025-09-21T07:00:00+00:00<br/>gen: 2025-09-21T07:08:23.388912+00:00</div>
+</div>
+
+
+<div class="tf-card">
+  <div class="tf-hdr">30M <span class="age">9m</span></div>
+  <div class="tf-row"><span>Model</span> <span class="val buy">BUY</span></div>
+  <div class="tf-probs">
+    <span class="buy">BUY 51.4%</span>
+    <span class="">HOLD 8.8%</span>
+    <span class="">SELL 39.8%</span>
+
+  </div>
+  <div class="tf-row"><span>Rules</span> <span class="val sell">SELL</span></div>
+  <div class="tf-row small"><span>Rule score</span> <span class="val">-1</span></div>
+  <div class="tf-foot">bar: 2025-09-21T07:00:00+00:00<br/>gen: 2025-09-21T07:08:51.778397+00:00</div>
+</div>
+
+
+<div class="tf-card">
+  <div class="tf-hdr">1H <span class="age">8m</span></div>
+  <div class="tf-row"><span>Model</span> <span class="val buy">BUY</span></div>
+  <div class="tf-probs">
+    <span class="buy">BUY 85.2%</span>
+    <span class="">HOLD 2.1%</span>
+    <span class="">SELL 12.7%</span>
+
+  </div>
+  <div class="tf-row"><span>Rules</span> <span class="val sell">SELL</span></div>
+  <div class="tf-row small"><span>Rule score</span> <span class="val">-1</span></div>
+  <div class="tf-foot">bar: 2025-09-21T07:00:00+00:00<br/>gen: 2025-09-21T07:09:16.847679+00:00</div>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>
