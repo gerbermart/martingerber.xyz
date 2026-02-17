@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stick Fighter</title>
+  <style>
+    html, body { margin:0; height:100%; background:#111; color:#ddd; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+    .wrap { display:flex; flex-direction:column; align-items:center; gap:10px; padding:12px; position:relative; }
+    canvas { background:#1b1b1b; border:1px solid #333; border-radius:10px; }
+
+    .hud { width:min(960px, 96vw); display:flex; justify-content:space-between; gap:12px; }
+    .panel { flex:1; }
+    .row { display:flex; justify-content:space-between; margin-bottom:6px; }
+    .bar { background:#222; border:1px solid #333; border-radius:999px; overflow:hidden; height:16px; }
+    .bar.small { height:10px; margin-top:6px; }
+    .fill { height:100%; width:100%; }
+    .p1 { background:#3aa0ff; }
+    .p2 { background:#ff4b4b; }
+    .m1 { background:#7cff8a; }
+    .m2 { background:#ffe07a; }
+
+    .hint { width:min(960px, 96vw); font-size:14px; line-height:1.35; opacity:.9; }
+    .kbd { padding:2px 6px; border:1px solid #444; border-bottom-width:2px; border-radius:6px; background:#191919; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+
+    /* Menu overlay */
+    .overlay {
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(2px);
+      z-index: 10;
+    }
+    .card {
+      width:min(520px, 92vw);
+      background:#141414;
+      border:1px solid #333;
+      border-radius:16px;
+      padding:18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .title { font-weight:800; font-size:22px; margin:0 0 10px 0; }
+    .sub { opacity:0.9; margin:0 0 14px 0; }
+    .btnrow { display:flex; gap:10px; flex-wrap:wrap; }
+    button {
+      appearance:none;
+      border:1px solid #3a3a3a;
+      background:#1f1f1f;
+      color:#eee;
+      border-radius:12px;
+      padding:10px 14px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    button:hover { background:#252525; }
+    button.primary { border-color:#4a8dff; }
+    .hidden { display:none !important; }
+    .smallnote { margin-top:10px; font-size:13px; opacity:0.85; }
+
+    /* Build stamp */
+    #buildStamp {
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      padding: 6px 10px;
+      border: 1px solid #444;
+      background: #111;
+      border-radius: 10px;
+      font: 12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #bbb;
+      opacity: 0.92;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Mode/Difficulty Menus -->
+    <div id="menuOverlay" class="overlay">
+      <div class="card">
+        <div id="menuMode">
+          <p class="title">Stick Fighter</p>
+          <p class="sub">Choose mode</p>
+          <div class="btnrow">
+            <button id="btn1p" class="primary">1 Player</button>
+            <button id="btn2p">2 Player</button>
+          </div>
+          <div class="smallnote">
+            Tip: Click the game canvas once so it captures input.
+          </div>
+        </div>
+
+        <div id="menuDifficulty" class="hidden">
+          <p class="title">1 Player</p>
+          <p class="sub">Choose difficulty</p>
+          <div class="btnrow">
+            <button id="btnEasy" class="primary">Easy</button>
+            <button id="btnMedium">Medium</button>
+            <button id="btnHard">Hard</button>
+          </div>
+          <div class="smallnote">
+            Easy = chill goblin vibes. Hard = training mode boss.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HUD -->
+    <div class="hud">
+      <div class="panel">
+        <div class="row"><div>Blue</div><div id="p1hpText">100</div></div>
+        <div class="bar"><div id="p1hp" class="fill p1"></div></div>
+        <div class="row" style="margin-top:8px;"><div>Meter</div><div id="p1mText">0</div></div>
+        <div class="bar small"><div id="p1m" class="fill m1"></div></div>
+      </div>
+
+      <div class="panel">
+        <div class="row"><div>Red</div><div id="p2hpText">100</div></div>
+        <div class="bar"><div id="p2hp" class="fill p2"></div></div>
+        <div class="row" style="margin-top:8px;"><div>Meter</div><div id="p2mText">0</div></div>
+        <div class="bar small"><div id="p2m" class="fill m2"></div></div>
+      </div>
+    </div>
+
+    <canvas id="game" width="960" height="540"></canvas>
+
+    <div class="hint">
+      Controls:
+      Blue = <span class="kbd">A</span>/<span class="kbd">D</span> move,
+      <span class="kbd">W</span> jump,
+      <span class="kbd">F</span> punch,
+      <span class="kbd">G</span> kick,
+      <span class="kbd">H</span> SPECIAL.
+      Red = <span class="kbd">←</span>/<span class="kbd">→</span> move,
+      <span class="kbd">↑</span> jump,
+      <span class="kbd">/</span> punch,
+      <span class="kbd">.</span> kick,
+      <span class="kbd">L</span> SPECIAL.
+      Restart = <span class="kbd">R</span>.
+      (Gamepad: <span class="kbd">B</span>=Punch, <span class="kbd">Y</span>=Kick, <span class="kbd">X</span>=Special)
+    </div>
+  </div>
+
+  <div id="buildStamp">BUILD: (loading...)</div>
+
+  <script type="module" src="./js/main.js?v=menu3"></script>
+</body>
+</html>
