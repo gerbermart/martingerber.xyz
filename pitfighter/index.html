@@ -2,12 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Stick Fighter</title>
   <style>
     html, body { margin:0; height:100%; background:#111; color:#ddd; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
-    .wrap { display:flex; flex-direction:column; align-items:center; gap:10px; padding:12px; position:relative; }
-    canvas { background:#1b1b1b; border:1px solid #333; border-radius:10px; }
+    .wrap { display:flex; flex-direction:column; align-items:center; gap:10px; padding:10px; position:relative; min-height:100vh; box-sizing:border-box; }
+
+    /* Key change: canvas scales to available height */
+    canvas {
+      background:#1b1b1b;
+      border:1px solid #333;
+      border-radius:10px;
+
+      /* Display size */
+      height: calc(100vh - 210px);
+      width: auto;
+      max-width: 96vw;
+
+      /* Prevent iOS from selecting/scrolling while playing */
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
 
     .hud { width:min(960px, 96vw); display:flex; justify-content:space-between; gap:12px; }
     .panel { flex:1; }
@@ -23,13 +39,9 @@
     .hint { width:min(960px, 96vw); font-size:14px; line-height:1.35; opacity:.9; }
     .kbd { padding:2px 6px; border:1px solid #444; border-bottom-width:2px; border-radius:6px; background:#191919; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
 
-    /* Menu overlay */
     .overlay {
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
       background: rgba(0,0,0,0.55);
       backdrop-filter: blur(2px);
       z-index: 10;
@@ -60,7 +72,6 @@
     .hidden { display:none !important; }
     .smallnote { margin-top:10px; font-size:13px; opacity:0.85; }
 
-    /* Build stamp */
     #buildStamp {
       position: fixed;
       right: 10px;
@@ -78,7 +89,6 @@
 </head>
 <body>
   <div class="wrap">
-    <!-- Mode/Difficulty Menus -->
     <div id="menuOverlay" class="overlay">
       <div class="card">
         <div id="menuMode">
@@ -89,7 +99,7 @@
             <button id="btn2p">2 Player</button>
           </div>
           <div class="smallnote">
-            Tip: Click the game canvas once so it captures input.
+            Tip: Tap the game canvas once so it captures input.
           </div>
         </div>
 
@@ -108,7 +118,6 @@
       </div>
     </div>
 
-    <!-- HUD -->
     <div class="hud">
       <div class="panel">
         <div class="row"><div>Blue</div><div id="p1hpText">100</div></div>
@@ -140,7 +149,7 @@
       <span class="kbd">.</span> kick,
       <span class="kbd">L</span> SPECIAL.
       Restart = <span class="kbd">R</span>.
-      (Gamepad: <span class="kbd">B</span>=Punch, <span class="kbd">Y</span>=Kick, <span class="kbd">X</span>=Special)
+      (Gamepad: <span class="kbd">B</span>=Punch, <span class="kbd">Y</span>=Kick, <span class="kbd">X</span>=Special, <span class="kbd">+</span>=Reset)
     </div>
   </div>
 

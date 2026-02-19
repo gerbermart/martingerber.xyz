@@ -52,9 +52,17 @@ btnHard.addEventListener('click', () => {
 });
 
 // Loop (never silently dies)
+let resetHeld = false;
+
 function loop(ts) {
   try {
     game.tick(ts);
+
+    // Gamepad "+" (Start) reset: player 1 is enough for now
+    const now = game.input && game.input.gpDown(1, 'reset');
+    if (now && !resetHeld) game.reset();
+    resetHeld = now;
+
   } catch (err) {
     console.error("Game loop crashed:", err);
   }
@@ -62,7 +70,7 @@ function loop(ts) {
 }
 requestAnimationFrame(loop);
 
-// Restart
+// Keyboard restart
 window.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'r') game.reset();
 });
