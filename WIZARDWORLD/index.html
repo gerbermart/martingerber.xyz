@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Wizard World (v0)</title>
+  <style>
+    html, body { margin: 0; padding: 0; background: #111; color: #eee; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    #wrap { display: grid; place-items: center; min-height: 100vh; }
+    canvas { background: #1a1a1a; image-rendering: pixelated; border: 1px solid #333; }
+    .hint { margin-top: 10px; font-size: 14px; color: #bbb; text-align: center; }
+    .hint code { color: #eee; }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <div>
+      <canvas id="game" width="960" height="540"></canvas>
+      <div class="hint">
+        Move: <code>← →</code> or <code>A D</code> · Jump: <code>Space</code> or <code>W</code> or <code>↑</code> · Restart: <code>R</code><br/>
+        Touch the glowing block at the end to win.
+      </div>
+    </div>
+  </div>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
