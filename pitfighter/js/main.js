@@ -1,6 +1,6 @@
-import { Game } from './src/game.js?v=menu4';
+import { Game } from './src/game.js?v=menu5';
 
-const BUILD_ID = "menu4-" + Date.now();
+const BUILD_ID = "menu5-" + Date.now();
 console.log("RUNNING BUILD", BUILD_ID);
 
 const stamp = document.getElementById("buildStamp");
@@ -9,6 +9,18 @@ if (stamp) stamp.textContent = "BUILD: " + BUILD_ID;
 const canvas = document.getElementById('game');
 const game = new Game(canvas);
 game.buildId = BUILD_ID;
+
+// Reset button
+const btnReset = document.getElementById('btnReset');
+if (btnReset) btnReset.addEventListener('click', () => game.reset());
+
+// Prevent double-tap zoom (best-effort; iOS can still be stubborn)
+let lastTouchEnd = 0;
+document.addEventListener('touchend', (e) => {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) e.preventDefault();
+  lastTouchEnd = now;
+}, { passive:false });
 
 // Menu elements
 const overlay = document.getElementById('menuOverlay');
@@ -50,16 +62,16 @@ btnHard.addEventListener('click', () => {
   canvas.focus();
 });
 
+// Loop + Joy-Con "+" reset
 let resetHeld = false;
-
 function loop(ts) {
   try {
     game.tick(ts);
 
-    // Gamepad "+" reset (player 1)
     const now = game.input && game.input.gpDown(1, 'reset');
     if (now && !resetHeld) game.reset();
     resetHeld = now;
+
   } catch (err) {
     console.error("Game loop crashed:", err);
   }
@@ -67,6 +79,7 @@ function loop(ts) {
 }
 requestAnimationFrame(loop);
 
+// Keyboard reset
 window.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'r') game.reset();
 });

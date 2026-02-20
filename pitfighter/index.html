@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- Disable zoom (as much as browsers allow) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <title>Stick Fighter</title>
   <style>
     html, body { margin:0; height:100%; background:#111; color:#ddd; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
@@ -12,16 +13,34 @@
       background:#1b1b1b;
       border:1px solid #333;
       border-radius:10px;
-
-      /* Fit height (landscape-friendly) */
-      height: calc(100vh - 210px);
+      height: calc(100vh - 250px);
       width: auto;
       max-width: 96vw;
-
       touch-action: none;
       -webkit-user-select: none;
       user-select: none;
     }
+
+    .topbar {
+      width:min(960px, 96vw);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .miniBtn {
+      appearance:none;
+      border:1px solid #3a3a3a;
+      background:#1f1f1f;
+      color:#eee;
+      border-radius:12px;
+      padding:8px 12px;
+      cursor:pointer;
+      font-weight:800;
+      touch-action: manipulation;
+    }
+    .miniBtn:active { transform: translateY(1px); }
 
     .hud { width:min(960px, 96vw); display:flex; justify-content:space-between; gap:12px; }
     .panel { flex:1; }
@@ -55,7 +74,7 @@
     .title { font-weight:800; font-size:22px; margin:0 0 10px 0; }
     .sub { opacity:0.9; margin:0 0 14px 0; }
     .btnrow { display:flex; gap:10px; flex-wrap:wrap; }
-    button {
+    button.big {
       appearance:none;
       border:1px solid #3a3a3a;
       background:#1f1f1f;
@@ -63,14 +82,13 @@
       border-radius:12px;
       padding:10px 14px;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
     }
-    button:hover { background:#252525; }
+    button.big:hover { background:#252525; }
     button.primary { border-color:#4a8dff; }
     .hidden { display:none !important; }
     .smallnote { margin-top:10px; font-size:13px; opacity:0.85; }
 
-    /* Build stamp */
     #buildStamp {
       position: fixed;
       right: 10px;
@@ -85,11 +103,11 @@
       z-index: 9999;
     }
 
-    /* Touch controls overlay (only show on touch devices) */
+    /* Touch controls overlay */
     #touchControls {
       position: fixed;
       inset: 0;
-      pointer-events: none; /* we enable pointer events only on buttons */
+      pointer-events: none;
       z-index: 9998;
     }
     .touchPad, .touchBtns {
@@ -110,7 +128,7 @@
       border: 1px solid rgba(255,255,255,0.18);
       background: rgba(20,20,20,0.55);
       color: #eee;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 18px;
       display: grid;
       place-items: center;
@@ -120,12 +138,9 @@
       touch-action: none;
     }
     .tbtn:active { transform: translateY(1px); background: rgba(30,30,30,0.65); }
-
-    /* D-pad layout */
     .dcol { display:flex; flex-direction:column; gap:12px; }
     .drow { display:flex; gap:12px; }
 
-    /* Only show on coarse pointers (phones/tablets) */
     @media (pointer: fine) {
       #touchControls { display:none; }
     }
@@ -139,8 +154,8 @@
           <p class="title">Stick Fighter</p>
           <p class="sub">Choose mode</p>
           <div class="btnrow">
-            <button id="btn1p" class="primary">1 Player</button>
-            <button id="btn2p">2 Player</button>
+            <button id="btn1p" class="big primary">1 Player</button>
+            <button id="btn2p" class="big">2 Player</button>
           </div>
           <div class="smallnote">Tip: Tap the canvas once so it captures input.</div>
         </div>
@@ -149,13 +164,17 @@
           <p class="title">1 Player</p>
           <p class="sub">Choose difficulty</p>
           <div class="btnrow">
-            <button id="btnEasy" class="primary">Easy</button>
-            <button id="btnMedium">Medium</button>
-            <button id="btnHard">Hard</button>
+            <button id="btnEasy" class="big primary">Easy</button>
+            <button id="btnMedium" class="big">Medium</button>
+            <button id="btnHard" class="big">Hard</button>
           </div>
-          <div class="smallnote">Easy = chill goblin vibes. Hard = training mode boss.</div>
         </div>
       </div>
+    </div>
+
+    <div class="topbar">
+      <div style="font-weight:900; letter-spacing:.3px;">Stick Fighter</div>
+      <button id="btnReset" class="miniBtn">Reset</button>
     </div>
 
     <div class="hud">
@@ -177,19 +196,15 @@
     <canvas id="game" width="960" height="540"></canvas>
 
     <div class="hint">
-      Mobile: use on-screen controls (Left/Right/Up + Punch/Kick/Special).<br/>
-      Keyboard: Blue jump = <span class="kbd">↑</span> (also <span class="kbd">W</span>), move = <span class="kbd">A</span>/<span class="kbd">D</span>.
-      (Gamepad: <span class="kbd">+</span>=Reset)
+      Blue jump = <span class="kbd">W</span>. Red jump = <span class="kbd">↑</span>.
+      Restart = <span class="kbd">R</span> or Joy-Con <span class="kbd">+</span>.
     </div>
   </div>
 
-  <!-- Touch overlay -->
   <div id="touchControls">
     <div class="touchPad">
       <div class="dcol">
-        <div class="drow">
-          <div class="tbtn" data-action="up">↑</div>
-        </div>
+        <div class="drow"><div class="tbtn" data-action="up">↑</div></div>
         <div class="drow">
           <div class="tbtn" data-action="left">←</div>
           <div class="tbtn" data-action="right">→</div>
@@ -205,7 +220,6 @@
   </div>
 
   <div id="buildStamp">BUILD: (loading...)</div>
-
-  <script type="module" src="./js/main.js?v=menu4"></script>
+  <script type="module" src="./js/main.js?v=menu5"></script>
 </body>
 </html>
