@@ -8,18 +8,16 @@
     html, body { margin:0; height:100%; background:#111; color:#ddd; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
     .wrap { display:flex; flex-direction:column; align-items:center; gap:10px; padding:10px; position:relative; min-height:100vh; box-sizing:border-box; }
 
-    /* Key change: canvas scales to available height */
     canvas {
       background:#1b1b1b;
       border:1px solid #333;
       border-radius:10px;
 
-      /* Display size */
+      /* Fit height (landscape-friendly) */
       height: calc(100vh - 210px);
       width: auto;
       max-width: 96vw;
 
-      /* Prevent iOS from selecting/scrolling while playing */
       touch-action: none;
       -webkit-user-select: none;
       user-select: none;
@@ -72,6 +70,7 @@
     .hidden { display:none !important; }
     .smallnote { margin-top:10px; font-size:13px; opacity:0.85; }
 
+    /* Build stamp */
     #buildStamp {
       position: fixed;
       right: 10px;
@@ -84,6 +83,51 @@
       color: #bbb;
       opacity: 0.92;
       z-index: 9999;
+    }
+
+    /* Touch controls overlay (only show on touch devices) */
+    #touchControls {
+      position: fixed;
+      inset: 0;
+      pointer-events: none; /* we enable pointer events only on buttons */
+      z-index: 9998;
+    }
+    .touchPad, .touchBtns {
+      position: absolute;
+      bottom: 14px;
+      display: flex;
+      gap: 12px;
+      pointer-events: none;
+    }
+    .touchPad { left: 14px; }
+    .touchBtns { right: 14px; }
+
+    .tbtn {
+      pointer-events: auto;
+      width: 74px;
+      height: 74px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(20,20,20,0.55);
+      color: #eee;
+      font-weight: 800;
+      font-size: 18px;
+      display: grid;
+      place-items: center;
+      backdrop-filter: blur(6px);
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: none;
+    }
+    .tbtn:active { transform: translateY(1px); background: rgba(30,30,30,0.65); }
+
+    /* D-pad layout */
+    .dcol { display:flex; flex-direction:column; gap:12px; }
+    .drow { display:flex; gap:12px; }
+
+    /* Only show on coarse pointers (phones/tablets) */
+    @media (pointer: fine) {
+      #touchControls { display:none; }
     }
   </style>
 </head>
@@ -98,9 +142,7 @@
             <button id="btn1p" class="primary">1 Player</button>
             <button id="btn2p">2 Player</button>
           </div>
-          <div class="smallnote">
-            Tip: Tap the game canvas once so it captures input.
-          </div>
+          <div class="smallnote">Tip: Tap the canvas once so it captures input.</div>
         </div>
 
         <div id="menuDifficulty" class="hidden">
@@ -111,9 +153,7 @@
             <button id="btnMedium">Medium</button>
             <button id="btnHard">Hard</button>
           </div>
-          <div class="smallnote">
-            Easy = chill goblin vibes. Hard = training mode boss.
-          </div>
+          <div class="smallnote">Easy = chill goblin vibes. Hard = training mode boss.</div>
         </div>
       </div>
     </div>
@@ -137,24 +177,35 @@
     <canvas id="game" width="960" height="540"></canvas>
 
     <div class="hint">
-      Controls:
-      Blue = <span class="kbd">A</span>/<span class="kbd">D</span> move,
-      <span class="kbd">W</span> jump,
-      <span class="kbd">F</span> punch,
-      <span class="kbd">G</span> kick,
-      <span class="kbd">H</span> SPECIAL.
-      Red = <span class="kbd">←</span>/<span class="kbd">→</span> move,
-      <span class="kbd">↑</span> jump,
-      <span class="kbd">/</span> punch,
-      <span class="kbd">.</span> kick,
-      <span class="kbd">L</span> SPECIAL.
-      Restart = <span class="kbd">R</span>.
-      (Gamepad: <span class="kbd">B</span>=Punch, <span class="kbd">Y</span>=Kick, <span class="kbd">X</span>=Special, <span class="kbd">+</span>=Reset)
+      Mobile: use on-screen controls (Left/Right/Up + Punch/Kick/Special).<br/>
+      Keyboard: Blue jump = <span class="kbd">↑</span> (also <span class="kbd">W</span>), move = <span class="kbd">A</span>/<span class="kbd">D</span>.
+      (Gamepad: <span class="kbd">+</span>=Reset)
+    </div>
+  </div>
+
+  <!-- Touch overlay -->
+  <div id="touchControls">
+    <div class="touchPad">
+      <div class="dcol">
+        <div class="drow">
+          <div class="tbtn" data-action="up">↑</div>
+        </div>
+        <div class="drow">
+          <div class="tbtn" data-action="left">←</div>
+          <div class="tbtn" data-action="right">→</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="touchBtns">
+      <div class="tbtn" data-action="punch">P</div>
+      <div class="tbtn" data-action="kick">K</div>
+      <div class="tbtn" data-action="special">★</div>
     </div>
   </div>
 
   <div id="buildStamp">BUILD: (loading...)</div>
 
-  <script type="module" src="./js/main.js?v=menu3"></script>
+  <script type="module" src="./js/main.js?v=menu4"></script>
 </body>
 </html>

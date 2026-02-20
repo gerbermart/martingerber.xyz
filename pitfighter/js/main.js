@@ -1,6 +1,6 @@
-import { Game } from './src/game.js?v=menu3';
+import { Game } from './src/game.js?v=menu4';
 
-const BUILD_ID = "menu3-" + Date.now();
+const BUILD_ID = "menu4-" + Date.now();
 console.log("RUNNING BUILD", BUILD_ID);
 
 const stamp = document.getElementById("buildStamp");
@@ -32,7 +32,6 @@ btn2p.addEventListener('click', () => {
   hideOverlay();
   canvas.focus();
 });
-
 btn1p.addEventListener('click', () => showDifficulty());
 
 btnEasy.addEventListener('click', () => {
@@ -51,18 +50,16 @@ btnHard.addEventListener('click', () => {
   canvas.focus();
 });
 
-// Loop (never silently dies)
 let resetHeld = false;
 
 function loop(ts) {
   try {
     game.tick(ts);
 
-    // Gamepad "+" (Start) reset: player 1 is enough for now
+    // Gamepad "+" reset (player 1)
     const now = game.input && game.input.gpDown(1, 'reset');
     if (now && !resetHeld) game.reset();
     resetHeld = now;
-
   } catch (err) {
     console.error("Game loop crashed:", err);
   }
@@ -70,7 +67,6 @@ function loop(ts) {
 }
 requestAnimationFrame(loop);
 
-// Keyboard restart
 window.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'r') game.reset();
 });
