@@ -2,12 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <!-- Disable zoom (as much as browsers allow) -->
+  <!-- Strong anti-zoom hint (iOS still needs JS guard below) -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <title>Stick Fighter</title>
   <style>
-    html, body { margin:0; height:100%; background:#111; color:#ddd; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
-    .wrap { display:flex; flex-direction:column; align-items:center; gap:10px; padding:10px; position:relative; min-height:100vh; box-sizing:border-box; }
+    html, body {
+      margin:0; height:100%;
+      background:#111; color:#ddd;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      -webkit-text-size-adjust: 100%;
+      overscroll-behavior: none;
+      touch-action: manipulation;
+    }
+    * { -webkit-tap-highlight-color: rgba(0,0,0,0); }
+
+    .wrap {
+      display:flex; flex-direction:column; align-items:center;
+      gap:10px; padding:10px; position:relative;
+      min-height:100vh; box-sizing:border-box;
+    }
 
     canvas {
       background:#1b1b1b;
@@ -20,27 +33,6 @@
       -webkit-user-select: none;
       user-select: none;
     }
-
-    .topbar {
-      width:min(960px, 96vw);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-
-    .miniBtn {
-      appearance:none;
-      border:1px solid #3a3a3a;
-      background:#1f1f1f;
-      color:#eee;
-      border-radius:12px;
-      padding:8px 12px;
-      cursor:pointer;
-      font-weight:800;
-      touch-action: manipulation;
-    }
-    .miniBtn:active { transform: translateY(1px); }
 
     .hud { width:min(960px, 96vw); display:flex; justify-content:space-between; gap:12px; }
     .panel { flex:1; }
@@ -62,6 +54,7 @@
       background: rgba(0,0,0,0.55);
       backdrop-filter: blur(2px);
       z-index: 10;
+      touch-action: none;
     }
     .card {
       width:min(520px, 92vw);
@@ -83,11 +76,35 @@
       padding:10px 14px;
       cursor:pointer;
       font-weight:800;
+      touch-action: manipulation;
     }
     button.big:hover { background:#252525; }
     button.primary { border-color:#4a8dff; }
     .hidden { display:none !important; }
     .smallnote { margin-top:10px; font-size:13px; opacity:0.85; }
+
+    /* Floating reset: always visible */
+    #btnReset {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 10000;
+      width: 56px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(20,20,20,0.55);
+      color:#eee;
+      font-weight: 900;
+      font-size: 18px;
+      display:grid;
+      place-items:center;
+      backdrop-filter: blur(6px);
+      -webkit-user-select:none;
+      user-select:none;
+      touch-action: manipulation;
+    }
+    #btnReset:active { transform: translateY(1px); background: rgba(30,30,30,0.65); }
 
     #buildStamp {
       position: fixed;
@@ -109,6 +126,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 9998;
+      touch-action: none;
     }
     .touchPad, .touchBtns {
       position: absolute;
@@ -147,6 +165,8 @@
   </style>
 </head>
 <body>
+  <button id="btnReset" aria-label="Reset">↻</button>
+
   <div class="wrap">
     <div id="menuOverlay" class="overlay">
       <div class="card">
@@ -172,11 +192,6 @@
       </div>
     </div>
 
-    <div class="topbar">
-      <div style="font-weight:900; letter-spacing:.3px;">Stick Fighter</div>
-      <button id="btnReset" class="miniBtn">Reset</button>
-    </div>
-
     <div class="hud">
       <div class="panel">
         <div class="row"><div>Blue</div><div id="p1hpText">100</div></div>
@@ -197,7 +212,7 @@
 
     <div class="hint">
       Blue jump = <span class="kbd">W</span>. Red jump = <span class="kbd">↑</span>.
-      Restart = <span class="kbd">R</span> or Joy-Con <span class="kbd">+</span>.
+      Reset = <span class="kbd">R</span> or Joy-Con <span class="kbd">+</span> or ↻ button.
     </div>
   </div>
 
@@ -220,6 +235,6 @@
   </div>
 
   <div id="buildStamp">BUILD: (loading...)</div>
-  <script type="module" src="./js/main.js?v=menu5"></script>
+  <script type="module" src="./js/main.js?v=menu6"></script>
 </body>
 </html>

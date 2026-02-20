@@ -1,4 +1,4 @@
-import { Input } from './input.js?v=menu5';
+import { Input } from './input.js?v=menu6';
 import { rectsOverlap } from './math.js';
 import { Fighter } from './fighter.js';
 import { AIController } from './ai.js?v=menu3';

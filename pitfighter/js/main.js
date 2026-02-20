@@ -1,6 +1,6 @@
-import { Game } from './src/game.js?v=menu5';
+import { Game } from './src/game.js?v=menu6';
 
-const BUILD_ID = "menu5-" + Date.now();
+const BUILD_ID = "menu6-" + Date.now();
 console.log("RUNNING BUILD", BUILD_ID);
 
 const stamp = document.getElementById("buildStamp");
@@ -12,17 +12,45 @@ game.buildId = BUILD_ID;
 
 // Reset button
 const btnReset = document.getElementById('btnReset');
-if (btnReset) btnReset.addEventListener('click', () => game.reset());
+if (btnReset) {
+  btnReset.addEventListener('click', (e) => {
+    e.preventDefault();
+    game.reset();
+    try { canvas.focus(); } catch {}
+  }, { passive:false });
+}
 
-// Prevent double-tap zoom (best-effort; iOS can still be stubborn)
-let lastTouchEnd = 0;
-document.addEventListener('touchend', (e) => {
+// iOS Safari anti-zoom guards (best-effort)
+document.addEventListener('gesturestart', (e) => e.preventDefault(), { passive:false });
+document.addEventListener('gesturechange', (e) => e.preventDefault(), { passive:false });
+document.addEventListener('gestureend', (e) => e.preventDefault(), { passive:false });
+
+// Block double-tap zoom by preventing the second tap
+let lastTouchStart = 0;
+let lastTouchX = 0;
+let lastTouchY = 0;
+
+document.addEventListener('touchstart', (e) => {
+  if (!e.touches || e.touches.length !== 1) return;
+
+  const t = e.touches[0];
   const now = Date.now();
-  if (now - lastTouchEnd <= 300) e.preventDefault();
-  lastTouchEnd = now;
+  const dt = now - lastTouchStart;
+
+  const dx = Math.abs(t.clientX - lastTouchX);
+  const dy = Math.abs(t.clientY - lastTouchY);
+
+  // If two taps happen close in time and space, kill the second one
+  if (dt > 0 && dt < 330 && dx < 24 && dy < 24) {
+    e.preventDefault();
+  }
+
+  lastTouchStart = now;
+  lastTouchX = t.clientX;
+  lastTouchY = t.clientY;
 }, { passive:false });
 
-// Menu elements
+// Menu wiring
 const overlay = document.getElementById('menuOverlay');
 const menuMode = document.getElementById('menuMode');
 const menuDiff = document.getElementById('menuDifficulty');
@@ -42,25 +70,28 @@ function showDifficulty() {
 btn2p.addEventListener('click', () => {
   game.setMode({ mode: '2p' });
   hideOverlay();
-  canvas.focus();
-});
-btn1p.addEventListener('click', () => showDifficulty());
+  try { canvas.focus(); } catch {}
+}, { passive:false });
+
+btn1p.addEventListener('click', () => showDifficulty(), { passive:false });
 
 btnEasy.addEventListener('click', () => {
   game.setMode({ mode: '1p', difficulty: 'easy' });
   hideOverlay();
-  canvas.focus();
-});
+  try { canvas.focus(); } catch {}
+}, { passive:false });
+
 btnMedium.addEventListener('click', () => {
   game.setMode({ mode: '1p', difficulty: 'medium' });
   hideOverlay();
-  canvas.focus();
-});
+  try { canvas.focus(); } catch {}
+}, { passive:false });
+
 btnHard.addEventListener('click', () => {
   game.setMode({ mode: '1p', difficulty: 'hard' });
   hideOverlay();
-  canvas.focus();
-});
+  try { canvas.focus(); } catch {}
+}, { passive:false });
 
 // Loop + Joy-Con "+" reset
 let resetHeld = false;
